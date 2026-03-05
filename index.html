@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Prakul Sunil Hiremath — AI/ML Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080808;
+    --bg2: #0e0e0e;
+    --bg3: #131313;
+    --border: rgba(255,255,255,0.06);
+    --border-bright: rgba(255,255,255,0.14);
+    --text: #e8e2d9;
+    --muted: #6b6560;
+    --accent: #c8a96e;
+    --accent2: #e8d5a8;
+    --white: #f5f0e8;
+    --red: #c0392b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s ease;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(200,169,110,0.4);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: all 0.18s ease;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9997;
+    opacity: 0.5;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 28px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  nav.scrolled {
+    border-color: var(--border);
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(120px, 18vw, 280px);
+    font-weight: 300;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.03);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .hero-line {
+    width: 1px; height: 120px;
+    background: linear-gradient(to bottom, transparent, var(--accent));
+    margin-bottom: 40px;
+    animation: lineGrow 1.2s ease forwards;
+    transform-origin: top;
+  }
+  @keyframes lineGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+  .hero-tag {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s ease forwards;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 8vw, 110px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s ease forwards;
+  }
+  h1 em { font-style: italic; color: var(--accent2); }
+
+  .hero-sub {
+    margin-top: 32px;
+    max-width: 520px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.7s ease forwards;
+  }
+
+  .hero-bottom {
+    margin-top: 56px;
+    display: flex; gap: 24px; align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s ease forwards;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid;
+    transition: all 0.25s;
+  }
+  .btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #080808;
+  }
+  .btn-primary:hover { background: var(--accent2); border-color: var(--accent2); }
+  .btn-outline {
+    background: transparent;
+    border-color: var(--border-bright);
+    color: var(--muted);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-scroll {
+    position: absolute; right: 60px; bottom: 80px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    writing-mode: vertical-rl;
+    font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--muted);
+    opacity: 0; animation: fadeUp 1s 1.2s ease forwards;
+  }
+  .hero-scroll::after {
+    content: '';
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION WRAPPER */
+  section { padding: 120px 60px; position: relative; }
+  .section-label {
+    font-size: 10px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .section-label::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--accent);
+  }
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 60px;
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ABOUT */
+  #about { background: var(--bg2); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .about-text p {
+    color: var(--muted);
+    line-height: 2;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+  .about-text p strong { color: var(--text); font-weight: 400; }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+  .stat-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 32px 28px;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+  /* SKILLS */
+  #skills { background: var(--bg); }
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .skill-group {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 36px 32px;
+    transition: border-color 0.2s;
+  }
+  .skill-group:hover { border-color: var(--border-bright); }
+  .skill-group-title {
+    font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 20px;
+    padding-bottom: 14px; border-bottom: 1px solid var(--border);
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag {
+    font-size: 11px;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    transition: all 0.2s;
+  }
+  .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* RESEARCH / PUBLICATIONS */
+  #research { background: var(--bg2); }
+  .pub-list { display: flex; flex-direction: column; gap: 2px; }
+  .pub-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 32px 36px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 24px;
+    align-items: start;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .pub-item:hover { border-color: var(--border-bright); background: rgba(200,169,110,0.03); }
+  .pub-year {
+    font-size: 11px; letter-spacing: 0.1em; color: var(--accent);
+    padding-top: 4px; min-width: 44px;
+  }
+  .pub-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 400; color: var(--white);
+    line-height: 1.4; margin-bottom: 8px;
+  }
+  .pub-venue { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
+  .pub-status {
+    font-size: 9px; padding: 4px 10px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    border: 1px solid;
+    white-space: nowrap; align-self: start; margin-top: 4px;
+  }
+  .pub-status.published { border-color: var(--accent); color: var(--accent); }
+  .pub-status.review { border-color: #555; color: #666; }
+
+  /* PROJECTS */
+  #projects { background: var(--bg); }
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .project-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 44px 40px;
+    position: relative; overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .project-card:hover { border-color: var(--border-bright); }
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--accent), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px; font-weight: 300;
+    color: rgba(200,169,110,0.1);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+  .project-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 400;
+    color: var(--white); margin-bottom: 12px; line-height: 1.3;
+  }
+  .project-desc { font-size: 12px; color: var(--muted); line-height: 1.9; margin-bottom: 24px; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .project-tag {
+    font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 3px 10px; border: 1px solid var(--border); color: var(--muted);
+  }
+
+  /* GRANTS */
+  #grants { background: var(--bg2); }
+  .grants-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .grant-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 36px 32px;
+    transition: border-color 0.2s;
+  }
+  .grant-card:hover { border-color: var(--border-bright); }
+  .grant-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px; font-weight: 300; color: var(--accent); line-height: 1;
+    margin-bottom: 16px;
+  }
+  .grant-title { font-size: 13px; color: var(--white); margin-bottom: 8px; line-height: 1.6; }
+  .grant-body { font-size: 11px; color: var(--muted); line-height: 1.8; }
+
+  /* CONFERENCES */
+  #conferences { background: var(--bg); }
+  .conf-list { display: flex; flex-direction: column; gap: 2px; }
+  .conf-item {
+    border: 1px solid var(--border);
+    padding: 28px 36px;
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 40px; align-items: center;
+    background: var(--bg2);
+    transition: border-color 0.2s;
+  }
+  .conf-item:hover { border-color: var(--border-bright); }
+  .conf-venue-tag {
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); line-height: 1.8;
+  }
+  .conf-year { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .conf-title { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 400; color: var(--white); line-height: 1.4; margin-bottom: 6px; }
+  .conf-sub { font-size: 11px; color: var(--muted); }
+
+  /* HOBBIES */
+  #hobbies { background: var(--bg2); }
+  .hobbies-flex { display: flex; gap: 2px; flex-wrap: wrap; }
+  .hobby-card {
+    flex: 1; min-width: 200px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 40px 32px;
+    text-align: center;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: default;
+  }
+  .hobby-card:hover { border-color: var(--border-bright); background: rgba(200,169,110,0.03); }
+  .hobby-icon { font-size: 32px; margin-bottom: 16px; display: block; }
+  .hobby-name { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+  /* BLOG */
+  #blog { background: var(--bg); }
+  .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .blog-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 36px 32px;
+    text-decoration: none;
+    display: block;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .blog-card:hover { border-color: var(--border-bright); background: rgba(200,169,110,0.03); }
+  .blog-source {
+    font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+  }
+  .blog-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 400;
+    color: var(--white); line-height: 1.4; margin-bottom: 14px;
+  }
+  .blog-desc { font-size: 11px; color: var(--muted); line-height: 1.9; margin-bottom: 20px; }
+  .blog-link {
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); display: flex; align-items: center; gap: 8px;
+  }
+  .blog-link::after { content: '→'; transition: transform 0.2s; }
+  .blog-card:hover .blog-link::after { transform: translateX(4px); }
+
+  /* CONTACT */
+  #contact { background: var(--bg2); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+  .contact-left h2 { margin-bottom: 24px; }
+  .contact-left p { color: var(--muted); font-size: 13px; line-height: 2; margin-bottom: 40px; }
+  .contact-links { display: flex; flex-direction: column; gap: 2px; }
+  .contact-link {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 24px;
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .contact-link:hover { border-color: var(--border-bright); background: rgba(200,169,110,0.04); }
+  .contact-link-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .contact-link-value { font-size: 12px; color: var(--text); }
+  .contact-link-arrow { color: var(--accent); font-size: 14px; transition: transform 0.2s; }
+  .contact-link:hover .contact-link-arrow { transform: translateX(4px); }
+  .contact-form { display: flex; flex-direction: column; gap: 2px; }
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    padding: 18px 20px;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: var(--muted); }
+  .form-group input:focus,
+  .form-group textarea:focus { border-color: var(--accent); }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 60px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; }
+  .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 14px; color: var(--accent); }
+
+  /* SCROLL ANIMATIONS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    #hero { padding: 0 24px 60px; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+    .skills-grid, .grants-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .blog-grid { grid-template-columns: 1fr; }
+    .conf-item { grid-template-columns: 1fr; gap: 8px; }
+    h1 { font-size: 48px; }
+    .hero-scroll { display: none; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-logo" href="#hero">PSH</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#conferences">Conferences</a></li>
+    <li><a href="#blog">Writing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-text">PRAKUL</div>
+  <div class="hero-line"></div>
+  <div class="hero-tag">AI / ML Researcher · VTU Belagavi · 2023–2027</div>
+  <h1>Prakul<br><em>Sunil</em><br>Hiremath</h1>
+  <p class="hero-sub">Building deep learning models and data pipelines for anomaly detection, time-series analysis, and scientific research. Focused on machine learning applied to real-world and space data.</p>
+  <div class="hero-bottom">
+    <a class="btn btn-primary" href="#research">View Research</a>
+    <a class="btn btn-outline" href="#contact">Get in Touch</a>
+    <a class="btn btn-outline" href="https://medium.com/@prakulhiremath" target="_blank">Medium ↗</a>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">Profile</div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <h2>Who I<br><em style="font-style:italic;color:var(--accent2)">Am</em></h2>
+      <p>Computer Science &amp; Engineering undergraduate at <strong>Visvesvaraya Technological University, Belagavi</strong> — building at the intersection of machine learning, signal processing, and real scientific data.</p>
+      <p>My work spans deep learning for <strong>high-energy astrophysics</strong>, RLHF safety, reinforcement learning policy optimization, and AI-driven environmental modeling. I've secured <strong>₹18L+ in research grants</strong> and presented at international conferences across India and the Middle East.</p>
+      <p>Beyond the lab — state-level debater, football player, founder of the research collective <strong>Aliens on Earth (AoE)</strong>, and sponsored delegate at the Linux Foundation's Open Source Summit 2025.</p>
+      <p style="color:var(--muted)">CGPA: <strong style="color:var(--text)">7.91 / 10.0</strong> &nbsp;·&nbsp; Languages: <strong style="color:var(--text)">Kannada, English, Hindi, Marathi</strong></p>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-num">3</div>
+        <div class="stat-label">ICML 2026 Submissions</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">₹18L</div>
+        <div class="stat-label">Research Grants Secured</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">8+</div>
+        <div class="stat-label">Conferences & Posters</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">4</div>
+        <div class="stat-label">SSB Interviews Attended</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Technical Arsenal</div>
+  <h2>Skills &amp;<br><em style="font-style:italic;color:var(--accent2)">Tools</em></h2>
+  <div class="skills-grid reveal">
+    <div class="skill-group">
+      <div class="skill-group-title">Languages & Frameworks</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">C/C++</span>
+        <span class="skill-tag">MATLAB</span>
+        <span class="skill-tag">PyTorch</span>
+        <span class="skill-tag">TensorFlow</span>
+        <span class="skill-tag">Scikit-Learn</span>
+        <span class="skill-tag">OpenCV</span>
+        <span class="skill-tag">NumPy</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">ML Architectures</div>
+      <div class="skill-tags">
+        <span class="skill-tag">RLHF</span>
+        <span class="skill-tag">RAPO / PPO</span>
+        <span class="skill-tag">TCN</span>
+        <span class="skill-tag">VAE</span>
+        <span class="skill-tag">Bayesian Time-Series</span>
+        <span class="skill-tag">Multi-Modal AI</span>
+        <span class="skill-tag">Self-Supervised</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Research Stack</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Astropy</span>
+        <span class="skill-tag">HEASoft</span>
+        <span class="skill-tag">FITS</span>
+        <span class="skill-tag">Linux/Ubuntu</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">LaTeX</span>
+        <span class="skill-tag">Uncertainty Quantification</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Applied AI Domains</div>
+      <div class="skill-tags">
+        <span class="skill-tag">High-Energy Astrophysics</span>
+        <span class="skill-tag">Environmental Modeling</span>
+        <span class="skill-tag">AI Safety</span>
+        <span class="skill-tag">Model Alignment</span>
+        <span class="skill-tag">Bioaerosols</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Leadership & Soft Skills</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Public Speaking</span>
+        <span class="skill-tag">Research Coordination</span>
+        <span class="skill-tag">Design Thinking</span>
+        <span class="skill-tag">Entrepreneurship</span>
+        <span class="skill-tag">Grant Writing</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Profiles</div>
+      <div class="skill-tags">
+        <a class="skill-tag" href="https://github.com/prakulhiremath" target="_blank" style="text-decoration:none">GitHub</a>
+        <a class="skill-tag" href="https://scholar.google.com/citations?user=ERbZUdoAAAAJ" target="_blank" style="text-decoration:none">Google Scholar</a>
+        <a class="skill-tag" href="https://orcid.org/0009-0007-9744-3519" target="_blank" style="text-decoration:none">ORCID</a>
+        <a class="skill-tag" href="https://aclanthology.org/people/prakul-hiremath/" target="_blank" style="text-decoration:none">ACL Anthology</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="section-label">Publications & Manuscripts</div>
+  <h2>Research<br><em style="font-style:italic;color:var(--accent2)">Work</em></h2>
+  <div class="pub-list reveal">
+
+    <div class="pub-item">
+      <div class="pub-year">2024</div>
+      <div>
+        <div class="pub-title">Shared Feature-Based Multitask Model for Faux-Hate Classification in Code-Mixed Text</div>
+        <div class="pub-venue">ICON 2024 · AU-KBC Research Centre, Chennai · NLP Association of India</div>
+      </div>
+      <span class="pub-status published">Published</span>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-year">2026</div>
+      <div>
+        <div class="pub-title">GIRL: Generative Imagination Reinforcement Learning via Information-Theoretic Hallucination Control</div>
+        <div class="pub-venue">Submitted · ICML 2026 (43rd International Conference on Machine Learning)</div>
+      </div>
+      <span class="pub-status review">Under Review</span>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-year">2026</div>
+      <div>
+        <div class="pub-title">Regret-Aware Policy Optimization (RAPO): Environment-Level Memory for Replay Suppression under Delayed Harm</div>
+        <div class="pub-venue">Submitted · ICML 2026</div>
+      </div>
+      <span class="pub-status review">Under Review</span>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-year">2026</div>
+      <div>
+        <div class="pub-title">The Mirage of Efficiency: Latency-Conditioned Selection Bias in Asynchronous Partial Rollouts for RLHF</div>
+        <div class="pub-venue">Submitted · ICML 2026 Position Paper Track</div>
+      </div>
+      <span class="pub-status review">Under Review</span>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-year">2026</div>
+      <div>
+        <div class="pub-title">AI-Driven, Uncertainty-Aware Anomaly Detection in Multi-wavelength AstroSat Observations</div>
+        <div class="pub-venue">AstroSat 2026 · Hyatt Centric Bengaluru · Page 146, Official Conference Proceedings</div>
+      </div>
+      <span class="pub-status published">Published</span>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Selected Work</div>
+  <h2>Featured<br><em style="font-style:italic;color:var(--accent2)">Projects</em></h2>
+  <div class="projects-grid reveal">
+
+    <div class="project-card">
+      <div class="project-num">01</div>
+      <div class="project-title">Satellite Data Analysis for Transient Detection</div>
+      <p class="project-desc">Built a lightweight pipeline to analyze AstroSat SXT Level-2 light curve data. Developed an anomaly detection script to flag significant flux deviations and solar flare interference in X-ray time-series. Presented at ISRO's AstroSat 2026 conference.</p>
+      <div class="project-tags">
+        <span class="project-tag">Python</span><span class="project-tag">Astropy</span>
+        <span class="project-tag">NumPy</span><span class="project-tag">FITS</span>
+        <span class="project-tag">ISRO</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">02</div>
+      <div class="project-title">Regret-Aware Policy Optimization (RAPO)</div>
+      <p class="project-desc">Architected a novel RL framework solving the credit assignment problem in environments with large temporal gaps between actions and rewards. Implemented environment-level memory modules to suppress harmful trajectory replays in RLHF pipelines.</p>
+      <div class="project-tags">
+        <span class="project-tag">PyTorch</span><span class="project-tag">RL</span>
+        <span class="project-tag">RLHF</span><span class="project-tag">AI Safety</span>
+        <span class="project-tag">ICML 2026</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">03</div>
+      <div class="project-title">EcoWave — AI Traffic Management System</div>
+      <p class="project-desc">AI-driven traffic management system formally appreciated by DCP N. Niranjan Raj Urs, Belagavi City. Utilized computer vision, facial recognition, and V2X communication to reduce urban congestion and air pollution.</p>
+      <div class="project-tags">
+        <span class="project-tag">Computer Vision</span><span class="project-tag">OpenCV</span>
+        <span class="project-tag">V2X</span><span class="project-tag">Civic Tech</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">04</div>
+      <div class="project-title">BIOLOOP & URJAWAVE (NAIN 2.0)</div>
+      <p class="project-desc">Dual-project initiative backed by a ₹3L government grant from NAIN 2.0 (Govt. of Karnataka), hosted at IIIT Dharwad. Focused on carbon capture (BIOLOOP) and clean energy solutions (URJAWAVE) using AI-integrated approaches.</p>
+      <div class="project-tags">
+        <span class="project-tag">AI4Good</span><span class="project-tag">Green Tech</span>
+        <span class="project-tag">Govt. of Karnataka</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GRANTS -->
+<section id="grants">
+  <div class="section-label">Funding</div>
+  <h2>Notable<br><em style="font-style:italic;color:var(--accent2)">Grants</em></h2>
+  <div class="grants-grid reveal">
+    <div class="grant-card">
+      <div class="grant-amount">₹15L</div>
+      <div class="grant-title">MSME Idea Hackathon 5.0</div>
+      <div class="grant-body">Ministry of MSME, Govt. of India · Innovative Green Hydrogen Production from Seawater integrating Nanocatalysts, Selective Membranes, and Concentrated Solar Power.</div>
+    </div>
+    <div class="grant-card">
+      <div class="grant-amount">₹3L</div>
+      <div class="grant-title">NAIN 2.0 — New Age Innovation Network</div>
+      <div class="grant-body">Govt. of Karnataka · Host Institute: IIIT Dharwad · BIOLOOP (Carbon Capture) &amp; URJAWAVE (Clean Energy).</div>
+    </div>
+    <div class="grant-card">
+      <div class="grant-amount">Grant</div>
+      <div class="grant-title">KAHER VC Research Grant</div>
+      <div class="grant-body">Deep Learning for Multi-Modal AI-Assisted Diagnosis — integrating Histopathology WSIs and Clinical Oral Images for Indian patients.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONFERENCES -->
+<section id="conferences">
+  <div class="section-label">Talks & Posters</div>
+  <h2>Conference<br><em style="font-style:italic;color:var(--accent2)">Appearances</em></h2>
+  <div class="conf-list reveal">
+
+    <div class="conf-item">
+      <div>
+        <div class="conf-venue-tag">AstroSat 2026<br>Bengaluru</div>
+        <div class="conf-year">Jan–Feb 2026</div>
+      </div>
+      <div>
+        <div class="conf-title">AI-Driven, Uncertainty-Aware Anomaly Detection in Multi-wavelength AstroSat Observations</div>
+        <div class="conf-sub">Hyatt Centric Hebbal · ISRO / URSC · Published Proceedings p.146</div>
+      </div>
+    </div>
+
+    <div class="conf-item">
+      <div>
+        <div class="conf-venue-tag">AAC 2025<br>Mumbai</div>
+        <div class="conf-year">Dec 2025</div>
+      </div>
+      <div>
+        <div class="conf-title">Real-Time Monitoring of Bioaerosol Emissions in Algae-Based Hydrogen Reactors Using Low-Cost Sensors and AI</div>
+        <div class="conf-sub">14th Asian Aerosol Conference · Vikhroli</div>
+      </div>
+    </div>
+
+    <div class="conf-item">
+      <div>
+        <div class="conf-venue-tag">QIB 2025<br>Bengaluru</div>
+        <div class="conf-year">Jul–Aug 2025</div>
+      </div>
+      <div>
+        <div class="conf-title">Monogamy-Driven Adaptive Quantum Secure Communication Framework</div>
+        <div class="conf-sub">Quantum India Bengaluru · Hotel Hilton, Manyata Tech Park</div>
+      </div>
+    </div>
+
+    <div class="conf-item">
+      <div>
+        <div class="conf-venue-tag">CODE-AI 2025<br>MAHE Dubai</div>
+        <div class="conf-year">Apr 2025</div>
+      </div>
+      <div>
+        <div class="conf-title">Photonic AI: Ultra-Fast, Zero-Power Optical Neural Networks for Real-Time Computer Vision</div>
+        <div class="conf-sub">2nd International Conference on Data Science &amp; Exploration in AI</div>
+      </div>
+    </div>
+
+    <div class="conf-item">
+      <div>
+        <div class="conf-venue-tag">VTU Climate<br>Conf. 2025</div>
+        <div class="conf-year">Feb 2025</div>
+      </div>
+      <div>
+        <div class="conf-title">Integration of AI in Environmental Modelling for Sustainable Ecosystems</div>
+        <div class="conf-sub">🏆 Best Paper Award · VTU Belagavi International Conference on Climate Change</div>
+      </div>
+    </div>
+
+    <div class="conf-item">
+      <div>
+        <div class="conf-venue-tag">IIT Bombay<br>TechConnect'24</div>
+        <div class="conf-year">Dec 2024</div>
+      </div>
+      <div>
+        <div class="conf-title">Hybrid AI for Real-Time Autonomous Systems: Neuromorphic Computing and Reinforcement Learning</div>
+        <div class="conf-sub">ResCon: Soch Vichar Achar</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOBBIES -->
+<section id="hobbies">
+  <div class="section-label">Beyond the Lab</div>
+  <h2>Life<br><em style="font-style:italic;color:var(--accent2)">Outside</em></h2>
+  <div class="hobbies-flex reveal">
+    <div class="hobby-card">
+      <span class="hobby-icon">⚽</span>
+      <div class="hobby-name">Football</div>
+    </div>
+    <div class="hobby-card">
+      <span class="hobby-icon">🏀</span>
+      <div class="hobby-name">Basketball</div>
+    </div>
+    <div class="hobby-card">
+      <span class="hobby-icon">♟️</span>
+      <div class="hobby-name">Chess</div>
+    </div>
+    <div class="hobby-card">
+      <span class="hobby-icon">🏓</span>
+      <div class="hobby-name">Table Tennis</div>
+    </div>
+    <div class="hobby-card">
+      <span class="hobby-icon">🎙️</span>
+      <div class="hobby-name">Debating</div>
+    </div>
+    <div class="hobby-card">
+      <span class="hobby-icon">✍️</span>
+      <div class="hobby-name">Technical Writing</div>
+    </div>
+    <div class="hobby-card">
+      <span class="hobby-icon">🚀</span>
+      <div class="hobby-name">Space Science</div>
+    </div>
+    <div class="hobby-card">
+      <span class="hobby-icon">🌍</span>
+      <div class="hobby-name">Conferences & Travel</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="section-label">Writing</div>
+  <h2>From My<br><em style="font-style:italic;color:var(--accent2)">Desk</em></h2>
+  <div class="blog-grid reveal">
+    <a class="blog-card" href="https://medium.com/@prakulhiremath" target="_blank">
+      <div class="blog-source">Medium · Technical Deep-Dive</div>
+      <div class="blog-title">Research-Focused Writing on AI, ML & Space Science</div>
+      <div class="blog-desc">In-depth articles on machine learning, reinforcement learning, astrophysics data, and the intersection of AI with scientific discovery.</div>
+      <div class="blog-link">Read on Medium</div>
+    </a>
+    <a class="blog-card" href="https://substack.com/@prakulhiremath" target="_blank">
+      <div class="blog-source">Substack · Newsletter</div>
+      <div class="blog-title">Ideas, Opinions & Research Notes</div>
+      <div class="blog-desc">Long-form essays and research notes spanning AI policy, emerging tech, and the future of scientific computing.</div>
+      <div class="blog-link">Read on Substack</div>
+    </a>
+    <div class="blog-card" style="cursor:default">
+      <div class="blog-source">Academic Writing</div>
+      <div class="blog-title">Published Papers & Conference Proceedings</div>
+      <div class="blog-desc">Peer-reviewed work on RLHF, anomaly detection in AstroSat data, NLP for code-mixed text, and more. All indexed on Google Scholar and ACL Anthology.</div>
+      <a class="blog-link" href="https://scholar.google.com/citations?user=ERbZUdoAAAAJ" target="_blank" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none">View Scholar Profile</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid reveal">
+    <div class="contact-left">
+      <div class="section-label">Get In Touch</div>
+      <h2>Let's<br><em style="font-style:italic;color:var(--accent2)">Connect</em></h2>
+      <p>Open to research collaborations, speaking invitations, conference discussions, and interesting ideas. Reach out through any of the channels below.</p>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:prakulhiremath03@gmail.com">
+          <span class="contact-link-label">Personal Email</span>
+          <span class="contact-link-value">prakulhiremath03@gmail.com</span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a class="contact-link" href="mailto:prakulhiremath@vtu.ac.in">
+          <span class="contact-link-label">Academic Email</span>
+          <span class="contact-link-value">prakulhiremath@vtu.ac.in</span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a class="contact-link" href="https://linkedin.com/in/prakulhiremath" target="_blank">
+          <span class="contact-link-label">LinkedIn</span>
+          <span class="contact-link-value">in/prakulhiremath</span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a class="contact-link" href="https://github.com/prakulhiremath" target="_blank">
+          <span class="contact-link-label">GitHub</span>
+          <span class="contact-link-value">github.com/prakulhiremath</span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a class="contact-link" href="https://twitter.com/PrakulHiremath" target="_blank">
+          <span class="contact-link-label">Twitter / X</span>
+          <span class="contact-link-value">@PrakulHiremath</span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="section-label" style="margin-bottom:24px">Send a Message</div>
+      <div class="contact-form">
+        <div class="form-group">
+          <input type="text" placeholder="Your name" />
+        </div>
+        <div class="form-group">
+          <input type="email" placeholder="Your email" />
+        </div>
+        <div class="form-group">
+          <input type="text" placeholder="Subject" />
+        </div>
+        <div class="form-group">
+          <textarea rows="6" placeholder="Your message..."></textarea>
+        </div>
+        <a class="btn btn-primary" href="#" style="align-self:flex-start">Send Message</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-copy">© 2025 Prakul Sunil Hiremath · All rights reserved</div>
+  <div class="footer-name">Aliens on Earth (AoE) · AI4Good</div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  const animCursor = () => {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animCursor);
+  };
+  animCursor();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { ring.style.transform = 'translate(-50%,-50%) scale(1.6)'; ring.style.borderColor = 'rgba(200,169,110,0.8)'; });
+    el.addEventListener('mouseleave', () => { ring.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.borderColor = 'rgba(200,169,110,0.4)'; });
+  });
+
+  // Scroll nav
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+</body>
+</html>
