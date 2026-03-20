@@ -1,917 +1,1225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="Prakul Sunil Hiremath — AI/ML Researcher, VTU Belagavi. Deep learning, astrophysics, RLHF, and scientific AI."/>
+<meta name="description" content="Prakul Sunil Hiremath — AI/ML Researcher, VTU Belagavi"/>
 <title>Prakul Sunil Hiremath · AI/ML Researcher</title>
-
-<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Unbounded:wght@200;400;700;900&display=swap" rel="stylesheet">
-<!-- Styles -->
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500;700&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════
+   PRAKUL HIREMATH — Signal Noise
+   White canvas · Chromatic energy · Research precision
+═══════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500;700&family=Syne:wght@400;500;700;800&display=swap');
+
+:root {
+  --white: #ffffff;
+  --off:   #f5f4f1;
+  --ink:   #0b0b0b;
+  --mid:   #6a6a6a;
+  --faint: #e4e4e4;
+
+  --c1: #ff3300;   /* vermillion */
+  --c2: #0041ff;   /* electric blue */
+  --c3: #00b341;   /* green */
+  --c4: #ff7a00;   /* orange */
+  --c5: #8800ff;   /* violet */
+  --c6: #00a8ff;   /* sky */
+  --c7: #ff0077;   /* pink */
+  --c8: #f5c400;   /* yellow */
+
+  --f-disp: 'Syne', sans-serif;
+  --f-ser:  'Instrument Serif', serif;
+  --f-mono: 'Geist Mono', monospace;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--f-mono);
+  font-size: 13px; line-height: 1.75;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CURSOR ─────────────────────────────────────────── */
+#cur {
+  position: fixed; width: 10px; height: 10px;
+  border-radius: 50%; background: var(--c1);
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .18s, height .18s, background .25s;
+  mix-blend-mode: multiply;
+}
+#cur.large { width: 50px; height: 50px; opacity: .5; }
+
+/* ── PIXEL GRID ──────────────────────────────────────── */
+.pgrid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,0,0,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,.05) 1px, transparent 1px);
+  background-size: 36px 36px;
+  pointer-events: none;
+}
+
+/* ── TICKER ──────────────────────────────────────────── */
+.ticker {
+  background: var(--ink); color: white;
+  padding: 11px 0; overflow: hidden;
+  white-space: nowrap; position: relative;
+}
+.ticker-track {
+  display: inline-flex;
+  animation: tick 32s linear infinite;
+}
+.ticker-item {
+  font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
+  padding: 0 40px; display: flex; align-items: center; gap: 16px;
+}
+.ticker-item b { color: var(--c8); }
+.ticker-item::after { content: '✦'; color: var(--c1); font-size: 7px; }
+@keyframes tick { to { transform: translateX(-50%); } }
+
+/* ── NAV ─────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  height: 58px; padding: 0 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid var(--faint);
+}
+.nav-logo {
+  font-family: var(--f-disp);
+  font-weight: 800; font-size: 14px; letter-spacing: -.01em;
+  color: var(--ink); text-decoration: none;
+}
+.nav-logo span { color: var(--c1); }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--mid); text-decoration: none; transition: color .2s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-right { display: flex; align-items: center; gap: 12px; }
+.nav-live {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 8px; letter-spacing: .16em; text-transform: uppercase; color: var(--c3);
+}
+.nav-live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--c3); animation: blink 1.6s ease-in-out infinite;
+}
+@keyframes blink { 50% { opacity: .3; } }
+.nav-btn {
+  font-family: var(--f-mono); font-size: 9px; letter-spacing: .14em;
+  text-transform: uppercase; padding: 8px 18px;
+  background: var(--ink); color: white; text-decoration: none;
+  transition: background .2s;
+}
+.nav-btn:hover { background: var(--c1); }
+
+/* ── HERO ─────────────────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  padding: 80px 48px 0;
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+
+.hero-top {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 0;
+  align-items: end;
+  padding-bottom: 60px;
+  position: relative; z-index: 2;
+}
+
+/* giant ghost text */
+.hero-ghost {
+  position: absolute;
+  bottom: -10px; left: -12px;
+  font-family: var(--f-disp);
+  font-weight: 800;
+  font-size: clamp(180px, 26vw, 400px);
+  letter-spacing: -.06em; line-height: .88;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(0,0,0,.04);
+  pointer-events: none; user-select: none;
+}
+
+/* eyebrow */
+.hero-eye {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 9px; letter-spacing: .26em; text-transform: uppercase;
+  color: var(--mid); margin-bottom: 22px;
+}
+.hero-eye-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--c1); }
+
+/* name */
+.hero-h1 {
+  font-family: var(--f-disp);
+  font-weight: 800;
+  font-size: clamp(62px, 9.5vw, 144px);
+  line-height: .88; letter-spacing: -.04em;
+}
+.hero-h1 .l1 { display: block; color: var(--ink); }
+.hero-h1 .l2 {
+  display: block;
+  font-family: var(--f-ser); font-style: italic; font-weight: 400;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--c2);
+  font-size: .88em;
+}
+.hero-h1 .l3 { display: block; color: var(--c1); }
+
+/* subline */
+.hero-sub {
+  margin-top: 28px; max-width: 440px;
+  font-size: 12px; color: var(--mid); line-height: 2;
+}
+
+/* actions */
+.hero-acts {
+  margin-top: 36px; display: flex; gap: 10px; flex-wrap: wrap;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 26px;
+  font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: .16em; text-transform: uppercase;
+  text-decoration: none; border: 1.5px solid;
+  transition: all .2s; cursor: none;
+}
+.btn-dark { background: var(--ink); border-color: var(--ink); color: white; }
+.btn-dark:hover { background: var(--c1); border-color: var(--c1); }
+.btn-light { background: transparent; border-color: var(--faint); color: var(--mid); }
+.btn-light:hover { border-color: var(--ink); color: var(--ink); }
+
+/* right panel - stat cards */
+.hero-panel {
+  border-left: 1.5px solid var(--faint);
+  display: flex; flex-direction: column; gap: 0;
+  align-self: stretch;
+  margin-bottom: 60px;
+}
+.hstat {
+  padding: 22px 28px;
+  border-bottom: 1.5px solid var(--faint);
+  display: flex; flex-direction: column; gap: 3px;
+  transition: background .2s;
+  flex: 1;
+}
+.hstat:hover { background: var(--off); }
+.hstat-n {
+  font-family: var(--f-disp);
+  font-weight: 800; font-size: 40px; line-height: 1;
+  letter-spacing: -.03em;
+}
+.hstat-l { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--mid); }
+
+/* TICKER / stats band */
+.hero-band {
+  border-top: 1.5px solid var(--faint);
+  display: grid; grid-template-columns: repeat(4,1fr);
+  position: relative; z-index: 2;
+}
+.hb-cell {
+  padding: 20px 24px;
+  border-right: 1.5px solid var(--faint);
+  position: relative;
+}
+.hb-cell:last-child { border-right: none; }
+.hb-n {
+  font-family: var(--f-disp);
+  font-weight: 800; font-size: 32px; line-height: 1;
+  letter-spacing: -.03em; margin-bottom: 3px;
+}
+.hb-l { font-size: 8px; letter-spacing: .16em; text-transform: uppercase; color: var(--mid); }
+
+/* ── SECTION HELPERS ─────────────────────────────────── */
+.section { padding: 100px 48px; position: relative; }
+.s-off { background: var(--off); }
+.s-white { background: white; }
+
+.s-eye {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 9px; letter-spacing: .26em; text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.s-eye::before { content:''; width: 28px; height: 1.5px; background: currentColor; }
+
+.s-title {
+  font-family: var(--f-disp);
+  font-weight: 800;
+  font-size: clamp(42px, 5.5vw, 84px);
+  line-height: .9; letter-spacing: -.04em;
+  color: var(--ink); margin-bottom: 60px;
+}
+.s-title em { font-family: var(--f-ser); font-style: italic; font-weight: 400; }
+.s-title .out {
+  color: transparent; -webkit-text-stroke: 1.5px var(--ink);
+}
+
+/* ── COLOR DIVIDER BANDS ─────────────────────────────── */
+.cband {
+  padding: 0 48px;
+  height: 44px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 2px solid; border-bottom: 2px solid;
+}
+.cband-l { font-family: var(--f-disp); font-weight: 800; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; }
+.cband-r { font-family: var(--f-mono); font-size: 9px; letter-spacing: .14em; opacity: .45; }
+
+/* ── ABOUT ───────────────────────────────────────────── */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.abt-p { font-size: 14px; color: #444; line-height: 2; margin-bottom: 22px; }
+.abt-p strong { color: var(--ink); font-weight: 500; }
+.abt-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 28px; }
+.abt-tag {
+  font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
+  padding: 6px 13px; border: 1.5px solid var(--faint); color: var(--mid);
+  transition: all .2s;
+}
+.abt-tag:hover { border-color: var(--ink); color: var(--ink); }
+.kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+.kpi {
+  padding: 30px 26px; background: white; border: 1.5px solid var(--faint);
+  transition: border-color .2s;
+}
+.kpi:hover { border-color: var(--ink); }
+.kpi-n {
+  font-family: var(--f-disp); font-weight: 800; font-size: 50px; line-height: 1;
+  letter-spacing: -.04em; margin-bottom: 5px;
+}
+.kpi-l { font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--mid); }
+
+/* ── SKILLS ──────────────────────────────────────────── */
+.sk-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; }
+.sk-block {
+  padding: 26px 22px; border: 1.5px solid var(--faint);
+  transition: border-color .2s; position: relative; overflow: hidden;
+}
+.sk-block::before {
+  content: ''; position: absolute;
+  bottom: 0; left: 0; right: 0; height: 2px;
+  background: var(--c8); transform: scaleX(0); transform-origin: left;
+  transition: transform .35s;
+}
+.sk-block:hover::before { transform: scaleX(1); }
+.sk-block:hover { border-color: var(--ink); }
+.sk-head {
+  font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--mid); margin-bottom: 14px; padding-bottom: 12px;
+  border-bottom: 1.5px solid var(--faint);
+}
+.sk-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.sk-tag {
+  font-size: 10px; padding: 4px 11px; border: 1.5px solid var(--faint);
+  color: #555; transition: all .18s; text-decoration: none; display: inline-block;
+}
+.sk-tag:hover { border-color: var(--ink); color: var(--ink); }
+
+/* ── PUBLICATIONS ────────────────────────────────────── */
+.pub-list { display: flex; flex-direction: column; gap: 2px; }
+.pub {
+  display: grid; grid-template-columns: 72px 1fr 100px;
+  gap: 20px; align-items: start;
+  padding: 22px 26px; background: white;
+  border: 1.5px solid var(--faint);
+  border-left: 3px solid transparent;
+  transition: border-left-color .2s, transform .2s;
+}
+.pub:hover { transform: translateX(5px); }
+.pub.blue:hover   { border-left-color: var(--c2); }
+.pub.violet:hover { border-left-color: var(--c5); }
+.pub.green:hover  { border-left-color: var(--c3); }
+.pub-yr { font-size: 10px; letter-spacing: .1em; padding-top: 2px; }
+.pub.blue .pub-yr   { color: var(--c2); }
+.pub.violet .pub-yr { color: var(--c5); }
+.pub.green .pub-yr  { color: var(--c3); }
+.pub-t {
+  font-family: var(--f-ser); font-size: 16px; font-weight: 400;
+  color: var(--ink); line-height: 1.45; margin-bottom: 5px;
+}
+.pub-v { font-size: 10px; color: var(--mid); line-height: 1.7; }
+.badge {
+  font-size: 8px; letter-spacing: .14em; text-transform: uppercase;
+  padding: 5px 10px; border: 1.5px solid; align-self: flex-start;
+  margin-top: 2px; white-space: nowrap;
+}
+.badge-live   { border-color: var(--c3); color: var(--c3); }
+.badge-review { border-color: var(--faint); color: var(--mid); }
+
+/* ── PROJECTS ────────────────────────────────────────── */
+.proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+.proj {
+  background: var(--off); padding: 44px 38px;
+  border: 1.5px solid var(--faint); position: relative; overflow: hidden;
+  transition: border-color .25s;
+}
+.proj:hover { border-color: var(--ink); }
+.proj::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .4s;
+}
+.proj-c1::after { background: var(--c2); }
+.proj-c2::after { background: var(--c1); }
+.proj-c3::after { background: var(--c3); }
+.proj-c4::after { background: var(--c4); }
+.proj:hover::after { transform: scaleX(1); }
+.proj-num {
+  font-family: var(--f-disp); font-weight: 800; font-size: 70px;
+  color: transparent; -webkit-text-stroke: 1.5px var(--faint);
+  line-height: 1; margin-bottom: 18px; letter-spacing: -.04em;
+  transition: -webkit-text-stroke-color .3s;
+}
+.proj:hover .proj-num { -webkit-text-stroke-color: #ccc; }
+.proj-t { font-family: var(--f-ser); font-size: 22px; color: var(--ink); margin-bottom: 10px; line-height: 1.3; }
+.proj-d { font-size: 11px; color: var(--mid); line-height: 2; margin-bottom: 18px; }
+.proj-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.proj-tag {
+  font-size: 8px; letter-spacing: .18em; text-transform: uppercase;
+  padding: 3px 9px; border: 1.5px solid var(--faint); color: var(--mid);
+}
+
+/* ── GRANTS — DARK BLOCK ─────────────────────────────── */
+#grants { background: var(--ink); }
+#grants .s-eye { color: rgba(255,255,255,.4); }
+#grants .s-eye::before { background: rgba(255,255,255,.25); }
+#grants .s-title { color: white; }
+.grants-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; }
+.grant {
+  padding: 34px 28px; border: 1.5px solid rgba(255,255,255,.1);
+  transition: border-color .2s;
+}
+.grant:hover { border-color: rgba(255,255,255,.35); }
+.grant-a {
+  font-family: var(--f-disp); font-weight: 800; font-size: 44px;
+  line-height: 1; letter-spacing: -.03em; margin-bottom: 14px;
+}
+.grant-t { font-size: 13px; color: rgba(255,255,255,.88); margin-bottom: 7px; line-height: 1.6; }
+.grant-b { font-size: 10px; color: rgba(255,255,255,.38); line-height: 1.8; }
+
+/* ── CONFERENCES ─────────────────────────────────────── */
+.conf-list { display: flex; flex-direction: column; gap: 2px; }
+.conf {
+  display: grid; grid-template-columns: 180px 1fr;
+  gap: 36px; align-items: center;
+  padding: 22px 26px; background: var(--off);
+  border: 1.5px solid var(--faint);
+  border-left: 3px solid transparent;
+  transition: border-left-color .2s;
+}
+.conf:hover { border-left-color: var(--c6); }
+.conf-venue { font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--c6); line-height: 1.9; }
+.conf-yr { font-size: 10px; color: var(--mid); margin-top: 4px; }
+.conf-t { font-family: var(--f-ser); font-size: 16px; color: var(--ink); line-height: 1.4; margin-bottom: 4px; }
+.conf-s { font-size: 10px; color: var(--mid); }
+.award-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--f-disp); font-weight: 700;
+  font-size: 8px; letter-spacing: .14em; text-transform: uppercase;
+  padding: 3px 10px; background: var(--c8); color: var(--ink); margin-left: 10px;
+}
+
+/* ── HOBBIES ─────────────────────────────────────────── */
+.hobs { display: flex; flex-wrap: wrap; gap: 3px; }
+.hob {
+  flex: 1; min-width: 140px; background: white;
+  border: 1.5px solid var(--faint); padding: 30px 22px;
+  text-align: center; transition: all .2s; cursor: default;
+}
+.hob:hover { border-color: var(--ink); transform: translateY(-4px); }
+.hob-i { font-size: 26px; display: block; margin-bottom: 10px; }
+.hob-n { font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--mid); }
+
+/* ── HIGHLIGHTS ──────────────────────────────────────── */
+.hi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+.hi {
+  background: var(--off); overflow: hidden;
+  border: 1.5px solid var(--faint); position: relative;
+}
+.hi img {
+  width: 100%; height: 290px; object-fit: cover; display: block;
+  transition: transform .6s, filter .4s; filter: grayscale(.15);
+}
+.hi:hover img { transform: scale(1.05); filter: grayscale(0); }
+.hi-cap {
+  padding: 13px 16px; font-size: 10px; letter-spacing: .07em;
+  color: var(--mid); background: white; border-top: 1.5px solid var(--faint);
+}
+
+/* ── BLOG ────────────────────────────────────────────── */
+.blog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; }
+.blog {
+  background: white; border: 1.5px solid var(--faint);
+  border-top-width: 3px;
+  padding: 30px 26px;
+  display: flex; flex-direction: column;
+  text-decoration: none;
+  transition: border-color .2s;
+}
+.blog:hover { border-color: var(--ink); }
+.blog-s { font-size: 8px; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 10px; }
+.blog-t { font-family: var(--f-ser); font-size: 19px; color: var(--ink); line-height: 1.4; margin-bottom: 10px; }
+.blog-d { font-size: 10px; color: var(--mid); line-height: 2; flex: 1; margin-bottom: 18px; }
+.blog-a { font-size: 9px; letter-spacing: .16em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; transition: gap .2s; }
+.blog:hover .blog-a { gap: 14px; }
+
+/* ── CONTACT ─────────────────────────────────────────── */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+.clinks { display: flex; flex-direction: column; gap: 2px; margin-top: 36px; }
+.clink {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 15px 18px; background: var(--off);
+  border: 1.5px solid var(--faint); text-decoration: none;
+  transition: border-color .2s;
+}
+.clink:hover { border-color: var(--ink); }
+.clink-l { font-size: 8px; letter-spacing: .18em; text-transform: uppercase; color: var(--mid); }
+.clink-v { font-size: 11px; color: var(--ink); }
+.clink-a { color: var(--mid); font-size: 14px; transition: transform .2s; }
+.clink:hover .clink-a { transform: translateX(4px); color: var(--ink); }
+
+.cf { display: flex; flex-direction: column; gap: 3px; }
+.cf input, .cf textarea {
+  width: 100%; background: var(--off); border: 1.5px solid var(--faint);
+  color: var(--ink); font-family: var(--f-mono); font-size: 13px;
+  padding: 15px 16px; outline: none; resize: none; transition: border-color .2s;
+}
+.cf input::placeholder, .cf textarea::placeholder { color: var(--mid); }
+.cf input:focus, .cf textarea:focus { border-color: var(--ink); }
+
+/* ── FOOTER ──────────────────────────────────────────── */
+footer {
+  background: var(--ink); color: white; padding: 26px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.foot-l { font-size: 10px; color: rgba(255,255,255,.38); letter-spacing: .07em; }
+.foot-r { font-family: var(--f-ser); font-size: 14px; font-style: italic; color: var(--c1); }
+
+/* ── REVEALS ─────────────────────────────────────────── */
+.rv {
+  opacity: 0; transform: translateY(26px);
+  transition: opacity .6s, transform .6s;
+}
+.rv.in { opacity: 1; transform: none; }
+.rv-d1 { transition-delay: .08s; }
+.rv-d2 { transition-delay: .16s; }
+.rv-d3 { transition-delay: .24s; }
+
+/* ── RESPONSIVE ──────────────────────────────────────── */
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links, .nav-right { display: none; }
+  .section { padding: 70px 20px; }
+  #hero { padding: 80px 20px 0; }
+  .hero-top { grid-template-columns: 1fr; gap: 0; }
+  .hero-panel { display: none; }
+  .hero-h1 { font-size: 54px; }
+  .hero-band { grid-template-columns: 1fr 1fr; }
+  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 44px; }
+  .sk-grid { grid-template-columns: 1fr 1fr; }
+  .proj-grid { grid-template-columns: 1fr; }
+  .grants-row { grid-template-columns: 1fr; }
+  .blog-grid { grid-template-columns: 1fr; }
+  .conf { grid-template-columns: 1fr; gap: 8px; }
+  .pub { grid-template-columns: 1fr; }
+  .hi-grid { grid-template-columns: 1fr; }
+  .cband { padding: 0 20px; }
+  footer { flex-direction: column; gap: 10px; text-align: center; }
+}
+</style>
 </head>
 <body>
 
 <!-- CURSOR -->
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
-<div id="cursor-label"></div>
+<div id="cur"></div>
 
-<!-- STARFIELD -->
-<canvas id="starfield"></canvas>
-
-<!-- ─── NAV ─────────────────────────────────────────────── -->
-<nav id="navbar">
-  <a class="nav-logo" href="#hero">PSH</a>
+<!-- ── NAV ────────────────────────────────────────────── -->
+<nav>
+  <a class="nav-logo" href="#hero">PSH<span>.</span></a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#research">Research</a></li>
-    <li><a href="#patents">Patents</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#conferences">Talks</a></li>
-    <li><a href="#highlights">Moments</a></li>
     <li><a href="#blog">Writing</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a class="nav-cta" href="mailto:prakulhiremath03@gmail.com">Say Hello →</a>
+  <div class="nav-right">
+    <div class="nav-live"><div class="nav-live-dot"></div>Open to Collaborations</div>
+    <a class="nav-btn" href="mailto:prakulhiremath03@gmail.com">Say Hello →</a>
+  </div>
 </nav>
 
-<!-- ─── HERO ─────────────────────────────────────────────── -->
+<!-- ── TICKER ─────────────────────────────────────────── -->
+<div class="ticker" style="margin-top:58px">
+  <div class="ticker-track">
+    <!-- duplicated for seamless loop -->
+    <span class="ticker-item"><b>ICML 2026</b> · 3 Submissions Under Review</span>
+    <span class="ticker-item"><b>₹18L+</b> · Research Grants Secured</span>
+    <span class="ticker-item"><b>AstroSat 2026</b> · ISRO Published Proceedings</span>
+    <span class="ticker-item"><b>Best Paper Award</b> · VTU Climate Conference 2025</span>
+    <span class="ticker-item"><b>5 Patents</b> · Published, Indian Patent Office</span>
+    <span class="ticker-item"><b>CODE-AI 2025</b> · MAHE Dubai · International Presenter</span>
+    <span class="ticker-item"><b>NAIN 2.0</b> · Govt. of Karnataka · IIIT Dharwad</span>
+    <span class="ticker-item"><b>KDD 2026</b> · 3 Papers Under Review</span>
+    <!-- duplicate -->
+    <span class="ticker-item"><b>ICML 2026</b> · 3 Submissions Under Review</span>
+    <span class="ticker-item"><b>₹18L+</b> · Research Grants Secured</span>
+    <span class="ticker-item"><b>AstroSat 2026</b> · ISRO Published Proceedings</span>
+    <span class="ticker-item"><b>Best Paper Award</b> · VTU Climate Conference 2025</span>
+    <span class="ticker-item"><b>5 Patents</b> · Published, Indian Patent Office</span>
+    <span class="ticker-item"><b>CODE-AI 2025</b> · MAHE Dubai · International Presenter</span>
+    <span class="ticker-item"><b>NAIN 2.0</b> · Govt. of Karnataka · IIIT Dharwad</span>
+    <span class="ticker-item"><b>KDD 2026</b> · 3 Papers Under Review</span>
+  </div>
+</div>
+
+<!-- ── HERO ────────────────────────────────────────────── -->
 <section id="hero">
-  <canvas id="starfield" style="display:none"></canvas>
+  <div class="pgrid"></div>
+  <div class="hero-ghost">PSH</div>
 
-  <!-- decorative bg year -->
-  <div class="hero-year">2027</div>
-
-  <div class="hero-content">
-    <!-- eyebrow -->
-    <div class="hero-eyebrow">
-      <div class="hero-eyebrow-line"></div>
-      <span class="hero-tag">AI / ML · VTU Belagavi · 2023–2027</span>
-    </div>
-
-    <!-- name -->
-    <h1 class="hero-name" id="hero-name">
-      <span>Prakul</span><br>
-      <span class="outline">Sunil</span><br>
-      <span class="accent">Hiremath</span>
-    </h1>
-
-    <!-- typewriter -->
-    <div class="hero-typewriter-wrap">
-      <div class="hero-typewriter">
-        <span id="typewriter-text"></span><span class="cursor-blink"></span>
-      </div>
-    </div>
-
-    <!-- bio -->
-    <p class="hero-bio">
-      Building deep learning models and data pipelines for anomaly detection,
-      time-series analysis, and scientific research. Founder of
-      <strong style="color:var(--text)">Aliens on Earth (AoE)</strong> — bridging
-      machine learning and real-world scientific impact.
-    </p>
-
-    <!-- CTAs -->
-    <div class="hero-actions">
-      <a class="btn btn-gold" href="#research">View Research</a>
-      <a class="btn btn-ghost" href="#contact">Get in Touch</a>
-      <a class="btn btn-ghost" href="https://medium.com/@prakulhiremath" target="_blank" rel="noopener">Medium ↗</a>
-    </div>
-
-    <!-- stats bar -->
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="hero-stat-num" data-count="3">3</div>
-        <div class="hero-stat-label">ICML 2026 Submissions</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num" data-count="18">₹18L</div>
-        <div class="hero-stat-label">Research Grants</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num" data-count="8">8+</div>
-        <div class="hero-stat-label">Conferences &amp; Posters</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num" data-count="4">4</div>
-        <div class="hero-stat-label">SSB Interviews</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- scroll indicator -->
-  <div class="hero-scroll">
-    <span class="scroll-label">Scroll</span>
-    <div class="scroll-track"></div>
-  </div>
-</section>
-
-<div class="hr"></div>
-
-<!-- ─── ABOUT ─────────────────────────────────────────────── -->
-<section id="about" class="section section--dark">
-  <div class="section-header reveal">
-    <div class="section-left">
-      <div class="section-eyebrow">Profile</div>
-      <h2 class="section-title">Who I<br><em>Am</em></h2>
-    </div>
-    <div class="section-count">01</div>
-  </div>
-
-  <div class="about-grid reveal">
-    <div class="about-body">
-      <p>Computer Science &amp; Engineering undergraduate at
-        <strong>Visvesvaraya Technological University, Belagavi</strong> —
-        building at the intersection of machine learning, signal processing,
-        and real scientific data.</p>
-      <p>My work spans deep learning for <strong>high-energy astrophysics</strong>,
-        RLHF safety, reinforcement learning policy optimization, and
-        AI-driven environmental modeling. I've secured
-        <strong>₹18L+ in research grants</strong> and presented at international
-        conferences across India and the Middle East.</p>
-      <p>Beyond the lab — state-level debater, football player, founder of the
-        research collective <strong>Aliens on Earth (AoE)</strong>, and sponsored
-        delegate at the Linux Foundation's Open Source Summit 2025.</p>
-      <p style="color:var(--muted)">
-        CGPA: <strong style="color:var(--text)">7.91 / 10.0</strong>
-        &nbsp;·&nbsp;
-        Languages: <strong style="color:var(--text)">Kannada, English, Hindi, Marathi</strong>
-      </p>
-    </div>
-
-    <div class="about-right">
-      <div class="stat-row">
-        <div class="stat-cell">
-          <div class="stat-num" data-count="3">3</div>
-          <div class="stat-lbl">ICML 2026 Submissions</div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-num">₹18L</div>
-          <div class="stat-lbl">Research Grants Secured</div>
-        </div>
-      </div>
-      <div class="stat-row">
-        <div class="stat-cell">
-          <div class="stat-num" data-count="8">8+</div>
-          <div class="stat-lbl">Conferences &amp; Posters</div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-num" data-count="4">4</div>
-          <div class="stat-lbl">SSB Interviews</div>
-        </div>
-      </div>
-      <div class="stat-row">
-        <div class="stat-cell" style="grid-column:1/-1">
-          <div class="stat-num" data-count="5">5</div>
-          <div class="stat-lbl">Published Indian Patents</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="hr"></div>
-
-<!-- ─── SKILLS ─────────────────────────────────────────────── -->
-<section id="skills" class="section section--darker">
-  <div class="section-header reveal">
-    <div class="section-left">
-      <div class="section-eyebrow">Technical Arsenal</div>
-      <h2 class="section-title">Skills &amp;<br><span class="outline">Tools</span></h2>
-    </div>
-    <div class="section-count">02</div>
-  </div>
-
-  <div class="skills-container reveal">
-    <div class="skill-panel">
-      <div class="skill-panel-title">Languages &amp; Frameworks</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Python</span>
-        <span class="skill-tag">C/C++</span>
-        <span class="skill-tag">MATLAB</span>
-        <span class="skill-tag">PyTorch</span>
-        <span class="skill-tag">TensorFlow</span>
-        <span class="skill-tag">Scikit-Learn</span>
-        <span class="skill-tag">OpenCV</span>
-        <span class="skill-tag">NumPy</span>
-      </div>
-    </div>
-    <div class="skill-panel">
-      <div class="skill-panel-title">ML Architectures</div>
-      <div class="skill-tags">
-        <span class="skill-tag">RLHF</span>
-        <span class="skill-tag">RAPO / PPO</span>
-        <span class="skill-tag">TCN</span>
-        <span class="skill-tag">VAE</span>
-        <span class="skill-tag">Bayesian Time-Series</span>
-        <span class="skill-tag">Multi-Modal AI</span>
-        <span class="skill-tag">Self-Supervised</span>
-      </div>
-    </div>
-    <div class="skill-panel">
-      <div class="skill-panel-title">Research Stack</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Astropy</span>
-        <span class="skill-tag">HEASoft</span>
-        <span class="skill-tag">FITS</span>
-        <span class="skill-tag">Linux / Ubuntu</span>
-        <span class="skill-tag">Git</span>
-        <span class="skill-tag">LaTeX</span>
-        <span class="skill-tag">Uncertainty Quantification</span>
-      </div>
-    </div>
-    <div class="skill-panel">
-      <div class="skill-panel-title">Applied AI Domains</div>
-      <div class="skill-tags">
-        <span class="skill-tag">High-Energy Astrophysics</span>
-        <span class="skill-tag">Environmental Modeling</span>
-        <span class="skill-tag">AI Safety</span>
-        <span class="skill-tag">Model Alignment</span>
-        <span class="skill-tag">Bioaerosols</span>
-      </div>
-    </div>
-    <div class="skill-panel">
-      <div class="skill-panel-title">Leadership &amp; Soft Skills</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Public Speaking</span>
-        <span class="skill-tag">Research Coordination</span>
-        <span class="skill-tag">Design Thinking</span>
-        <span class="skill-tag">Entrepreneurship</span>
-        <span class="skill-tag">Grant Writing</span>
-      </div>
-    </div>
-    <div class="skill-panel">
-      <div class="skill-panel-title">Academic Profiles</div>
-      <div class="skill-tags">
-        <a class="skill-tag" href="https://github.com/prakulhiremath" target="_blank" rel="noopener">GitHub</a>
-        <a class="skill-tag" href="https://scholar.google.com/citations?user=ERbZUdoAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
-        <a class="skill-tag" href="https://orcid.org/0009-0007-9744-3519" target="_blank" rel="noopener">ORCID</a>
-        <a class="skill-tag" href="https://aclanthology.org/people/prakul-hiremath/" target="_blank" rel="noopener">ACL Anthology</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="hr"></div>
-
-<!-- ─── RESEARCH ──────────────────────────────────────────── -->
-<section id="research" class="section section--dark">
-  <div class="section-header reveal">
-    <div class="section-left">
-      <div class="section-eyebrow">Publications &amp; Manuscripts</div>
-      <h2 class="section-title">Research<br><em>Work</em></h2>
-    </div>
-    <div class="section-count">03</div>
-  </div>
-
-  <div class="pub-stack reveal">
-
-    <div class="pub-card">
-      <div class="pub-year">2024</div>
-      <div>
-        <div class="pub-title">Shared Feature-Based Multitask Model for Faux-Hate Classification in Code-Mixed Text</div>
-        <div class="pub-venue">ICON 2024 · AU-KBC Research Centre, Chennai · NLP Association of India</div>
-      </div>
-      <span class="pub-badge live">Published</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2026</div>
-      <div>
-        <div class="pub-title">A Comprehensive Survey on Financial Health and Credit Card Management Practices in India</div>
-        <div class="pub-venue">Kaleidoscope Journal of Management Research · ISSN 3107-4677 · DOI: 10.62801/jkjmr2.12</div>
-      </div>
-      <span class="pub-badge live">Published</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2026</div>
-      <div>
-        <div class="pub-title">AI-Driven, Uncertainty-Aware Anomaly Detection in Multi-wavelength AstroSat Observations</div>
-        <div class="pub-venue">AstroSat 2026 · Hyatt Centric Bengaluru · Official Conference Proceedings</div>
-      </div>
-      <span class="pub-badge live">Published</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2026</div>
-      <div>
-        <div class="pub-title">ECG-TransNet: A Multi-Dataset CNN–Transformer Framework for Robust and Explainable Arrhythmia Detection</div>
-        <div class="pub-venue">Computers in Biology and Medicine (Elsevier) · Manuscript ID: CIBM-D-26-01216</div>
-      </div>
-      <span class="pub-badge review">Under Review</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2026</div>
-      <div>
-        <div class="pub-title">GIRL: Generative Imagination Reinforcement Learning via Information-Theoretic Hallucination Control</div>
-        <div class="pub-venue">ICML 2026 (43rd International Conference on Machine Learning)</div>
-      </div>
-      <span class="pub-badge review">Under Review</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2026</div>
-      <div>
-        <div class="pub-title">Regret-Aware Policy Optimization (RAPO): Environment-Level Memory for Replay Suppression under Delayed Harm</div>
-        <div class="pub-venue">ICML 2026</div>
-      </div>
-      <span class="pub-badge review">Under Review</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2026</div>
-      <div>
-        <div class="pub-title">When Offline Metrics Lie: The Dynamics of Silent Failure in Deployed Recommendation Systems</div>
-        <div class="pub-venue">KDD 2026 Research Track</div>
-      </div>
-      <span class="pub-badge review">Under Review</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2026</div>
-      <div>
-        <div class="pub-title">On the Fundamental Incompatibility Between Language Model Inductive Biases and Structured Data Learning</div>
-        <div class="pub-venue">KDD 2026 Research Track</div>
-      </div>
-      <span class="pub-badge review">Under Review</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2026</div>
-      <div>
-        <div class="pub-title">BIOLOOP: Bio-Conformal Multimodal Learning for Reliability-Guaranteed Safe Control of Algal Hydrogen Reactors</div>
-        <div class="pub-venue">KDD 2026 AI4Science Track</div>
-      </div>
-      <span class="pub-badge review">Under Review</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2026</div>
-      <div>
-        <div class="pub-title">The Mirage of Efficiency: Latency-Conditioned Selection Bias in Asynchronous Partial Rollouts for RLHF</div>
-        <div class="pub-venue">ICML 2026 Position Paper Track</div>
-      </div>
-      <span class="pub-badge review">Under Review</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2026</div>
-      <div>
-        <div class="pub-title">Policy Decoupling in Long-Context LLMs: Measuring Alignment Half-Life and Drift Robustness</div>
-        <div class="pub-venue">ICML 2026 Position Paper Track</div>
-      </div>
-      <span class="pub-badge review">Under Review</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2026</div>
-      <div>
-        <div class="pub-title">The Context Wall: Why Transformer Systems Break Down Under Latency, Cost, and Truncation Pressure</div>
-        <div class="pub-venue">ICML 2026 Position Paper Track</div>
-      </div>
-      <span class="pub-badge review">Under Review</span>
-    </div>
-
-  </div>
-</section>
-
-<div class="hr"></div>
-
-<!-- ─── PATENTS ────────────────────────────────────────────── -->
-<section id="patents" class="section section--darker">
-  <div class="section-header reveal">
-    <div class="section-left">
-      <div class="section-eyebrow">Intellectual Property</div>
-      <h2 class="section-title">Filed<br><span class="outline">Patents</span></h2>
-    </div>
-    <div class="section-count">04</div>
-  </div>
-
-  <div class="pub-stack reveal">
-
-    <div class="pub-card">
-      <div class="pub-year">2025</div>
-      <div>
-        <div class="pub-title">Integrating Neuromorphic Computing and Reinforcement Learning in Hybrid AI for Autonomous Systems</div>
-        <div class="pub-venue">Indian Patent · Application No. 202541014688</div>
-      </div>
-      <span class="pub-badge live">Published</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2025</div>
-      <div>
-        <div class="pub-title">Innovative CO₂ Emission Filters for Vehicles: Net-Zero Carbon Solutions with Advanced Adsorption and Smart Monitoring</div>
-        <div class="pub-venue">Indian Patent · Application No. 202541014687</div>
-      </div>
-      <span class="pub-badge live">Published</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2025</div>
-      <div>
-        <div class="pub-title">Dynamic Adjustable Sleeve D&amp;M for Enhanced Universal CO₂ Emission Filters</div>
-        <div class="pub-venue">Indian Patent · Application No. 202541014690</div>
-      </div>
-      <span class="pub-badge live">Published</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2025</div>
-      <div>
-        <div class="pub-title">Hyper-Adaptive Manufacturing Using Multi-Agent AI for Autonomous Production Optimization</div>
-        <div class="pub-venue">Indian Patent · Application No. 202541014689</div>
-      </div>
-      <span class="pub-badge live">Published</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2025</div>
-      <div>
-        <div class="pub-title">EMEFF: An Explainable Multimodal Economic Forecasting Framework for Real-Time, Transparent, and Adaptive Predictions</div>
-        <div class="pub-venue">Indian Patent · Application No. 202541032942</div>
-      </div>
-      <span class="pub-badge live">Published</span>
-    </div>
-
-  </div>
-</section>
-
-<div class="hr"></div>
-
-<!-- ─── POSTERS ────────────────────────────────────────────── -->
-<section id="posters" class="section section--dark">
-  <div class="section-header reveal">
-    <div class="section-left">
-      <div class="section-eyebrow">Poster Sessions</div>
-      <h2 class="section-title">Research<br><em>Posters</em></h2>
-    </div>
-    <div class="section-count">05</div>
-  </div>
-
-  <div class="pub-stack reveal">
-
-    <div class="pub-card">
-      <div class="pub-year">2025</div>
-      <div>
-        <div class="pub-title">Real-Time Monitoring of Bioaerosol Emissions in Algae-Based Hydrogen Reactors Using Low-Cost Sensors and AI</div>
-        <div class="pub-venue">Asian Aerosol Conference (AAC 2025) · Mumbai</div>
-      </div>
-      <span class="pub-badge live">Presented</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2025</div>
-      <div>
-        <div class="pub-title">Monogamy-Driven Adaptive Quantum Secure Communication Framework</div>
-        <div class="pub-venue">Quantum India Bengaluru (QIB 2025) · Hilton Manyata Tech Park</div>
-      </div>
-      <span class="pub-badge live">Presented</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2025</div>
-      <div>
-        <div class="pub-title">Photonic AI: Ultra-Fast, Zero-Power Optical Neural Networks for Real-Time Computer Vision</div>
-        <div class="pub-venue">CODE-AI 2025 · Manipal Academy of Higher Education</div>
-      </div>
-      <span class="pub-badge live">Presented</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2024</div>
-      <div>
-        <div class="pub-title">Hybrid AI for Real-Time Autonomous Systems: The Intersection of Neuromorphic Computing and Reinforcement Learning</div>
-        <div class="pub-venue">ResCon TechConnect · IIT Bombay</div>
-      </div>
-      <span class="pub-badge live">Presented</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2025</div>
-      <div>
-        <div class="pub-title">Quantum Resource Optimization: Revolutionizing Data Processing in High-Energy Physics through Entanglement and Quantum Feedback</div>
-        <div class="pub-venue">Quantum Resources Science Conference 2025</div>
-      </div>
-      <span class="pub-badge review">Accepted</span>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-year">2025</div>
-      <div>
-        <div class="pub-title">Optimizing Quantum Algorithms: Bridging Artificial Intelligence and Quantum Computing for Enhanced Decision-Making</div>
-        <div class="pub-venue">Quantum Resources Science Conference 2025</div>
-      </div>
-      <span class="pub-badge review">Accepted</span>
-    </div>
-
-  </div>
-</section>
-
-<div class="hr"></div>
-
-<!-- ─── PROJECTS ───────────────────────────────────────────── -->
-<section id="projects" class="section section--darker">
-  <div class="section-header reveal">
-    <div class="section-left">
-      <div class="section-eyebrow">Selected Work</div>
-      <h2 class="section-title">Featured<br><span class="outline">Projects</span></h2>
-    </div>
-    <div class="section-count">06</div>
-  </div>
-
-  <div class="projects-grid reveal">
-
-    <div class="project-card">
-      <div class="project-num">01</div>
-      <div class="project-title">Satellite Data Analysis for Transient Detection</div>
-      <p class="project-desc">Built a lightweight pipeline to analyze AstroSat SXT Level-2 light curve data. Developed an anomaly detection script to flag significant flux deviations and solar flare interference in X-ray time-series. Presented at ISRO's AstroSat 2026 conference.</p>
-      <div class="project-tags">
-        <span class="project-tag">Python</span>
-        <span class="project-tag">Astropy</span>
-        <span class="project-tag">NumPy</span>
-        <span class="project-tag">FITS</span>
-        <span class="project-tag">ISRO</span>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-num">02</div>
-      <div class="project-title">Regret-Aware Policy Optimization (RAPO)</div>
-      <p class="project-desc">Architected a novel RL framework solving the credit assignment problem in environments with large temporal gaps between actions and rewards. Implemented environment-level memory modules to suppress harmful trajectory replays in RLHF pipelines.</p>
-      <div class="project-tags">
-        <span class="project-tag">PyTorch</span>
-        <span class="project-tag">RL</span>
-        <span class="project-tag">RLHF</span>
-        <span class="project-tag">AI Safety</span>
-        <span class="project-tag">ICML 2026</span>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-num">03</div>
-      <div class="project-title">EcoWave — AI Traffic Management System</div>
-      <p class="project-desc">AI-driven traffic management system formally appreciated by DCP N. Niranjan Raj Urs, Belagavi City. Utilized computer vision, facial recognition, and V2X communication to reduce urban congestion and air pollution.</p>
-      <div class="project-tags">
-        <span class="project-tag">Computer Vision</span>
-        <span class="project-tag">OpenCV</span>
-        <span class="project-tag">V2X</span>
-        <span class="project-tag">Civic Tech</span>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-num">04</div>
-      <div class="project-title">BIOLOOP &amp; URJAWAVE (NAIN 2.0)</div>
-      <p class="project-desc">Dual-project initiative backed by a ₹3L government grant from NAIN 2.0 (Govt. of Karnataka), hosted at IIIT Dharwad. Focused on carbon capture (BIOLOOP) and clean energy solutions (URJAWAVE) using AI-integrated approaches.</p>
-      <div class="project-tags">
-        <span class="project-tag">AI4Good</span>
-        <span class="project-tag">Green Tech</span>
-        <span class="project-tag">Govt. of Karnataka</span>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<div class="hr"></div>
-
-<!-- ─── GRANTS ─────────────────────────────────────────────── -->
-<section id="grants" class="section section--dark">
-  <div class="section-header reveal">
-    <div class="section-left">
-      <div class="section-eyebrow">Funding</div>
-      <h2 class="section-title">Notable<br><em>Grants</em></h2>
-    </div>
-    <div class="section-count">07</div>
-  </div>
-
-  <div class="grants-grid reveal">
-    <div class="grant-card">
-      <div class="grant-amount">₹15L</div>
-      <div class="grant-title">MSME Idea Hackathon 5.0</div>
-      <div class="grant-body">Ministry of MSME, Govt. of India · Innovative Green Hydrogen Production from Seawater integrating Nanocatalysts, Selective Membranes, and Concentrated Solar Power.</div>
-    </div>
-    <div class="grant-card">
-      <div class="grant-amount">₹3L</div>
-      <div class="grant-title">NAIN 2.0 — New Age Innovation Network</div>
-      <div class="grant-body">Govt. of Karnataka · Host Institute: IIIT Dharwad · BIOLOOP (Carbon Capture) &amp; URJAWAVE (Clean Energy).</div>
-    </div>
-    <div class="grant-card">
-      <div class="grant-amount">₹30K</div>
-      <div class="grant-title">KAHER VC Research Grant</div>
-      <div class="grant-body">Deep Learning for Multi-Modal AI-Assisted Diagnosis — integrating Histopathology WSIs and Clinical Oral Images for Indian patients.</div>
-    </div>
-  </div>
-</section>
-
-<div class="hr"></div>
-
-<!-- ─── CONFERENCES ────────────────────────────────────────── -->
-<section id="conferences" class="section section--darker">
-  <div class="section-header reveal">
-    <div class="section-left">
-      <div class="section-eyebrow">Talks &amp; Posters</div>
-      <h2 class="section-title">Conference<br><span class="outline">Appearances</span></h2>
-    </div>
-    <div class="section-count">08</div>
-  </div>
-
-  <div class="conf-stack reveal">
-
-    <div class="conf-row">
-      <div>
-        <div class="conf-tag">AstroSat 2026<br>Bengaluru</div>
-        <div class="conf-year">Jan–Feb 2026</div>
-      </div>
-      <div>
-        <div class="conf-title">AI-Driven, Uncertainty-Aware Anomaly Detection in Multi-wavelength AstroSat Observations</div>
-        <div class="conf-sub">Hyatt Centric Hebbal · ISRO / URSC · Published Proceedings p.146</div>
-      </div>
-    </div>
-
-    <div class="conf-row">
-      <div>
-        <div class="conf-tag">AAC 2025<br>Mumbai</div>
-        <div class="conf-year">Dec 2025</div>
-      </div>
-      <div>
-        <div class="conf-title">Real-Time Monitoring of Bioaerosol Emissions in Algae-Based Hydrogen Reactors Using Low-Cost Sensors and AI</div>
-        <div class="conf-sub">14th Asian Aerosol Conference · Vikhroli</div>
-      </div>
-    </div>
-
-    <div class="conf-row">
-      <div>
-        <div class="conf-tag">QIB 2025<br>Bengaluru</div>
-        <div class="conf-year">Jul–Aug 2025</div>
-      </div>
-      <div>
-        <div class="conf-title">Monogamy-Driven Adaptive Quantum Secure Communication Framework</div>
-        <div class="conf-sub">Quantum India Bengaluru · Hotel Hilton, Manyata Tech Park</div>
-      </div>
-    </div>
-
-    <div class="conf-row">
-      <div>
-        <div class="conf-tag">CODE-AI 2025<br>MAHE Dubai</div>
-        <div class="conf-year">Apr 2025</div>
-      </div>
-      <div>
-        <div class="conf-title">Photonic AI: Ultra-Fast, Zero-Power Optical Neural Networks for Real-Time Computer Vision</div>
-        <div class="conf-sub">2nd International Conference on Data Science &amp; Exploration in AI</div>
-      </div>
-    </div>
-
-    <div class="conf-row">
-      <div>
-        <div class="conf-tag">VTU Climate<br>Conf. 2025</div>
-        <div class="conf-year">Feb 2025</div>
-      </div>
-      <div>
-        <div class="conf-title">
-          Integration of AI in Environmental Modelling for Sustainable Ecosystems
-          <span class="award-tag">🏆 Best Paper</span>
-        </div>
-        <div class="conf-sub">VTU Belagavi International Conference on Climate Change</div>
-      </div>
-    </div>
-
-    <div class="conf-row">
-      <div>
-        <div class="conf-tag">IIT Bombay<br>TechConnect '24</div>
-        <div class="conf-year">Dec 2024</div>
-      </div>
-      <div>
-        <div class="conf-title">Hybrid AI for Real-Time Autonomous Systems: Neuromorphic Computing and Reinforcement Learning</div>
-        <div class="conf-sub">ResCon: Soch Vichar Achar</div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<div class="hr"></div>
-
-<!-- ─── SUMMITS ────────────────────────────────────────────── -->
-<section id="summits" class="section section--dark">
-  <div class="section-header reveal">
-    <div class="section-left">
-      <div class="section-eyebrow">Industry &amp; Policy</div>
-      <h2 class="section-title">Summit<br><em>Participation</em></h2>
-    </div>
-    <div class="section-count">09</div>
-  </div>
-
-  <div class="conf-stack reveal">
-
-    <div class="conf-row">
-      <div>
-        <div class="conf-tag">India AI Impact<br>Summit · Delhi</div>
-        <div class="conf-year">Feb 2026</div>
-      </div>
-      <div>
-        <div class="conf-title">India AI Impact Summit 2026</div>
-        <div class="conf-sub">National-level summit on AI policy, deployment, and ecosystem building</div>
-      </div>
-    </div>
-
-    <div class="conf-row">
-      <div>
-        <div class="conf-tag">HDB Techceleration<br>Belagavi</div>
-        <div class="conf-year">2025</div>
-      </div>
-      <div>
-        <div class="conf-title">HDB Techceleration 2025</div>
-        <div class="conf-sub">Startup and innovation summit · Suvarna Vidhana Soudha</div>
-      </div>
-    </div>
-
-    <div class="conf-row">
-      <div>
-        <div class="conf-tag">Rakuten AI-nization<br>Bengaluru</div>
-        <div class="conf-year">2024</div>
-      </div>
-      <div>
-        <div class="conf-title">Rakuten AI-nization 2024</div>
-        <div class="conf-sub">Industry event focused on applied AI systems and deployment at scale</div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<div class="hr"></div>
-
-<!-- ─── HOBBIES ────────────────────────────────────────────── -->
-<section id="hobbies" class="section section--darker">
-  <div class="section-header reveal">
-    <div class="section-left">
-      <div class="section-eyebrow">Beyond the Lab</div>
-      <h2 class="section-title">Life<br><span class="outline">Outside</span></h2>
-    </div>
-    <div class="section-count">10</div>
-  </div>
-
-  <div class="hobbies-flex reveal">
-    <div class="hobby-pill"><span class="hobby-emoji">⚽</span><div class="hobby-lbl">Football</div></div>
-    <div class="hobby-pill"><span class="hobby-emoji">🏀</span><div class="hobby-lbl">Basketball</div></div>
-    <div class="hobby-pill"><span class="hobby-emoji">♟️</span><div class="hobby-lbl">Chess</div></div>
-    <div class="hobby-pill"><span class="hobby-emoji">🏓</span><div class="hobby-lbl">Table Tennis</div></div>
-    <div class="hobby-pill"><span class="hobby-emoji">🎙️</span><div class="hobby-lbl">Debating</div></div>
-    <div class="hobby-pill"><span class="hobby-emoji">✍️</span><div class="hobby-lbl">Technical Writing</div></div>
-    <div class="hobby-pill"><span class="hobby-emoji">🚀</span><div class="hobby-lbl">Space Science</div></div>
-    <div class="hobby-pill"><span class="hobby-emoji">🌍</span><div class="hobby-lbl">Conferences &amp; Travel</div></div>
-  </div>
-</section>
-
-<div class="hr"></div>
-
-<!-- ─── HIGHLIGHTS ─────────────────────────────────────────── -->
-<section id="highlights" class="section section--dark">
-  <div class="section-header reveal">
-    <div class="section-left">
-      <div class="section-eyebrow">Moments</div>
-      <h2 class="section-title">Research<br><em>Highlights</em></h2>
-    </div>
-    <div class="section-count">11</div>
-  </div>
-
-  <div class="highlights-grid reveal">
-    <div class="highlight-card">
-      <img src="assets/highlight-poster.jpg" alt="AAC Poster Presentation" loading="lazy">
-      <div class="highlight-overlay">
-        <div class="highlight-caption">AAC 2025 · Poster Presentation · Mumbai</div>
-      </div>
-    </div>
-    <div class="highlight-card">
-      <img src="assets/highlight-award.jpg" alt="Best Paper Award" loading="lazy">
-      <div class="highlight-overlay">
-        <div class="highlight-caption">Best Paper Award · VTU Climate Conference</div>
-      </div>
-    </div>
-    <div class="highlight-card">
-      <img src="assets/highlight-vidhanasoudha.jpg" alt="Vidhana Soudha" loading="lazy">
-      <div class="highlight-overlay">
-        <div class="highlight-caption">TECHCELERATION 2025 · Suvarna Vidhana Soudha, Belagavi</div>
-      </div>
-    </div>
-    <div class="highlight-card">
-      <img src="assets/highlight-iisc.jpg" alt="IISc Visit" loading="lazy">
-      <div class="highlight-overlay">
-        <div class="highlight-caption">Academic Visit · IISc Bangalore</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="hr"></div>
-
-<!-- ─── BLOG ──────────────────────────────────────────────── -->
-<section id="blog" class="section section--darker">
-  <div class="section-header reveal">
-    <div class="section-left">
-      <div class="section-eyebrow">Writing</div>
-      <h2 class="section-title">From My<br><span class="outline">Desk</span></h2>
-    </div>
-    <div class="section-count">12</div>
-  </div>
-
-  <div class="blog-grid reveal">
-    <a class="blog-card" href="https://medium.com/@prakulhiremath" target="_blank" rel="noopener">
-      <div class="blog-source">Medium · Technical Deep-Dive</div>
-      <div class="blog-title">Research-Focused Writing on AI, ML &amp; Space Science</div>
-      <div class="blog-desc">In-depth articles on machine learning, reinforcement learning, astrophysics data, and the intersection of AI with scientific discovery.</div>
-      <div class="blog-arrow">Read on Medium →</div>
-    </a>
-    <a class="blog-card" href="https://substack.com/@prakulhiremath" target="_blank" rel="noopener">
-      <div class="blog-source">Substack · Newsletter</div>
-      <div class="blog-title">Ideas, Opinions &amp; Research Notes</div>
-      <div class="blog-desc">Long-form essays and research notes spanning AI policy, emerging tech, and the future of scientific computing.</div>
-      <div class="blog-arrow">Read on Substack →</div>
-    </a>
-    <a class="blog-card" href="https://scholar.google.com/citations?user=ERbZUdoAAAAJ" target="_blank" rel="noopener">
-      <div class="blog-source">Academic Writing</div>
-      <div class="blog-title">Published Papers &amp; Conference Proceedings</div>
-      <div class="blog-desc">Peer-reviewed work on RLHF, anomaly detection in AstroSat data, NLP for code-mixed text, and more — all indexed on Google Scholar and ACL Anthology.</div>
-      <div class="blog-arrow">View Scholar Profile →</div>
-    </a>
-  </div>
-</section>
-
-<div class="hr"></div>
-
-<!-- ─── CONTACT ────────────────────────────────────────────── -->
-<section id="contact" class="section section--dark">
-  <div class="section-header reveal">
-    <div class="section-left">
-      <div class="section-eyebrow">Get In Touch</div>
-      <h2 class="section-title">Let's<br><em>Connect</em></h2>
-    </div>
-    <div class="section-count">13</div>
-  </div>
-
-  <div class="contact-grid reveal">
+  <div class="hero-top">
     <div>
-      <p style="color:var(--muted);font-size:13px;line-height:2;max-width:420px">
-        Open to research collaborations, speaking invitations, conference discussions,
-        and interesting ideas. Reach out through any of the channels below.
-      </p>
-      <div class="contact-links">
-        <a class="contact-row" href="mailto:prakulhiremath03@gmail.com">
-          <span class="contact-row-label">Personal Email</span>
-          <span class="contact-row-val">prakulhiremath03@gmail.com</span>
-          <span class="contact-row-arr">→</span>
-        </a>
-        <a class="contact-row" href="mailto:prakulhiremath@vtu.ac.in">
-          <span class="contact-row-label">Academic Email</span>
-          <span class="contact-row-val">prakulhiremath@vtu.ac.in</span>
-          <span class="contact-row-arr">→</span>
-        </a>
-        <a class="contact-row" href="https://linkedin.com/in/prakulhiremath" target="_blank" rel="noopener">
-          <span class="contact-row-label">LinkedIn</span>
-          <span class="contact-row-val">in/prakulhiremath</span>
-          <span class="contact-row-arr">→</span>
-        </a>
-        <a class="contact-row" href="https://github.com/prakulhiremath" target="_blank" rel="noopener">
-          <span class="contact-row-label">GitHub</span>
-          <span class="contact-row-val">github.com/prakulhiremath</span>
-          <span class="contact-row-arr">→</span>
-        </a>
-        <a class="contact-row" href="https://twitter.com/PrakulHiremath" target="_blank" rel="noopener">
-          <span class="contact-row-label">Twitter / X</span>
-          <span class="contact-row-val">@PrakulHiremath</span>
-          <span class="contact-row-arr">→</span>
-        </a>
+      <div class="hero-eye">
+        <div class="hero-eye-dot"></div>
+        AI / ML Researcher · VTU Belagavi · 2023–2027
+      </div>
+      <h1 class="hero-h1">
+        <span class="l1">Prakul</span>
+        <span class="l2">Sunil</span>
+        <span class="l3">Hiremath</span>
+      </h1>
+      <p class="hero-sub">Building deep learning models and data pipelines for anomaly detection, time-series analysis, and scientific research. Founder of <strong style="color:var(--ink)">Aliens on Earth (AoE)</strong>.</p>
+      <div class="hero-acts">
+        <a class="btn btn-dark" href="#research">View Research</a>
+        <a class="btn btn-light" href="#contact">Get in Touch</a>
+        <a class="btn btn-light" href="https://medium.com/@prakulhiremath" target="_blank">Medium ↗</a>
       </div>
     </div>
 
+    <!-- right panel -->
+    <div class="hero-panel">
+      <div class="hstat">
+        <div class="hstat-n" style="color:var(--c1)">3</div>
+        <div class="hstat-l">ICML 2026 Submissions</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n" style="color:var(--c2)">₹18L</div>
+        <div class="hstat-l">Research Grants</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n" style="color:var(--c3)">8+</div>
+        <div class="hstat-l">Conferences &amp; Posters</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n" style="color:var(--c5)">5</div>
+        <div class="hstat-l">Published Patents</div>
+      </div>
+      <div class="hstat" style="border-bottom:none">
+        <div class="hstat-n" style="color:var(--c4)">4</div>
+        <div class="hstat-l">SSB Interviews</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- bottom stats band -->
+  <div class="hero-band">
+    <div class="hb-cell">
+      <div class="hb-n" style="color:var(--c1)">7.91</div>
+      <div class="hb-l">CGPA / 10.0</div>
+    </div>
+    <div class="hb-cell">
+      <div class="hb-n" style="color:var(--c2)">12+</div>
+      <div class="hb-l">Papers &amp; Manuscripts</div>
+    </div>
+    <div class="hb-cell">
+      <div class="hb-n" style="color:var(--c3)">4</div>
+      <div class="hb-l">Languages Spoken</div>
+    </div>
+    <div class="hb-cell" style="border-right:none">
+      <div class="hb-n" style="color:var(--c7)">∞</div>
+      <div class="hb-l">Research Curiosity</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COLOR BAND ─────────────────────────────────────── -->
+<div class="cband" style="border-color:var(--c2);color:var(--c2)">
+  <div class="cband-l">About &amp; Background</div>
+  <div class="cband-r">§ 01</div>
+</div>
+
+<!-- ── ABOUT ──────────────────────────────────────────── -->
+<section id="about" class="section s-off">
+  <div class="s-eye" style="color:var(--c2)">Profile</div>
+  <h2 class="s-title">Who I<br><em>Am</em></h2>
+  <div class="about-grid rv">
     <div>
-      <div class="section-eyebrow" style="margin-bottom:24px">Send a Message</div>
-      <form class="contact-form" action="https://formspree.io/f/xaqpbwry" method="POST">
-        <input class="cf-input"    type="text"  name="name"    placeholder="Your name"       required>
-        <input class="cf-input"    type="email" name="email"   placeholder="Your email"      required>
-        <input class="cf-input"    type="text"  name="subject" placeholder="Subject">
-        <textarea class="cf-textarea" name="message" rows="6"  placeholder="Your message…"   required></textarea>
-        <button class="btn btn-gold" type="submit" style="align-self:flex-start;margin-top:4px">
-          Send Message →
-        </button>
+      <p class="abt-p">Computer Science &amp; Engineering undergraduate at <strong>Visvesvaraya Technological University, Belagavi</strong> — building at the intersection of machine learning, signal processing, and real scientific data.</p>
+      <p class="abt-p">My work spans deep learning for <strong>high-energy astrophysics</strong>, RLHF safety, reinforcement learning policy optimization, and AI-driven environmental modeling. I've secured <strong>₹18L+ in research grants</strong> and presented at international conferences across India and the Middle East.</p>
+      <p class="abt-p">Beyond the lab — state-level debater, football player, founder of the research collective <strong>Aliens on Earth (AoE)</strong>, and sponsored delegate at the Linux Foundation's Open Source Summit 2025.</p>
+      <p class="abt-p" style="color:var(--mid)">CGPA: <strong style="color:var(--ink)">7.91 / 10.0</strong> &nbsp;·&nbsp; Kannada · English · Hindi · Marathi</p>
+      <div class="abt-tags">
+        <span class="abt-tag">VTU Belagavi</span>
+        <span class="abt-tag">AI Safety</span>
+        <span class="abt-tag">Astrophysics</span>
+        <span class="abt-tag">RLHF</span>
+        <span class="abt-tag">Open Source</span>
+        <span class="abt-tag">Green Tech</span>
+        <span class="abt-tag">AI4Good</span>
+      </div>
+    </div>
+    <div class="kpi-grid rv rv-d1">
+      <div class="kpi"><div class="kpi-n" style="color:var(--c1)">3</div><div class="kpi-l">ICML 2026 Submissions</div></div>
+      <div class="kpi"><div class="kpi-n" style="color:var(--c2)">₹18L</div><div class="kpi-l">Research Grants</div></div>
+      <div class="kpi"><div class="kpi-n" style="color:var(--c3)">8+</div><div class="kpi-l">Conferences &amp; Posters</div></div>
+      <div class="kpi"><div class="kpi-n" style="color:var(--c5)">5</div><div class="kpi-l">Published Patents</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COLOR BAND ─────────────────────────────────────── -->
+<div class="cband" style="border-color:var(--c8);color:var(--c8)">
+  <div class="cband-l">Technical Arsenal</div>
+  <div class="cband-r">§ 02</div>
+</div>
+
+<!-- ── SKILLS ─────────────────────────────────────────── -->
+<section id="skills" class="section s-white">
+  <div class="s-eye" style="color:var(--c8)">Skills &amp; Tools</div>
+  <h2 class="s-title"><span class="out">Tech</span><br>Stack</h2>
+  <div class="sk-grid rv">
+    <div class="sk-block">
+      <div class="sk-head">Languages &amp; Frameworks</div>
+      <div class="sk-tags">
+        <span class="sk-tag">Python</span><span class="sk-tag">C/C++</span><span class="sk-tag">MATLAB</span>
+        <span class="sk-tag">PyTorch</span><span class="sk-tag">TensorFlow</span>
+        <span class="sk-tag">Scikit-Learn</span><span class="sk-tag">OpenCV</span><span class="sk-tag">NumPy</span>
+      </div>
+    </div>
+    <div class="sk-block">
+      <div class="sk-head">ML Architectures</div>
+      <div class="sk-tags">
+        <span class="sk-tag">RLHF</span><span class="sk-tag">RAPO / PPO</span><span class="sk-tag">TCN</span>
+        <span class="sk-tag">VAE</span><span class="sk-tag">Bayesian Time-Series</span>
+        <span class="sk-tag">Multi-Modal AI</span><span class="sk-tag">Self-Supervised</span>
+      </div>
+    </div>
+    <div class="sk-block">
+      <div class="sk-head">Research Stack</div>
+      <div class="sk-tags">
+        <span class="sk-tag">Astropy</span><span class="sk-tag">HEASoft</span><span class="sk-tag">FITS</span>
+        <span class="sk-tag">Linux/Ubuntu</span><span class="sk-tag">Git</span>
+        <span class="sk-tag">LaTeX</span><span class="sk-tag">Uncertainty Quantification</span>
+      </div>
+    </div>
+    <div class="sk-block">
+      <div class="sk-head">Applied Domains</div>
+      <div class="sk-tags">
+        <span class="sk-tag">High-Energy Astrophysics</span>
+        <span class="sk-tag">Environmental Modeling</span>
+        <span class="sk-tag">AI Safety</span><span class="sk-tag">Model Alignment</span>
+        <span class="sk-tag">Bioaerosols</span>
+      </div>
+    </div>
+    <div class="sk-block">
+      <div class="sk-head">Leadership</div>
+      <div class="sk-tags">
+        <span class="sk-tag">Public Speaking</span><span class="sk-tag">Research Coordination</span>
+        <span class="sk-tag">Design Thinking</span><span class="sk-tag">Entrepreneurship</span>
+        <span class="sk-tag">Grant Writing</span>
+      </div>
+    </div>
+    <div class="sk-block">
+      <div class="sk-head">Profiles</div>
+      <div class="sk-tags">
+        <a class="sk-tag" href="https://github.com/prakulhiremath" target="_blank">GitHub</a>
+        <a class="sk-tag" href="https://scholar.google.com/citations?user=ERbZUdoAAAAJ" target="_blank">Google Scholar</a>
+        <a class="sk-tag" href="https://orcid.org/0009-0007-9744-3519" target="_blank">ORCID</a>
+        <a class="sk-tag" href="https://aclanthology.org/people/prakul-hiremath/" target="_blank">ACL Anthology</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COLOR BAND ─────────────────────────────────────── -->
+<div class="cband" style="border-color:var(--c2);color:var(--c2)">
+  <div class="cband-l">Publications &amp; Manuscripts</div>
+  <div class="cband-r">§ 03</div>
+</div>
+
+<!-- ── RESEARCH ───────────────────────────────────────── -->
+<section id="research" class="section s-off">
+  <div class="s-eye" style="color:var(--c2)">Research</div>
+  <h2 class="s-title">Published<br><em>Work</em></h2>
+  <div class="pub-list rv">
+    <div class="pub blue">
+      <div class="pub-yr">2024</div>
+      <div>
+        <div class="pub-t">Shared Feature-Based Multitask Model for Faux-Hate Classification in Code-Mixed Text</div>
+        <div class="pub-v">ICON 2024 · AU-KBC Research Centre, Chennai · NLP Association of India</div>
+      </div>
+      <span class="badge badge-live">Published</span>
+    </div>
+    <div class="pub blue">
+      <div class="pub-yr">2026</div>
+      <div>
+        <div class="pub-t">A Comprehensive Survey on Financial Health and Credit Card Management Practices in India</div>
+        <div class="pub-v">Kaleidoscope Journal of Management Research · ISSN 3107-4677 · DOI: 10.62801/jkjmr2.12</div>
+      </div>
+      <span class="badge badge-live">Published</span>
+    </div>
+    <div class="pub blue">
+      <div class="pub-yr">2026</div>
+      <div>
+        <div class="pub-t">AI-Driven, Uncertainty-Aware Anomaly Detection in Multi-wavelength AstroSat Observations</div>
+        <div class="pub-v">AstroSat 2026 · Hyatt Centric Bengaluru · Official Conference Proceedings</div>
+      </div>
+      <span class="badge badge-live">Published</span>
+    </div>
+    <div class="pub blue">
+      <div class="pub-yr">2026</div>
+      <div>
+        <div class="pub-t">ECG-TransNet: A Multi-Dataset CNN–Transformer Framework for Robust and Explainable Arrhythmia Detection</div>
+        <div class="pub-v">Computers in Biology and Medicine (Elsevier) · Manuscript ID: CIBM-D-26-01216</div>
+      </div>
+      <span class="badge badge-review">Under Review</span>
+    </div>
+    <div class="pub blue">
+      <div class="pub-yr">2026</div>
+      <div>
+        <div class="pub-t">GIRL: Generative Imagination Reinforcement Learning via Information-Theoretic Hallucination Control</div>
+        <div class="pub-v">ICML 2026 (43rd International Conference on Machine Learning)</div>
+      </div>
+      <span class="badge badge-review">Under Review</span>
+    </div>
+    <div class="pub blue">
+      <div class="pub-yr">2026</div>
+      <div>
+        <div class="pub-t">Regret-Aware Policy Optimization (RAPO): Environment-Level Memory for Replay Suppression under Delayed Harm</div>
+        <div class="pub-v">ICML 2026</div>
+      </div>
+      <span class="badge badge-review">Under Review</span>
+    </div>
+    <div class="pub blue">
+      <div class="pub-yr">2026</div>
+      <div>
+        <div class="pub-t">When Offline Metrics Lie: The Dynamics of Silent Failure in Deployed Recommendation Systems</div>
+        <div class="pub-v">KDD 2026 Research Track</div>
+      </div>
+      <span class="badge badge-review">Under Review</span>
+    </div>
+    <div class="pub blue">
+      <div class="pub-yr">2026</div>
+      <div>
+        <div class="pub-t">On the Fundamental Incompatibility Between Language Model Inductive Biases and Structured Data Learning</div>
+        <div class="pub-v">KDD 2026 Research Track</div>
+      </div>
+      <span class="badge badge-review">Under Review</span>
+    </div>
+    <div class="pub blue">
+      <div class="pub-yr">2026</div>
+      <div>
+        <div class="pub-t">BIOLOOP: Bio-Conformal Multimodal Learning for Reliability-Guaranteed Safe Control of Algal Hydrogen Reactors</div>
+        <div class="pub-v">KDD 2026 AI4Science Track</div>
+      </div>
+      <span class="badge badge-review">Under Review</span>
+    </div>
+    <div class="pub blue">
+      <div class="pub-yr">2026</div>
+      <div>
+        <div class="pub-t">The Mirage of Efficiency: Latency-Conditioned Selection Bias in Asynchronous Partial Rollouts for RLHF</div>
+        <div class="pub-v">ICML 2026 Position Paper Track</div>
+      </div>
+      <span class="badge badge-review">Under Review</span>
+    </div>
+    <div class="pub blue">
+      <div class="pub-yr">2026</div>
+      <div>
+        <div class="pub-t">Policy Decoupling in Long-Context LLMs: Measuring Alignment Half-Life and Drift Robustness</div>
+        <div class="pub-v">ICML 2026 Position Paper Track</div>
+      </div>
+      <span class="badge badge-review">Under Review</span>
+    </div>
+    <div class="pub blue">
+      <div class="pub-yr">2026</div>
+      <div>
+        <div class="pub-t">The Context Wall: Why Transformer Systems Break Down Under Latency, Cost, and Truncation Pressure</div>
+        <div class="pub-v">ICML 2026 Position Paper Track</div>
+      </div>
+      <span class="badge badge-review">Under Review</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── COLOR BAND ─────────────────────────────────────── -->
+<div class="cband" style="border-color:var(--c5);color:var(--c5)">
+  <div class="cband-l">Intellectual Property</div>
+  <div class="cband-r">§ 04</div>
+</div>
+
+<!-- ── PATENTS ────────────────────────────────────────── -->
+<section id="patents" class="section s-white">
+  <div class="s-eye" style="color:var(--c5)">Patents</div>
+  <h2 class="s-title">Filed<br><span class="out">Patents</span></h2>
+  <div class="pub-list rv">
+    <div class="pub violet">
+      <div class="pub-yr">2025</div>
+      <div>
+        <div class="pub-t">Integrating Neuromorphic Computing and Reinforcement Learning in Hybrid AI for Autonomous Systems</div>
+        <div class="pub-v">Indian Patent · Application No. 202541014688</div>
+      </div>
+      <span class="badge badge-live">Published</span>
+    </div>
+    <div class="pub violet">
+      <div class="pub-yr">2025</div>
+      <div>
+        <div class="pub-t">Innovative CO₂ Emission Filters for Vehicles: Net-Zero Carbon Solutions with Advanced Adsorption and Smart Monitoring</div>
+        <div class="pub-v">Indian Patent · Application No. 202541014687</div>
+      </div>
+      <span class="badge badge-live">Published</span>
+    </div>
+    <div class="pub violet">
+      <div class="pub-yr">2025</div>
+      <div>
+        <div class="pub-t">Dynamic Adjustable Sleeve D&amp;M for Enhanced Universal CO₂ Emission Filters</div>
+        <div class="pub-v">Indian Patent · Application No. 202541014690</div>
+      </div>
+      <span class="badge badge-live">Published</span>
+    </div>
+    <div class="pub violet">
+      <div class="pub-yr">2025</div>
+      <div>
+        <div class="pub-t">Hyper-Adaptive Manufacturing Using Multi-Agent AI for Autonomous Production Optimization</div>
+        <div class="pub-v">Indian Patent · Application No. 202541014689</div>
+      </div>
+      <span class="badge badge-live">Published</span>
+    </div>
+    <div class="pub violet">
+      <div class="pub-yr">2025</div>
+      <div>
+        <div class="pub-t">EMEFF: An Explainable Multimodal Economic Forecasting Framework for Real-Time, Transparent, and Adaptive Predictions</div>
+        <div class="pub-v">Indian Patent · Application No. 202541032942</div>
+      </div>
+      <span class="badge badge-live">Published</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── COLOR BAND ─────────────────────────────────────── -->
+<div class="cband" style="border-color:var(--c3);color:var(--c3)">
+  <div class="cband-l">Poster Sessions</div>
+  <div class="cband-r">§ 05</div>
+</div>
+
+<!-- ── POSTERS ────────────────────────────────────────── -->
+<section id="posters" class="section s-off">
+  <div class="s-eye" style="color:var(--c3)">Posters</div>
+  <h2 class="s-title">Research<br><em>Posters</em></h2>
+  <div class="pub-list rv">
+    <div class="pub green">
+      <div class="pub-yr">2025</div>
+      <div>
+        <div class="pub-t">Real-Time Monitoring of Bioaerosol Emissions in Algae-Based Hydrogen Reactors Using Low-Cost Sensors and AI</div>
+        <div class="pub-v">Asian Aerosol Conference (AAC 2025) · Mumbai</div>
+      </div>
+      <span class="badge badge-live">Presented</span>
+    </div>
+    <div class="pub green">
+      <div class="pub-yr">2025</div>
+      <div>
+        <div class="pub-t">Monogamy-Driven Adaptive Quantum Secure Communication Framework</div>
+        <div class="pub-v">Quantum India Bengaluru (QIB 2025) · Hilton Manyata Tech Park</div>
+      </div>
+      <span class="badge badge-live">Presented</span>
+    </div>
+    <div class="pub green">
+      <div class="pub-yr">2025</div>
+      <div>
+        <div class="pub-t">Photonic AI: Ultra-Fast, Zero-Power Optical Neural Networks for Real-Time Computer Vision</div>
+        <div class="pub-v">CODE-AI 2025 · Manipal Academy of Higher Education</div>
+      </div>
+      <span class="badge badge-live">Presented</span>
+    </div>
+    <div class="pub green">
+      <div class="pub-yr">2024</div>
+      <div>
+        <div class="pub-t">Hybrid AI for Real-Time Autonomous Systems: The Intersection of Neuromorphic Computing and Reinforcement Learning</div>
+        <div class="pub-v">ResCon TechConnect · IIT Bombay</div>
+      </div>
+      <span class="badge badge-live">Presented</span>
+    </div>
+    <div class="pub green">
+      <div class="pub-yr">2025</div>
+      <div>
+        <div class="pub-t">Quantum Resource Optimization: Revolutionizing Data Processing in High-Energy Physics through Entanglement and Quantum Feedback</div>
+        <div class="pub-v">Quantum Resources Science Conference 2025</div>
+      </div>
+      <span class="badge badge-review">Accepted</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── COLOR BAND ─────────────────────────────────────── -->
+<div class="cband" style="border-color:var(--c1);color:var(--c1)">
+  <div class="cband-l">Selected Work</div>
+  <div class="cband-r">§ 06</div>
+</div>
+
+<!-- ── PROJECTS ───────────────────────────────────────── -->
+<section id="projects" class="section s-white">
+  <div class="s-eye" style="color:var(--c1)">Projects</div>
+  <h2 class="s-title">Featured<br><em>Projects</em></h2>
+  <div class="proj-grid rv">
+    <div class="proj proj-c1">
+      <div class="proj-num">01</div>
+      <div class="proj-t">Satellite Data Analysis for Transient Detection</div>
+      <p class="proj-d">Built a lightweight pipeline to analyze AstroSat SXT Level-2 light curve data. Developed an anomaly detection script to flag significant flux deviations and solar flare interference in X-ray time-series. Presented at ISRO's AstroSat 2026 conference.</p>
+      <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">Astropy</span><span class="proj-tag">FITS</span><span class="proj-tag">ISRO</span></div>
+    </div>
+    <div class="proj proj-c2">
+      <div class="proj-num">02</div>
+      <div class="proj-t">Regret-Aware Policy Optimization (RAPO)</div>
+      <p class="proj-d">Architected a novel RL framework solving the credit assignment problem in environments with large temporal gaps. Implemented environment-level memory modules to suppress harmful trajectory replays in RLHF pipelines.</p>
+      <div class="proj-tags"><span class="proj-tag">PyTorch</span><span class="proj-tag">RL</span><span class="proj-tag">RLHF</span><span class="proj-tag">ICML 2026</span></div>
+    </div>
+    <div class="proj proj-c3">
+      <div class="proj-num">03</div>
+      <div class="proj-t">EcoWave — AI Traffic Management System</div>
+      <p class="proj-d">AI-driven traffic management system formally appreciated by DCP N. Niranjan Raj Urs, Belagavi City. Utilized computer vision, facial recognition, and V2X communication to reduce urban congestion and air pollution.</p>
+      <div class="proj-tags"><span class="proj-tag">Computer Vision</span><span class="proj-tag">OpenCV</span><span class="proj-tag">V2X</span></div>
+    </div>
+    <div class="proj proj-c4">
+      <div class="proj-num">04</div>
+      <div class="proj-t">BIOLOOP &amp; URJAWAVE (NAIN 2.0)</div>
+      <p class="proj-d">Dual-project initiative backed by a ₹3L government grant from NAIN 2.0 (Govt. of Karnataka), hosted at IIIT Dharwad. Carbon capture (BIOLOOP) and clean energy (URJAWAVE) using AI-integrated approaches.</p>
+      <div class="proj-tags"><span class="proj-tag">AI4Good</span><span class="proj-tag">Green Tech</span><span class="proj-tag">Govt. of Karnataka</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COLOR BAND ─────────────────────────────────────── -->
+<div class="cband" style="border-color:var(--c4);color:var(--c4)">
+  <div class="cband-l">Funding</div>
+  <div class="cband-r">§ 07</div>
+</div>
+
+<!-- ── GRANTS ─────────────────────────────────────────── -->
+<section id="grants" class="section">
+  <div class="s-eye" style="color:rgba(255,255,255,.45)">Grants</div>
+  <h2 class="s-title">Notable<br><em>Grants</em></h2>
+  <div class="grants-row rv">
+    <div class="grant"><div class="grant-a" style="color:var(--c8)">₹15L</div><div class="grant-t">MSME Idea Hackathon 5.0</div><div class="grant-b">Ministry of MSME, Govt. of India · Green Hydrogen Production from Seawater integrating Nanocatalysts, Selective Membranes, and Concentrated Solar Power.</div></div>
+    <div class="grant"><div class="grant-a" style="color:var(--c3)">₹3L</div><div class="grant-t">NAIN 2.0 — New Age Innovation Network</div><div class="grant-b">Govt. of Karnataka · Host Institute: IIIT Dharwad · BIOLOOP (Carbon Capture) &amp; URJAWAVE (Clean Energy).</div></div>
+    <div class="grant"><div class="grant-a" style="color:var(--c6)">₹30K</div><div class="grant-t">KAHER VC Research Grant</div><div class="grant-b">Deep Learning for Multi-Modal AI-Assisted Diagnosis — integrating Histopathology WSIs and Clinical Oral Images for Indian patients.</div></div>
+  </div>
+</section>
+
+<!-- ── COLOR BAND ─────────────────────────────────────── -->
+<div class="cband" style="border-color:var(--c6);color:var(--c6)">
+  <div class="cband-l">Conference Appearances</div>
+  <div class="cband-r">§ 08</div>
+</div>
+
+<!-- ── CONFERENCES ────────────────────────────────────── -->
+<section id="conferences" class="section s-white">
+  <div class="s-eye" style="color:var(--c6)">Talks &amp; Posters</div>
+  <h2 class="s-title">Conference<br><span class="out">Appearances</span></h2>
+  <div class="conf-list rv">
+    <div class="conf"><div><div class="conf-venue">AstroSat 2026<br>Bengaluru</div><div class="conf-yr">Jan–Feb 2026</div></div><div><div class="conf-t">AI-Driven, Uncertainty-Aware Anomaly Detection in Multi-wavelength AstroSat Observations</div><div class="conf-s">Hyatt Centric Hebbal · ISRO / URSC · Published Proceedings p.146</div></div></div>
+    <div class="conf"><div><div class="conf-venue">AAC 2025<br>Mumbai</div><div class="conf-yr">Dec 2025</div></div><div><div class="conf-t">Real-Time Monitoring of Bioaerosol Emissions in Algae-Based Hydrogen Reactors Using Low-Cost Sensors and AI</div><div class="conf-s">14th Asian Aerosol Conference · Vikhroli</div></div></div>
+    <div class="conf"><div><div class="conf-venue">QIB 2025<br>Bengaluru</div><div class="conf-yr">Jul–Aug 2025</div></div><div><div class="conf-t">Monogamy-Driven Adaptive Quantum Secure Communication Framework</div><div class="conf-s">Quantum India Bengaluru · Hotel Hilton, Manyata Tech Park</div></div></div>
+    <div class="conf"><div><div class="conf-venue">CODE-AI 2025<br>MAHE Dubai</div><div class="conf-yr">Apr 2025</div></div><div><div class="conf-t">Photonic AI: Ultra-Fast, Zero-Power Optical Neural Networks for Real-Time Computer Vision</div><div class="conf-s">2nd International Conference on Data Science &amp; Exploration in AI</div></div></div>
+    <div class="conf"><div><div class="conf-venue">VTU Climate<br>Conf. 2025</div><div class="conf-yr">Feb 2025</div></div><div><div class="conf-t">Integration of AI in Environmental Modelling for Sustainable Ecosystems <span class="award-pill">🏆 Best Paper</span></div><div class="conf-s">VTU Belagavi International Conference on Climate Change</div></div></div>
+    <div class="conf"><div><div class="conf-venue">IIT Bombay<br>TechConnect '24</div><div class="conf-yr">Dec 2024</div></div><div><div class="conf-t">Hybrid AI for Real-Time Autonomous Systems: Neuromorphic Computing and Reinforcement Learning</div><div class="conf-s">ResCon: Soch Vichar Achar</div></div></div>
+  </div>
+</section>
+
+<!-- ── SUMMITS ─────────────────────────────────────────── -->
+<section id="summits" class="section s-off">
+  <div class="s-eye" style="color:var(--c4)">Industry &amp; Policy</div>
+  <h2 class="s-title">Summit<br><em>Participation</em></h2>
+  <div class="conf-list rv">
+    <div class="conf" style="border-left-color:transparent" onmouseenter="this.style.borderLeftColor='var(--c4)'" onmouseleave="this.style.borderLeftColor='transparent'"><div><div class="conf-venue" style="color:var(--c4)">India AI Impact<br>Summit · Delhi</div><div class="conf-yr">Feb 2026</div></div><div><div class="conf-t">India AI Impact Summit 2026</div><div class="conf-s">National-level summit on AI policy, deployment, and ecosystem building</div></div></div>
+    <div class="conf" style="border-left-color:transparent" onmouseenter="this.style.borderLeftColor='var(--c4)'" onmouseleave="this.style.borderLeftColor='transparent'"><div><div class="conf-venue" style="color:var(--c4)">HDB Techceleration<br>Belagavi</div><div class="conf-yr">2025</div></div><div><div class="conf-t">HDB Techceleration 2025</div><div class="conf-s">Startup and innovation summit · Suvarna Vidhana Soudha</div></div></div>
+    <div class="conf" style="border-left-color:transparent" onmouseenter="this.style.borderLeftColor='var(--c4)'" onmouseleave="this.style.borderLeftColor='transparent'"><div><div class="conf-venue" style="color:var(--c4)">Rakuten AI-nization<br>Bengaluru</div><div class="conf-yr">2024</div></div><div><div class="conf-t">Rakuten AI-nization 2024</div><div class="conf-s">Industry event focused on applied AI systems and deployment at scale</div></div></div>
+  </div>
+</section>
+
+<!-- ── HOBBIES ─────────────────────────────────────────── -->
+<section id="hobbies" class="section s-white">
+  <div class="s-eye" style="color:var(--c7)">Beyond the Lab</div>
+  <h2 class="s-title">Life<br><em>Outside</em></h2>
+  <div class="hobs rv">
+    <div class="hob"><span class="hob-i">⚽</span><div class="hob-n">Football</div></div>
+    <div class="hob"><span class="hob-i">🏀</span><div class="hob-n">Basketball</div></div>
+    <div class="hob"><span class="hob-i">♟️</span><div class="hob-n">Chess</div></div>
+    <div class="hob"><span class="hob-i">🏓</span><div class="hob-n">Table Tennis</div></div>
+    <div class="hob"><span class="hob-i">🎙️</span><div class="hob-n">Debating</div></div>
+    <div class="hob"><span class="hob-i">✍️</span><div class="hob-n">Technical Writing</div></div>
+    <div class="hob"><span class="hob-i">🚀</span><div class="hob-n">Space Science</div></div>
+    <div class="hob"><span class="hob-i">🌍</span><div class="hob-n">Conferences &amp; Travel</div></div>
+  </div>
+</section>
+
+<!-- ── HIGHLIGHTS ─────────────────────────────────────── -->
+<section id="highlights" class="section s-off">
+  <div class="s-eye" style="color:var(--c1)">Moments</div>
+  <h2 class="s-title">Research<br><span class="out">Highlights</span></h2>
+  <div class="hi-grid rv">
+    <div class="hi"><img src="assets/highlight-poster.jpg" alt="AAC Poster Presentation" loading="lazy"><div class="hi-cap">AAC 2025 · Poster Presentation · Mumbai</div></div>
+    <div class="hi"><img src="assets/highlight-award.jpg" alt="Best Paper Award" loading="lazy"><div class="hi-cap">Best Paper Award · VTU Climate Conference</div></div>
+    <div class="hi"><img src="assets/highlight-vidhanasoudha.jpg" alt="Vidhana Soudha" loading="lazy"><div class="hi-cap">TECHCELERATION 2025 · Suvarna Vidhana Soudha, Belagavi</div></div>
+    <div class="hi"><img src="assets/highlight-iisc.jpg" alt="IISc Visit" loading="lazy"><div class="hi-cap">Academic Visit · IISc Bangalore</div></div>
+  </div>
+</section>
+
+<!-- ── COLOR BAND ─────────────────────────────────────── -->
+<div class="cband" style="border-color:var(--c7);color:var(--c7)">
+  <div class="cband-l">Writing</div>
+  <div class="cband-r">§ 09</div>
+</div>
+
+<!-- ── BLOG ───────────────────────────────────────────── -->
+<section id="blog" class="section s-white">
+  <div class="s-eye" style="color:var(--c7)">Writing</div>
+  <h2 class="s-title">From My<br><em>Desk</em></h2>
+  <div class="blog-grid rv">
+    <a class="blog" href="https://medium.com/@prakulhiremath" target="_blank" style="border-top-color:var(--c1)">
+      <div class="blog-s" style="color:var(--c1)">Medium · Technical Deep-Dive</div>
+      <div class="blog-t">Research-Focused Writing on AI, ML &amp; Space Science</div>
+      <div class="blog-d">In-depth articles on machine learning, reinforcement learning, astrophysics data, and the intersection of AI with scientific discovery.</div>
+      <div class="blog-a" style="color:var(--c1)">Read on Medium →</div>
+    </a>
+    <a class="blog" href="https://substack.com/@prakulhiremath" target="_blank" style="border-top-color:var(--c4)">
+      <div class="blog-s" style="color:var(--c4)">Substack · Newsletter</div>
+      <div class="blog-t">Ideas, Opinions &amp; Research Notes</div>
+      <div class="blog-d">Long-form essays and research notes spanning AI policy, emerging tech, and the future of scientific computing.</div>
+      <div class="blog-a" style="color:var(--c4)">Read on Substack →</div>
+    </a>
+    <a class="blog" href="https://scholar.google.com/citations?user=ERbZUdoAAAAJ" target="_blank" style="border-top-color:var(--c2)">
+      <div class="blog-s" style="color:var(--c2)">Academic Writing</div>
+      <div class="blog-t">Published Papers &amp; Conference Proceedings</div>
+      <div class="blog-d">Peer-reviewed work on RLHF, anomaly detection, NLP for code-mixed text — indexed on Google Scholar and ACL Anthology.</div>
+      <div class="blog-a" style="color:var(--c2)">View Scholar Profile →</div>
+    </a>
+  </div>
+</section>
+
+<!-- ── COLOR BAND ─────────────────────────────────────── -->
+<div class="cband" style="border-color:var(--ink);color:var(--ink)">
+  <div class="cband-l">Get In Touch</div>
+  <div class="cband-r">§ 10</div>
+</div>
+
+<!-- ── CONTACT ────────────────────────────────────────── -->
+<section id="contact" class="section s-off">
+  <div class="s-eye" style="color:var(--mid)">Contact</div>
+  <h2 class="s-title">Let's<br><em>Connect</em></h2>
+  <div class="contact-grid rv">
+    <div>
+      <p style="font-size:13px;color:#555;line-height:2;max-width:400px;margin-bottom:4px">Open to research collaborations, speaking invitations, conference discussions, and interesting ideas.</p>
+      <div class="clinks">
+        <a class="clink" href="mailto:prakulhiremath03@gmail.com"><span class="clink-l">Personal Email</span><span class="clink-v">prakulhiremath03@gmail.com</span><span class="clink-a">→</span></a>
+        <a class="clink" href="mailto:prakulhiremath@vtu.ac.in"><span class="clink-l">Academic Email</span><span class="clink-v">prakulhiremath@vtu.ac.in</span><span class="clink-a">→</span></a>
+        <a class="clink" href="https://linkedin.com/in/prakulhiremath" target="_blank"><span class="clink-l">LinkedIn</span><span class="clink-v">in/prakulhiremath</span><span class="clink-a">→</span></a>
+        <a class="clink" href="https://github.com/prakulhiremath" target="_blank"><span class="clink-l">GitHub</span><span class="clink-v">github.com/prakulhiremath</span><span class="clink-a">→</span></a>
+        <a class="clink" href="https://twitter.com/PrakulHiremath" target="_blank"><span class="clink-l">Twitter / X</span><span class="clink-v">@PrakulHiremath</span><span class="clink-a">→</span></a>
+      </div>
+    </div>
+    <div>
+      <div class="s-eye" style="color:var(--mid);margin-bottom:20px">Send a Message</div>
+      <form class="cf" action="https://formspree.io/f/xaqpbwry" method="POST">
+        <input type="text"  name="name"    placeholder="Your name"    required>
+        <input type="email" name="email"   placeholder="Your email"   required>
+        <input type="text"  name="subject" placeholder="Subject">
+        <textarea name="message" rows="6"  placeholder="Your message…" required></textarea>
+        <button class="btn btn-dark" type="submit" style="align-self:flex-start;margin-top:4px;cursor:none">Send Message →</button>
       </form>
     </div>
   </div>
 </section>
 
-<!-- ─── FOOTER ─────────────────────────────────────────────── -->
+<!-- ── FOOTER ─────────────────────────────────────────── -->
 <footer>
-  <div class="footer-copy">© 2026 Prakul Sunil Hiremath · All rights reserved</div>
-  <div class="footer-sig">Aliens on Earth (AoE) · AI4Good</div>
+  <div class="foot-l">© 2026 Prakul Sunil Hiremath · All rights reserved</div>
+  <div class="foot-r">Aliens on Earth (AoE) · AI4Good</div>
 </footer>
 
-<script src="main.js"></script>
+<script>
+/* ── CURSOR ───────────────────────────────────────────── */
+const cur = document.getElementById('cur');
+let mx = 0, my = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cur.style.left = mx + 'px';
+  cur.style.top  = my + 'px';
+});
+const colors = ['--c1','--c2','--c3','--c4','--c5','--c6','--c7','--c8'];
+document.querySelectorAll('a, button, .hob, .kpi, .stat-cell, .hstat').forEach((el, i) => {
+  el.addEventListener('mouseenter', () => {
+    cur.classList.add('large');
+    cur.style.background = `var(${colors[i % colors.length]})`;
+  });
+  el.addEventListener('mouseleave', () => {
+    cur.classList.remove('large');
+    cur.style.background = 'var(--c1)';
+  });
+});
+
+/* ── SCROLL REVEALS ───────────────────────────────────── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+  });
+}, { threshold: .08 });
+document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+/* ── COUNT-UP ─────────────────────────────────────────── */
+const countObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const raw = el.dataset.count;
+    if (!raw) return;
+    const num = parseFloat(raw);
+    const dur = 1200; const step = 16;
+    const inc = num / (dur / step);
+    let cur = 0;
+    const t = setInterval(() => {
+      cur = Math.min(cur + inc, num);
+      el.textContent = Number.isInteger(num) ? Math.round(cur) : cur.toFixed(1);
+      if (cur >= num) clearInterval(t);
+    }, step);
+    countObs.unobserve(el);
+  });
+}, { threshold: .5 });
+document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
+
+/* ── NAV ANCHOR SMOOTH ────────────────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (!t) return;
+    e.preventDefault();
+    t.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
 </body>
 </html>
