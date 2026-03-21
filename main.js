@@ -1,177 +1,302 @@
-/* =========================================================
-   PRAKUL SUNIL HIREMATH — main.js
-   ========================================================= */
+/* ═══════════════════════════════════════════════
+   SIGNAL — main.js
+   Prakul Sunil Hiremath
+═══════════════════════════════════════════════ */
 
-/* ── CURSOR ─────────────────────────────────────────────── */
-const dot  = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
-const lbl  = document.getElementById('cursor-label');
+/* ── CURSOR + TRAIL ──────────────────────────── */
+const cur = document.getElementById('cur');
+const trailCanvas = document.getElementById('trail');
+const tctx = trailCanvas.getContext('2d');
+let mx = 0, my = 0;
+let dots = [];
 
-let mx = 0, my = 0, rx = 0, ry = 0;
+const resizeTrail = () => {
+  trailCanvas.width = window.innerWidth;
+  trailCanvas.height = window.innerHeight;
+};
+resizeTrail();
+window.addEventListener('resize', resizeTrail);
 
 document.addEventListener('mousemove', e => {
   mx = e.clientX; my = e.clientY;
-  dot.style.left  = mx + 'px';
-  dot.style.top   = my + 'px';
-  lbl.style.left  = mx + 'px';
-  lbl.style.top   = my + 'px';
+  cur.style.left = mx + 'px';
+  cur.style.top  = my + 'px';
+  dots.push({ x: mx, y: my, r: 2.5, a: 0.35, born: Date.now() });
+  if (dots.length > 14) dots.shift();
 });
 
-const lerpCursor = () => {
-  rx += (mx - rx) * .1;
-  ry += (my - ry) * .1;
-  ring.style.left = rx + 'px';
-  ring.style.top  = ry + 'px';
-  requestAnimationFrame(lerpCursor);
+const drawTrail = () => {
+  tctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+  const now = Date.now();
+  // get current ink color from CSS
+  const isDark = document.documentElement.classList.contains('dark');
+  const inkBase = isDark ? '240,237,232' : '12,12,12';
+  dots = dots.filter(d => now - d.born < 420);
+  dots.forEach((d, i) => {
+    const age = (now - d.born) / 420;
+    const a = (1 - age) * 0.22;
+    const r = d.r * (1 - age * 0.5);
+    tctx.beginPath();
+    tctx.arc(d.x, d.y, r, 0, Math.PI * 2);
+    tctx.fillStyle = `rgba(${inkBase},${a})`;
+    tctx.fill();
+  });
+  requestAnimationFrame(drawTrail);
 };
-lerpCursor();
+drawTrail();
 
-document.querySelectorAll('a, button, [data-cursor]').forEach(el => {
-  const label = el.dataset.cursor || '';
+// cursor color by domain
+const domainCursors = {
+  'space': 'c-space', 'mind': 'c-mind',
+  'earth': 'c-earth', 'signal': 'c-signal'
+};
+document.querySelectorAll('[data-domain]').forEach(el => {
   el.addEventListener('mouseenter', () => {
-    ring.classList.add('hover');
-    if (label) { lbl.textContent = label; lbl.classList.add('show'); }
+    const d = el.dataset.domain;
+    cur.className = domainCursors[d] || '';
+  });
+  el.addEventListener('mouseleave', () => { cur.className = ''; });
+});
+document.querySelectorAll('a,button,.pj,.sc,.pc,.pi,.ff').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    if (!el.dataset.domain) cur.classList.add('c-mind');
   });
   el.addEventListener('mouseleave', () => {
-    ring.classList.remove('hover');
-    lbl.classList.remove('show');
+    if (!el.dataset.domain) cur.classList.remove('c-mind');
   });
 });
 
-/* ── STARFIELD CANVAS ────────────────────────────────────── */
-const canvas = document.getElementById('starfield');
-const ctx    = canvas.getContext('2d');
-let stars    = [];
-let W, H;
+/* ── HERO SINE WAVE ──────────────────────────── */
+const letters = document.querySelectorAll('.hl');
+let flatlined = false;
+let flatlineTimer = null;
+const phases = Array.from(letters, (_, i) => (i / letters.length) * Math.PI * 2);
+const amplitudes = [18, 22, 16, 20, 14, 24];
+const freqs = [0.9, 1.1, 0.8, 1.0, 1.2, 0.95];
 
-const resize = () => {
-  W = canvas.width  = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-  stars = Array.from({ length: 180 }, () => ({
-    x: Math.random() * W,
-    y: Math.random() * H,
-    r: Math.random() * 1.2 + .2,
-    a: Math.random(),
-    speed: Math.random() * .3 + .05,
-    drift: (Math.random() - .5) * .1,
-  }));
+const animLetters = (t) => {
+  if (!flatlined) {
+    letters.forEach((l, i) => {
+      const y = Math.sin(t * freqs[i] * 0.0012 + phases[i]) * amplitudes[i];
+      l.style.transform = `translateY(${y}px)`;
+    });
+  }
+  requestAnimationFrame(animLetters);
 };
-resize();
-window.addEventListener('resize', resize);
+requestAnimationFrame(animLetters);
 
-const drawStars = () => {
-  ctx.clearRect(0, 0, W, H);
-  const scroll = window.scrollY * .02;
-  stars.forEach(s => {
-    s.y -= s.speed;
-    s.x += s.drift;
-    s.a = .3 + .7 * (Math.sin(Date.now() * .001 + s.r * 10) * .5 + .5);
-    if (s.y < -2) { s.y = H + 2; s.x = Math.random() * W; }
-    if (s.x < 0)  s.x = W;
-    if (s.x > W)  s.x = 0;
-    ctx.beginPath();
-    ctx.arc(s.x, s.y - scroll % H, s.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(201,169,110,${s.a * .5})`;
-    ctx.fill();
-  });
-  requestAnimationFrame(drawStars);
-};
-drawStars();
+// Flatline easter egg
+const heroLettersWrap = document.querySelector('.h-letters');
+const hline = document.querySelector('.h-line');
+const sigRestored = document.getElementById('sig-restored');
 
-/* ── NAV SCROLL ──────────────────────────────────────────── */
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  navbar.classList.toggle('solid', window.scrollY > 48);
+heroLettersWrap.addEventListener('click', () => {
+  if (flatlined) return;
+  flatlined = true;
+  letters.forEach(l => { l.style.transform = 'translateY(0px)'; });
+  hline.classList.add('flat');
+  sigRestored.style.opacity = '0';
+  setTimeout(() => {
+    sigRestored.style.opacity = '1';
+    sigRestored.style.transition = 'opacity .3s';
+  }, 500);
+  setTimeout(() => {
+    hline.classList.remove('flat');
+    sigRestored.style.opacity = '0';
+    setTimeout(() => { flatlined = false; }, 300);
+  }, 2000);
 });
 
-/* ── REVEAL ON SCROLL ────────────────────────────────────── */
-const revealEls = document.querySelectorAll('.reveal');
-const revObs = new IntersectionObserver(entries => {
+/* ── RIGHT NAV ───────────────────────────────── */
+const sections = document.querySelectorAll('section[id]');
+const rnavDots = document.querySelectorAll('.rd');
+
+const updateNav = () => {
+  let current = '';
+  sections.forEach(s => {
+    const rect = s.getBoundingClientRect();
+    if (rect.top <= window.innerHeight * 0.4) current = s.id;
+  });
+  rnavDots.forEach(d => {
+    d.classList.toggle('on', d.dataset.s === current || d.dataset.target === current);
+  });
+};
+window.addEventListener('scroll', updateNav, { passive: true });
+updateNav();
+
+rnavDots.forEach(d => {
+  d.addEventListener('click', () => {
+    const target = document.getElementById(d.dataset.target || d.dataset.s);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* ── THEME TOGGLE ────────────────────────────── */
+const tbtn = document.getElementById('tbtn');
+const sunIcon = document.getElementById('sun-icon');
+const moonIcon = document.getElementById('moon-icon');
+
+const applyTheme = (dark) => {
+  document.documentElement.classList.toggle('dark', dark);
+  sunIcon.style.display = dark ? 'block' : 'none';
+  moonIcon.style.display = dark ? 'none' : 'block';
+  localStorage.setItem('theme', dark ? 'dark' : 'light');
+};
+
+// On load
+const saved = localStorage.getItem('theme');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+applyTheme(saved === 'dark' || (!saved && prefersDark));
+
+tbtn.addEventListener('click', () => {
+  applyTheme(!document.documentElement.classList.contains('dark'));
+});
+
+/* ── FILMSTRIP ───────────────────────────────── */
+const fs = document.querySelector('.fs');
+const fsProg = document.querySelector('.fs-prog');
+const fsCtr = document.querySelector('.fs-cur');
+const fsTotalEl = document.querySelector('.fs-total');
+
+if (fs) {
+  let isDown = false, startX, scrollLeft;
+
+  const updateFilmProgress = () => {
+    const max = fs.scrollWidth - fs.clientWidth;
+    const pct = max > 0 ? (fs.scrollLeft / max) * 100 : 0;
+    if (fsProg) fsProg.style.width = pct + '%';
+    if (fsCtr) {
+      const frames = fs.querySelectorAll('.ff');
+      const frameW = frames[0]?.offsetWidth + 2 || 302;
+      const idx = Math.round(fs.scrollLeft / frameW) + 1;
+      fsCtr.textContent = String(Math.min(idx, frames.length)).padStart(2, '0');
+    }
+  };
+
+  fs.addEventListener('mousedown', e => {
+    isDown = true; fs.classList.add('drag');
+    startX = e.pageX - fs.offsetLeft;
+    scrollLeft = fs.scrollLeft;
+  });
+  window.addEventListener('mouseup', () => { isDown = false; fs.classList.remove('drag'); });
+  fs.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - fs.offsetLeft;
+    fs.scrollLeft = scrollLeft - (x - startX) * 1.4;
+    updateFilmProgress();
+  });
+  fs.addEventListener('scroll', updateFilmProgress, { passive: true });
+
+  // Touch support
+  let touchStartX = 0, touchScrollLeft = 0;
+  fs.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].pageX;
+    touchScrollLeft = fs.scrollLeft;
+  }, { passive: true });
+  fs.addEventListener('touchmove', e => {
+    const dx = touchStartX - e.touches[0].pageX;
+    fs.scrollLeft = touchScrollLeft + dx;
+    updateFilmProgress();
+  }, { passive: true });
+}
+
+/* ── PROJECT STRIPS ──────────────────────────── */
+document.querySelectorAll('.pj').forEach(strip => {
+  strip.addEventListener('click', () => {
+    const wasOpen = strip.classList.contains('open');
+    document.querySelectorAll('.pj.open').forEach(s => s.classList.remove('open'));
+    if (!wasOpen) strip.classList.add('open');
+  });
+});
+
+/* ── SCROLL REVEALS ──────────────────────────── */
+const rvObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       e.target.classList.add('in');
-      revObs.unobserve(e.target);
+      rvObs.unobserve(e.target);
     }
   });
-}, { threshold: .08 });
-revealEls.forEach(el => revObs.observe(el));
+}, { threshold: 0.07 });
+document.querySelectorAll('.rv').forEach(el => rvObs.observe(el));
 
-/* ── TYPEWRITER ──────────────────────────────────────────── */
-const lines = [
-  'AI / ML Researcher at VTU Belagavi',
-  'Deep Learning  ·  Astrophysics  ·  RLHF',
-  '3 ICML 2026 Submissions · ₹18L+ Grants',
-  'Founder, Aliens on Earth (AoE)',
-  'State-Level Debater · Open Source Summit',
-];
-let li = 0, ci = 0, deleting = false;
-const tw = document.getElementById('typewriter-text');
+/* ── COMMAND PALETTE ─────────────────────────── */
+const cmd = document.getElementById('cmd');
+const cmdIn = document.getElementById('cmd-in');
+const cmdItems = document.querySelectorAll('.ci');
+let selIdx = -1;
 
-const type = () => {
-  const current = lines[li];
-  if (!deleting) {
-    tw.textContent = current.slice(0, ++ci);
-    if (ci === current.length) {
-      deleting = true;
-      setTimeout(type, 2200);
-      return;
-    }
-    setTimeout(type, 42);
-  } else {
-    tw.textContent = current.slice(0, --ci);
-    if (ci === 0) {
-      deleting = false;
-      li = (li + 1) % lines.length;
-    }
-    setTimeout(type, 22);
-  }
+const openCmd = () => { cmd.classList.add('open'); cmdIn.focus(); cmdIn.value = ''; filterCmd(''); };
+const closeCmd = () => { cmd.classList.remove('open'); selIdx = -1; };
+
+const filterCmd = (q) => {
+  let vis = 0;
+  cmdItems.forEach(item => {
+    const match = item.dataset.target.toLowerCase().includes(q.toLowerCase()) || q === '';
+    item.style.display = match ? 'flex' : 'none';
+    if (match) vis++;
+  });
 };
-setTimeout(type, 1600);
 
-/* ── COUNT-UP NUMBERS ────────────────────────────────────── */
-const countEls = document.querySelectorAll('[data-count]');
-const countObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    const el  = e.target;
-    const end = el.dataset.count;
-    const num = parseFloat(end);
-    const isRupee = end.startsWith('₹');
-    const suffix  = end.replace(/[₹\d.]/g, '');
-    const prefix  = isRupee ? '₹' : '';
-    const dur = 1400;
-    const step = 16;
-    const inc  = num / (dur / step);
-    let cur = 0;
-    const timer = setInterval(() => {
-      cur = Math.min(cur + inc, num);
-      el.textContent = prefix + (Number.isInteger(num) ? Math.round(cur) : cur.toFixed(1)) + suffix;
-      if (cur >= num) clearInterval(timer);
-    }, step);
-    countObs.unobserve(el);
-  });
-}, { threshold: .5 });
-countEls.forEach(el => countObs.observe(el));
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+    e.preventDefault(); openCmd();
+  }
+  if (e.key === 'Escape') closeCmd();
+  if (cmd.classList.contains('open')) {
+    const visible = [...cmdItems].filter(i => i.style.display !== 'none');
+    if (e.key === 'ArrowDown') { selIdx = Math.min(selIdx + 1, visible.length - 1); }
+    if (e.key === 'ArrowUp')   { selIdx = Math.max(selIdx - 1, 0); }
+    visible.forEach((i, idx) => i.classList.toggle('sel', idx === selIdx));
+    if (e.key === 'Enter' && selIdx >= 0) {
+      const target = document.getElementById(visible[selIdx].dataset.target);
+      if (target) { target.scrollIntoView({ behavior: 'smooth' }); closeCmd(); }
+    }
+  }
+});
 
-/* ── MAGNETIC HERO NAME ──────────────────────────────────── */
-const heroName = document.getElementById('hero-name');
-if (heroName) {
-  document.addEventListener('mousemove', e => {
-    const rect = heroName.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top  + rect.height / 2;
-    const dx = (e.clientX - cx) / window.innerWidth;
-    const dy = (e.clientY - cy) / window.innerHeight;
-    heroName.style.transform = `translate(${dx * 12}px, ${dy * 6}px)`;
-  });
-}
+cmdIn.addEventListener('input', () => { filterCmd(cmdIn.value); selIdx = -1; });
+cmd.addEventListener('click', e => { if (e.target === cmd) closeCmd(); });
 
-/* ── SMOOTH SECTION FADE ON ANCHOR CLICK ────────────────── */
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (!target) return;
-    e.preventDefault();
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+cmdItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const target = document.getElementById(item.dataset.target);
+    if (target) { target.scrollIntoView({ behavior: 'smooth' }); closeCmd(); }
   });
 });
+
+/* ── CONTACT MODAL ───────────────────────────── */
+const modal = document.getElementById('modal');
+const mclose = document.getElementById('mclose');
+const openModal = () => modal.classList.add('open');
+const closeModal = () => modal.classList.remove('open');
+
+document.querySelectorAll('.open-modal').forEach(el => el.addEventListener('click', openModal));
+mclose.addEventListener('click', closeModal);
+modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ── SMOOTH ANCHOR SCROLL ────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (!t) return;
+    e.preventDefault();
+    t.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* ── LIVE CLOCK IN FOOTER ────────────────────── */
+const clockEl = document.getElementById('live-clock');
+if (clockEl) {
+  const tick = () => {
+    const now = new Date();
+    clockEl.textContent = now.toLocaleTimeString('en-IN', {
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+      timeZone: 'Asia/Kolkata'
+    }) + ' IST';
+  };
+  tick();
+  setInterval(tick, 1000);
+}
