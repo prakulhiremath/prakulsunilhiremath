@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prakul Sunil Hiremath | Epistemic Uncertainty &amp; Latent-State Systems</title>
+
+  <link rel="canonical" href="https://prakulhiremath.github.io/"/>
+
+  <meta name="description" content="Prakul Sunil Hiremath — Undergraduate Researcher at VTU Belagavi investigating the information-theoretic and geometric foundations of epistemic uncertainty, latent-state tracking, and failure diagnostics in intelligent systems."/>
+  <meta name="keywords" content="Epistemic Uncertainty, Information Geometry, Latent State Systems, Sequential Decision Making, World Models, AI Reliability, Uncertainty Quantification, Representation Learning, Switching State-Space Models, PyPI, Open Source Research"/>
+  <meta name="author" content="Prakul Sunil Hiremath"/>
+
+  <meta property="og:title" content="Prakul Sunil Hiremath | Epistemic Uncertainty &amp; Latent-State Systems"/>
+  <meta property="og:description" content="Investigating how uncertainty is represented, propagated, and lost in learned systems, and what structural failures emerge from that information loss."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://prakulhiremath.github.io/"/>
+  <meta property="og:image" content="https://prakulhiremath.github.io/assets/AOE.png"/>
+
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:site" content="@PrakulHiremath"/>
+  <meta name="twitter:title" content="Prakul Sunil Hiremath | Epistemic Uncertainty &amp; Latent-State Systems"/>
+  <meta name="twitter:description" content="Researching information-theoretic bounds and geometric diagnostics for uncertainty propagation and systemic failure in sequential models."/>
+  <meta name="twitter:image" content="https://prakulhiremath.github.io/assets/AOE.png"/>
+
+  <link rel="icon" type="image/png" href="assets/AOE.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+  
+<body>
+
+<!-- CURSOR -->
+<div id="cur"></div>
+<canvas id="trail"></canvas>
+
+<!-- RIGHT NAV -->
+<nav id="rnav">
+  <div class="rd on" data-target="hero"         data-s="hero"         title="Home"></div>
+  <div class="rd"    data-target="vision"       data-s="vision"       title="Vision"></div>
+  <div class="rd"    data-target="architecture" data-s="architecture" title="Architecture"></div>
+  <div class="rd"    data-target="research"     data-s="research"     title="Publications"></div>
+  <div class="rd"    data-target="software"     data-s="software"     title="Software"></div>
+  <div class="rd"    data-target="projects"     data-s="projects"     title="Projects"></div>
+  <div class="rd"    data-target="grants"       data-s="grants"       title="Grants"></div>
+  <div class="rd"    data-target="conferences"  data-s="conferences"  title="Talks"></div>
+  <div class="rd"    data-target="timeline"     data-s="timeline"     title="Timeline"></div>
+  <div class="rd"    data-target="writing"      data-s="writing"      title="Writing"></div>
+  <div class="rd"    data-target="contact"      data-s="contact"      title="Contact"></div>
+</nav>
+
+<!-- THEME TOGGLE -->
+<button id="tbtn" aria-label="Toggle theme">
+  <!-- Sun (shown in dark mode) -->
+  <svg id="sun-icon" style="display:none" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="4"/>
+    <line x1="12" y1="2"  x2="12" y2="5"/>
+    <line x1="12" y1="19" x2="12" y2="22"/>
+    <line x1="2"  y1="12" x2="5"  y2="12"/>
+    <line x1="19" y1="12" x2="22" y2="12"/>
+    <line x1="4.22" y1="4.22"  x2="6.34" y2="6.34"/>
+    <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
+    <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/>
+    <line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
+  </svg>
+  <!-- Moon (shown in light mode) -->
+  <svg id="moon-icon" viewBox="0 0 24 24">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+  </svg>
+</button>
+
+<!-- COMMAND PALETTE -->
+<div id="cmd">
+  <div id="cmd-box">
+    <input id="cmd-in"
+           placeholder="Search research, software, publications..."
+           autocomplete="off"
+           spellcheck="false"/>
+
+    <div class="ci" data-target="vision">
+      Research Vision
+      <span>Research identity &amp; focus</span>
+    </div>
+
+    <div class="ci" data-target="architecture">
+      Research Architecture
+      <span>Representation · Propagation · Failure</span>
+    </div>
+
+    <div class="ci" data-target="research">
+      Publications
+      <span>Papers, preprints &amp; submissions</span>
+    </div>
+
+    <div class="ci" data-target="software">
+      Research Software
+      <span>PyPI packages &amp; developer tools</span>
+    </div>
+
+    <div class="ci" data-target="projects">
+      Projects
+      <span>Systems, frameworks &amp; experiments</span>
+    </div>
+
+    <div class="ci" data-target="grants">
+      Grants &amp; Awards
+      <span>Funding, scholarships &amp; recognition</span>
+    </div>
+
+    <div class="ci" data-target="conferences">
+      Talks &amp; Conferences
+      <span>Presentations, workshops &amp; events</span>
+    </div>
+
+    <div class="ci" data-target="timeline">
+      Research Timeline
+      <span>Evolution of research interests</span>
+    </div>
+
+    <div class="ci" data-target="writing">
+      Writing
+      <span>Notes, essays &amp; reflections</span>
+    </div>
+
+    <div class="ci" data-target="contact">
+      Contact
+      <span>Links, profiles &amp; collaboration</span>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT MODAL -->
+<div id="modal">
+  <div id="mbox">
+    <button id="mclose">✕</button>
+    <div class="m-title">Send a Message</div>
+    <form class="mf" action="https://formspree.io/f/xaqpbwry" method="POST">
+      <input type="text"  name="name"    placeholder="Your name"    required>
+      <input type="email" name="email"   placeholder="Your email"   required>
+      <input type="text"  name="subject" placeholder="Subject">
+      <textarea name="message" rows="5"  placeholder="Your message…" required></textarea>
+      <button class="cb" type="submit" style="margin-top:4px">Send →</button>
+    </form>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="h-letters" title="Click me">
+    <span class="hl" data-domain="space">P</span>
+    <span class="hl" data-domain="mind">R</span>
+    <span class="hl" data-domain="earth">A</span>
+    <span class="hl" data-domain="signal">K</span>
+    <span class="hl" data-domain="space">U</span>
+    <span class="hl" data-domain="mind">L</span>
+  </div>
+  <div class="h-line"></div>
+  <div id="sig-restored">— Signal Restored —</div>
+  <div class="h-meta">
+    <span class="h-tag">AI / ML Researcher · VTU Belagavi · 2023–2027</span>
+    <span class="h-tag">23.2156° N &nbsp;75.1240° E</span>
+  </div>
+</section>
+
+<!-- stack wrapper -->
+<div class="stack-wrapper">
+
+<!-- ════════════════════════════════════════════
+     VISION
+════════════════════════════════════════════ -->
+<section id="vision" class="card c-mind">
+  <div class="sl">Research Vision</div>
+  <div class="ab-split rv">
+    <div>
+      <span class="ab-author">Prakul Sunil Hiremath · VTU Belagavi · CSE · 2023–present</span>
+      <div class="ab-text">
+        <h3 style="margin-bottom: 12px; font-weight: 600;">Core Research Identity</h3>
+        <p><strong>I study the representation, propagation, and failure modes of epistemic uncertainty in intelligent systems.</strong></p>
+        <br>
+        <p>My work develops information-theoretic and geometric frameworks for understanding how uncertainty is compressed, lost, and reconstructed in learned representations. I investigate what structural failures emerge when complex uncertainty is simplified into deterministic predictions.</p>
+        <br>
+        <h3 style="margin: 16px 0 12px 0; font-weight: 600;">Current Focus</h3>
+        <p><strong>Latent-state uncertainty in sequential systems:</strong> world models, state-space systems, retrieval architectures, and reliability diagnostics for learned representations.</p>
+        <br>
+        <p style="color:var(--ink-3);font-size:11px">Information Theory · Geometry · Sequential Systems · Uncertainty Quantification</p>
+      </div>
+    </div>
+    <div class="ab-div"></div>
+    <div>
+      <div class="g3 rv rv-1">
+        <div class="sc c-space" data-domain="space"><div class="sc-n">20+</div><div class="sc-l">Research<br>Manuscripts</div></div>
+        <div class="sc c-mind"  data-domain="mind"><div class="sc-n">7</div><div class="sc-l">PyPI<br>Packages</div></div>
+        <div class="sc c-earth" data-domain="earth"><div class="sc-n">8+</div><div class="sc-l">Confs &amp;<br>Posters</div></div>
+        <div class="sc c-signal" data-domain="signal"><div class="sc-n">5</div><div class="sc-l">Patents<br>Filed</div></div>
+        <div class="sc c-space"  data-domain="space"><div class="sc-n">18L+</div><div class="sc-l">Research<br>Grants ₹</div></div>
+        <div class="sc c-mind"   data-domain="mind"><div class="sc-n">7.91</div><div class="sc-l">CGPA<br>/10.0</div></div>
+        <div class="sc c-earth"  data-domain="earth"><div class="sc-n">4</div><div class="sc-l">SSB<br>Interviews</div></div>
+        <div class="sc c-signal" data-domain="signal"><div class="sc-n">4</div><div class="sc-l">Languages<br>Spoken</div></div>
+        <div class="sc c-space"  data-domain="space"><div class="sc-n">∞</div><div class="sc-l">Research<br>Curiosity</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     ARCHITECTURE
+════════════════════════════════════════════ -->
+<section id="architecture" class="card c-signal">
+  <div class="sl">Research Architecture</div>
+
+  <h2 class="st rv">
+    Information, Uncertainty<br>
+    &amp; Failure
+  </h2>
+
+  <div class="pt-lbl rv">
+    A formal research program centered on representation, propagation, and failure diagnostics in intelligent systems.
+  </div>
+
+  <div class="pt rv rv-1">
+    
+    <div class="pt-row">
+      <div class="pt-rlbl">North Star</div>
+      <div class="pc c-mind" data-domain="mind"><div class="pc-a">IT</div><div class="pc-n">Information Theory</div></div>
+      <div class="pc c-mind" data-domain="mind"><div class="pc-a">IG</div><div class="pc-n">Information Geometry</div></div>
+      <div class="pc c-mind" data-domain="mind"><div class="pc-a">EU</div><div class="pc-n">Epistemic Uncertainty</div></div>
+      <div class="pc c-mind" data-domain="mind"><div class="pc-a">LS</div><div class="pc-n">Latent States</div></div>
+    </div>
+    
+    <div class="pt-row">
+      <div class="pt-rlbl">Representation</div>
+      <div class="pc c-space" data-domain="space"><div class="pc-a">SC</div><div class="pc-n">Simplex Collapse</div></div>
+      <div class="pc c-space" data-domain="space"><div class="pc-a">MG</div><div class="pc-n">Measure Gap</div></div>
+      <div class="pc c-space" data-domain="space"><div class="pc-a">ICC</div><div class="pc-n">Identifiability</div></div>
+      <div class="pc c-space" data-domain="space"><div class="pc-a">AMB</div><div class="pc-n">AMBIVERT</div></div>
+    </div>
+    
+    <div class="pt-row">
+      <div class="pt-rlbl">Propagation</div>
+      <div class="pc c-signal" data-domain="signal"><div class="pc-a">AA</div><div class="pc-n">AAWM</div></div>
+      <div class="pc c-signal" data-domain="signal"><div class="pc-a">WU</div><div class="pc-n">WAM-EUP</div></div>
+      <div class="pc c-signal" data-domain="signal"><div class="pc-a">PF</div><div class="pc-n">PFHT</div></div>
+      <div class="pc c-signal" data-domain="signal"><div class="pc-a">GR</div><div class="pc-n">GIRL</div></div>
+    </div>
+    
+    <div class="pt-row">
+      <div class="pt-rlbl">Failure</div>
+      <div class="pc c-earth" data-domain="earth"><div class="pc-a">CAL</div><div class="pc-n">Calibration</div></div>
+      <div class="pc c-earth" data-domain="earth"><div class="pc-a">CD</div><div class="pc-n">Constraint Drift</div></div>
+      <div class="pc c-earth" data-domain="earth"><div class="pc-a">HED</div><div class="pc-n">HED Score</div></div>
+      <div class="pc c-earth" data-domain="earth"><div class="pc-a">MEM</div><div class="pc-n">Memoscope</div></div>
+    </div>
+    
+    <div class="pt-row">
+      <div class="pt-rlbl">Testbeds</div>
+      <div class="pc c-earth" data-domain="earth"><div class="pc-a">ROB</div><div class="pc-n">Robotics</div></div>
+      <div class="pc c-earth" data-domain="earth"><div class="pc-a">VDB</div><div class="pc-n">Vector DBs</div></div>
+      <div class="pc c-earth" data-domain="earth"><div class="pc-a">LLM</div><div class="pc-n">LLMs</div></div>
+      <div class="pc c-earth" data-domain="earth"><div class="pc-a">FIN</div><div class="pc-n">Finance</div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     PUBLICATIONS: SELECTED WORK & RESEARCH PIPELINE
+════════════════════════════════════════════ -->
+<section id="research" class="card c-mind">
+  <div class="sl" style="padding-left:60px">Publications</div>
+  <h2 class="st rv" style="padding-left:60px">Research<br><em>Output</em></h2>
+  
+  <div class="pt-lbl rv" style="padding-left:60px">
+    Peer-reviewed publications, active manuscripts, arXiv preprints, and foundational research directions organized by the Three Pillars.
+  </div>
+
+  <!-- RESEARCH CORE METRICS ENGINE -->
+  <div class="research-metrics" style="padding-left:60px; margin-bottom: 30px;">
+    <div class="metric">
+      <span class="metric-num">20+</span>
+      <span class="metric-label">Research Manuscripts</span>
+    </div>
+    <div class="metric">
+      <span class="metric-num">7</span>
+      <span class="metric-label">PyPI Packages</span>
+    </div>
+    <div class="metric">
+      <span class="metric-num">15+</span>
+      <span class="metric-label">Software Releases</span>
+    </div>
+    <div class="metric">
+      <span class="metric-num">3+</span>
+      <span class="metric-label">Research Grants</span>
+    </div>
+  </div>
+
+  <div class="fs-outer rv rv-1">
+    <div class="fs-tline"><div class="fs-prog"></div></div>
+    <div class="fs">
+      
+      <!-- ════════════════════════════════════════════
+           SECTION A: SELECTED PUBLICATIONS (PUBLISHED)
+      ════════════════════════════════════════════ -->
+      
+      <div class="ff" data-domain="signal">
+        <div class="ff-n">01</div>
+        <div class="paper-tag">Selected · Published</div>
+        <div class="ff-t">Shared Feature-Based Multitask Model for Faux-Hate Classification in Code-Mixed Text</div>
+        <div class="ff-v">ICON 2024 · AU-KBC Research Centre, Chennai · NLP Association of India</div>
+        <div class="ff-s live"><div class="fd live"></div><a href="https://aclanthology.org/people/prakul-hiremath/" target="_blank" style="text-decoration: none; color: inherit;">Published</a></div>
+      </div>
+
+      <div class="ff" data-domain="signal">
+        <div class="ff-n">02</div>
+        <div class="paper-tag">Selected · Published</div>
+        <div class="ff-t">A Comprehensive Survey on Financial Health and Credit Card Management Practices in India</div>
+        <div class="ff-v">Kaleidoscope Journal · ISSN 3107-4677 · DOI: <a href="https://doi.org/10.62801/jkjmr2.12" target="_blank" style="text-decoration: none; color: var(--accent);">10.62801/jkjmr2.12</a></div>
+        <div class="ff-s live"><div class="fd live"></div>Published</div>
+      </div>
+
+      <div class="ff" data-domain="space">
+        <div class="ff-n">03</div>
+        <div class="paper-tag">Selected · Published</div>
+        <div class="ff-t">AI-Driven, Uncertainty-Aware Anomaly Detection in Multi-wavelength AstroSat Observations</div>
+        <div class="ff-v">AstroSat 2026 · Hyatt Centric Bengaluru · ISRO/URSC Proceedings p.146</div>
+        <div class="ff-s live"><div class="fd live"></div>Published</div>
+      </div>
+
+      <!-- ════════════════════════════════════════════
+           SECTION B: REPRESENTATION PILLAR
+      ════════════════════════════════════════════ -->
+      
+      <div class="ff" data-domain="mind">
+        <div class="ff-n">04</div>
+        <div class="paper-tag">Representation</div>
+        <div class="ff-t">When the Simplex Collapses: The Geometry of Scalar Belief Compression</div>
+        <div class="ff-v">PGM 2026 Conference Submission · Core Theorem on Representation Loss</div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <div class="ff" data-domain="mind">
+        <div class="ff-n">05</div>
+        <div class="paper-tag">Representation</div>
+        <div class="ff-t">The Measure Gap: Information-Theoretic Limits of Deterministic Belief Encoders in POMDPs</div>
+        <div class="ff-v">NeurIPS 2026 Conference Submission · arXiv:2605.XXXXX</div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <div class="ff" data-domain="mind">
+        <div class="ff-n">06</div>
+        <div class="paper-tag">Representation</div>
+        <div class="ff-t">AMBIVERT: Uncertainty-Aware Nearest-Neighbor Search via Epistemic Covariance in Vector Indices</div>
+        <div class="ff-v">VLDB 2026 Workshop VecDB Submission · Geometric Vector Infrastructure</div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <div class="ff" data-domain="mind">
+        <div class="ff-n">07</div>
+        <div class="paper-tag">Representation</div>
+        <div class="ff-t">The Interventional Channel Constraint: A Geometric Diagnostic for Practical Identifiability in Regime-Switching Systems</div>
+        <div class="ff-v">CAISc 2026 Conference Submission · Sufficient Conditions for Subspace Isolation</div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <div class="ff" data-domain="mind">
+        <div class="ff-n">08</div>
+        <div class="paper-tag">Representation</div>
+        <div class="ff-t">Transformation-Stable Information: A Foundation for Predicting Representation Quality</div>
+        <div class="ff-v">NeurIPS 2026 Conference Submission</div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <!-- ════════════════════════════════════════════
+           SECTION C: PROPAGATION PILLAR
+      ════════════════════════════════════════════ -->
+
+      <div class="ff" data-domain="mind">
+        <div class="ff-n">09</div>
+        <div class="paper-tag">Propagation</div>
+        <div class="ff-t">GIRL: Generative Imagination Reinforcement Learning via Information-Theoretic Hallucination Control</div>
+        <div class="ff-v">ICML 2026 / RLC 2026 Workshop WMW · <a href="https://arxiv.org/abs/2604.07426" target="_blank" style="text-decoration: none; color: var(--accent);">arXiv:2604.07426</a></div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <div class="ff" data-domain="mind">
+        <div class="ff-n">10</div>
+        <div class="paper-tag">Propagation</div>
+        <div class="ff-t">World Action Models with Epistemic Uncertainty Propagation: Learning Uncertainty Budgets for Safe Long-Horizon Robot Imagination</div>
+        <div class="ff-v">RSS 2026 Workshop RWM Submission · Stochastic Policy Optimization Bounds</div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <div class="ff" data-domain="mind">
+        <div class="ff-n">11</div>
+        <div class="paper-tag">Propagation</div>
+        <div class="ff-t">Action-Conditioned Ambiguity World Models</div>
+        <div class="ff-v">RSS 2026 Workshop RWM Submission · Epistemic Future Representation</div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <div class="ff" data-domain="mind">
+        <div class="ff-n">12</div>
+        <div class="paper-tag">Propagation</div>
+        <div class="ff-t">Predictive Failure Hitting-Times for World Model-Based Robot Planning</div>
+        <div class="ff-v">RSS 2026 Workshop RWM Submission · Measure-Theoretic Safe Envelope Analysis</div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <div class="ff" data-domain="mind">
+        <div class="ff-n">13</div>
+        <div class="paper-tag">Propagation</div>
+        <div class="ff-t">Regret-Aware Policy Optimization: Environment-Level Memory for Replay Suppression under Delayed Harm</div>
+        <div class="ff-v">RLC 2026 Workshop ContinualRL · <a href="https://arxiv.org/abs/2604.07428" target="_blank" style="text-decoration: none; color: var(--accent);">arXiv:2604.07428</a></div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <!-- ════════════════════════════════════════════
+           SECTION D: FAILURE & DIAGNOSTICS PILLAR
+      ════════════════════════════════════════════ -->
+
+      <div class="ff" data-domain="mind">
+        <div class="ff-n">14</div>
+        <div class="paper-tag">Failure &amp; Diagnostics</div>
+        <div class="ff-t">More Reasoning Can Hurt Calibration</div>
+        <div class="ff-v">ACL ARR 2026 May Submission · Quantifying Token Budget Calibration Drift</div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <div class="ff" data-domain="mind">
+        <div class="ff-n">15</div>
+        <div class="paper-tag">Failure &amp; Diagnostics</div>
+        <div class="ff-t">Constraint Drift in Multi-Turn LLM Sessions: A Longitudinal Evaluation Framework</div>
+        <div class="ff-v">ACL ARR 2026 May Submission · Measuring Structural Half-Life Decays</div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <div class="ff" data-domain="mind">
+        <div class="ff-n">16</div>
+        <div class="paper-tag">Failure &amp; Diagnostics</div>
+        <div class="ff-t">When Offline Metrics Lie: The Dynamics of Silent Failure in Deployed Recommendation Systems</div>
+        <div class="ff-v">SIGKDD 2026 Research Track Submission · Dynamic Tracking Degradation</div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <div class="ff" data-domain="mind">
+        <div class="ff-n">17</div>
+        <div class="paper-tag">Failure &amp; Diagnostics</div>
+        <div class="ff-t">When Confidence Metrics Fail: Sensitivity Uncertainty Alignment as a Diagnostic for High-Risk Model Errors</div>
+        <div class="ff-v">NeurIPS 2026 Evaluations and Datasets Track · <a href="https://arxiv.org/abs/2604.20903" target="_blank" style="text-decoration: none; color: var(--accent);">arXiv:2604.20903</a></div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <div class="ff" data-domain="mind">
+        <div class="ff-n">18</div>
+        <div class="paper-tag">Failure &amp; Diagnostics</div>
+        <div class="ff-t">The Hiremath Early Detection (HED) Score: A Measure-Theoretic Evaluation Standard for Temporal Intelligence</div>
+        <div class="ff-v">arXiv:2604.04993 · Measure Theory &amp; Phase Transitions</div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <!-- ════════════════════════════════════════════
+           SECTION E: SEQUENTIAL SYSTEMS & APPLICATIONS
+      ════════════════════════════════════════════ -->
+
+      <div class="ff" data-domain="space">
+        <div class="ff-n">19</div>
+        <div class="paper-tag">Sequential Systems</div>
+        <div class="ff-t">Early Detection of Latent Microstructure Regimes in Limit Order Books</div>
+        <div class="ff-v">arXiv:2604.20949 · High-Frequency Finance &amp; State-Space Theory</div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <div class="ff" data-domain="space">
+        <div class="ff-n">20</div>
+        <div class="paper-tag">Sequential Systems</div>
+        <div class="ff-t">Learning Nonlinear Regime Transitions via Semi-Parametric State-Space Models</div>
+        <div class="ff-v">arXiv:2604.04963 · Structural Change Detection</div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <div class="ff" data-domain="space">
+        <div class="ff-n">21</div>
+        <div class="paper-tag">Applications</div>
+        <div class="ff-t">PARD-SSM: Probabilistic Cyber-Attack Regime Detection via Variational Switching State-Space Models</div>
+        <div class="ff-v">arXiv:2604.02299 · Network Security &amp; Anomaly Detection</div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <div class="ff" data-domain="earth">
+        <div class="ff-n">22</div>
+        <div class="paper-tag">Applications</div>
+        <div class="ff-t">BIOLOOP: Bio-Conformal Multimodal Learning for Reliability-Guaranteed Safe Control of Algal Hydrogen Reactors</div>
+        <div class="ff-v">KDD 2026 AI4Sciences Track · Sustainable Energy &amp; AI Safety</div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+      <div class="ff" data-domain="earth">
+        <div class="ff-n">23</div>
+        <div class="paper-tag">Applications</div>
+        <div class="ff-t">TIDAL: Temporal AI for Early Detection of Latent Financial Market Instability</div>
+        <div class="ff-v">AIETABS 2026 Conference · Market Microstructure &amp; Uncertainty</div>
+        <div class="ff-s rev"><div class="fd rev"></div>Under Review</div>
+      </div>
+
+    </div>
+    <div class="fs-ctr">Selected Publications &amp; Research Pipeline &nbsp;·&nbsp; Drag to explore</div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     SOFTWARE: PYPI ECOSYSTEM &amp; DEVELOPER TOOLS
+════════════════════════════════════════════ -->
+<section id="software" class="card c-earth">
+  <div class="sl" style="padding-left:60px">Software</div>
+  <h2 class="st rv" style="padding-left:60px">Research<br><em>Infrastructure</em></h2>
+  
+  <div class="pt-lbl rv" style="padding-left:60px">
+    Open-source Python packages published on PyPI, with complete GitHub repositories and immutable Zenodo DOIs for reproducibility and long-term archival.
+  </div>
+
+  <!-- SOFTWARE METRICS -->
+  <div class="research-metrics" style="padding-left:60px; margin-bottom: 30px;">
+    <div class="metric">
+      <span class="metric-num">7</span>
+      <span class="metric-label">PyPI Packages</span>
+    </div>
+    <div class="metric">
+      <span class="metric-num">18</span>
+      <span class="metric-label">GitHub Repos</span>
+    </div>
+    <div class="metric">
+      <span class="metric-num">7</span>
+      <span class="metric-label">Zenodo DOIs</span>
+    </div>
+    <div class="metric">
+      <span class="metric-num">100%</span>
+      <span class="metric-label">Open Source</span>
+    </div>
+  </div>
+
+  <div class="rv rv-1" style="padding-left:60px">
+    
+    <!-- LATENT STATE INTEGRITY SUITE -->
+    <div style="margin-bottom: 40px;">
+      <div style="margin-bottom: 20px;">
+        <h3 style="font-weight: 600; margin-bottom: 12px; color: var(--ink-1);">Latent State Integrity Suite</h3>
+        <p style="color: var(--ink-3); font-size: 13px; margin: 0;">Comprehensive ecosystem for monitoring, diagnosing, and auditing hidden-state degradation in sequential AI systems.</p>
+      </div>
+
+      <!-- Package 1: identifiability-diagnostic -->
+      <div class="sw-card" data-domain="mind">
+        <div class="sw-header">
+          <div class="sw-name">identifiability-diagnostic</div>
+          <div class="sw-tag">Latent States</div>
+        </div>
+        <div class="sw-desc">Geometric pre-training diagnostic verifying latent-state identifiability in regime-switching systems before deployment.</div>
+        <div class="sw-terminal">
+          <span style="color: var(--ink-3);">$ </span>pip install identifiability-diagnostic
+        </div>
+        <div class="sw-links">
+          <a href="https://github.com/prakulhiremath/identifiability-diagnostic-framework" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://pypi.org/project/identifiability-diagnostic/" target="_blank" rel="noopener">PyPI</a>
+          <a href="https://doi.org/10.5281/zenodo.20517275" target="_blank" rel="noopener">DOI: 10.5281/zenodo.20517275</a>
+        </div>
+      </div>
+
+      <!-- Package 2: memoscope -->
+      <div class="sw-card" data-domain="signal">
+        <div class="sw-header">
+          <div class="sw-name">memoscope</div>
+          <div class="sw-tag">State Monitoring</div>
+        </div>
+        <div class="sw-desc">Real-time internal-state drift inspector for Transformers, Mamba, and sequential neural network models with visualization suite.</div>
+        <div class="sw-terminal">
+          <span style="color: var(--ink-3);">$ </span>pip install memoscope
+        </div>
+        <div class="sw-links">
+          <a href="https://github.com/prakulhiremath/memoscope" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://pypi.org/project/memoscope/" target="_blank" rel="noopener">PyPI</a>
+          <a href="https://doi.org/10.5281/zenodo.20440916" target="_blank" rel="noopener">DOI: 10.5281/zenodo.20440916</a>
+        </div>
+      </div>
+
+      <!-- Package 3: temporal-leaks -->
+      <div class="sw-card" data-domain="space">
+        <div class="sw-header">
+          <div class="sw-name">temporal-leaks</div>
+          <div class="sw-tag">Data Integrity</div>
+        </div>
+        <div class="sw-desc">Static leakage detection for time-series ML pipelines; isolates look-ahead context contamination in training-serving workflows.</div>
+        <div class="sw-terminal">
+          <span style="color: var(--ink-3);">$ </span>pip install temporal-leaks
+        </div>
+        <div class="sw-links">
+          <a href="https://github.com/prakulhiremath/temporal-leaks" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://pypi.org/project/temporal-leaks/" target="_blank" rel="noopener">PyPI</a>
+          <a href="https://doi.org/10.5281/zenodo.20440810" target="_blank" rel="noopener">DOI: 10.5281/zenodo.20440810</a>
+        </div>
+      </div>
+
+      <!-- Package 4: flashback-df -->
+      <div class="sw-card" data-domain="mind">
+        <div class="sw-header">
+          <div class="sw-name">flashback-df</div>
+          <div class="sw-tag">Versioning</div>
+        </div>
+        <div class="sw-desc">DataFrame chronology control with granular lineage and checkpoint rollback support for Pandas and Polars.</div>
+        <div class="sw-terminal">
+          <span style="color: var(--ink-3);">$ </span>pip install flashback-df
+        </div>
+        <div class="sw-links">
+          <a href="https://github.com/prakulhiremath/flashback" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://pypi.org/project/flashback-df/" target="_blank" rel="noopener">PyPI</a>
+          <a href="https://doi.org/10.5281/zenodo.20440636" target="_blank" rel="noopener">DOI: 10.5281/zenodo.20440636</a>
+        </div>
+      </div>
+
+      <!-- Package 5: parallelwatch -->
+      <div class="sw-card" data-domain="earth">
+        <div class="sw-header">
+          <div class="sw-name">parallelwatch</div>
+          <div class="sw-tag">Failure Tracking</div>
+        </div>
+        <div class="sw-desc">Real-time multivariate sequence monitoring tracking structural failures and anomalies across telemetry blocks.</div>
+        <div class="sw-terminal">
+          <span style="color: var(--ink-3);">$ </span>pip install parallelwatch
+        </div>
+        <div class="sw-links">
+          <a href="https://github.com/prakulhiremath/parallelwatch" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://pypi.org/project/parallelwatch/" target="_blank" rel="noopener">PyPI</a>
+          <a href="https://doi.org/10.5281/zenodo.20494486" target="_blank" rel="noopener">DOI: 10.5281/zenodo.20494486</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUANTITATIVE FINANCE SUITE -->
+    <div style="margin-bottom: 40px;">
+      <div style="margin-bottom: 20px;">
+        <h3 style="font-weight: 600; margin-bottom: 12px; color: var(--ink-1);">Sequential Systems &amp; Finance</h3>
+        <p style="color: var(--ink-3); font-size: 13px; margin: 0;">Tools for latent regime detection and temporal instability diagnosis in market microstructure and sequential data.</p>
+      </div>
+
+      <!-- Package 6: chronosdefrag -->
+      <div class="sw-card" data-domain="signal">
+        <div class="sw-header">
+          <div class="sw-name">chronosdefrag</div>
+          <div class="sw-tag">Finance</div>
+        </div>
+        <div class="sw-desc">Quantitative finance representation learning suite targeting latent state transition behaviors in time series.</div>
+        <div class="sw-terminal">
+          <span style="color: var(--ink-3);">$ </span>pip install chronosdefrag
+        </div>
+        <div class="sw-links">
+          <a href="https://github.com/prakulhiremath/chronosdefrag" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://pypi.org/project/chronosdefrag/" target="_blank" rel="noopener">PyPI</a>
+          <a href="https://doi.org/10.5281/zenodo.20331774" target="_blank" rel="noopener">DOI: 10.5281/zenodo.20331774</a>
+        </div>
+      </div>
+
+      <!-- Package 7: hed-score -->
+      <div class="sw-card" data-domain="mind">
+        <div class="sw-header">
+          <div class="sw-name">hed-score</div>
+          <div class="sw-tag">Early Detection</div>
+        </div>
+        <div class="sw-desc">Canonical Hiremath Early Detection score calculator implementing measure-theoretic velocity tracking for temporal intelligence.</div>
+        <div class="sw-terminal">
+          <span style="color: var(--ink-3);">$ </span>pip install hed-score
+        </div>
+        <div class="sw-links">
+          <a href="https://github.com/prakulhiremath/HED-score" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://pypi.org/project/hed-score/" target="_blank" rel="noopener">PyPI</a>
+          <a href="https://doi.org/10.5281/zenodo.19713081" target="_blank" rel="noopener">DOI: 10.5281/zenodo.19713081</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- STYLING FOR SOFTWARE CARDS -->
+  <style>
+    .sw-card {
+      background: var(--bg-2);
+      border: 1px solid var(--bg-3);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      transition: all 0.2s ease;
+    }
+    
+    .sw-card:hover {
+      border-color: var(--ink-4);
+      background: var(--bg-1);
+    }
+    
+    .sw-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .sw-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--ink-1);
+    }
+    
+    .sw-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      background: var(--bg-3);
+      border-radius: 4px;
+      color: var(--ink-2);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .sw-desc {
+      font-size: 13px;
+      color: var(--ink-2);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    
+    .sw-terminal {
+      background: var(--bg-3);
+      border-left: 2px solid var(--ink-4);
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 12px;
+      color: var(--ink-2);
+      margin-bottom: 12px;
+      overflow-x: auto;
+    }
+    
+    .sw-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    
+    .sw-links a {
+      font-size: 12px;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      transition: opacity 0.2s ease;
+    }
+    
+    .sw-links a:hover {
+      opacity: 0.7;
+    }
+  </style>
+
+</section>
+
+<!-- ════════════════════════════════════════════
+     PATENTS — GAZETTE
+════════════════════════════════════════════ -->
+<section id="patents" class="card c-signal">
+  <div class="sl">Intellectual Property</div>
+  <h2 class="st rv">Filed<br><span class="out">Patents</span></h2>
+  <div class="rv rv-1">
+    <div class="gz-h">
+      <span class="gz-t">Indian Patent Office — Official Gazette</span>
+      <span class="gz-s">Status: Published · Total: 5 Applications</span>
+    </div>
+    <table class="gz-tbl">
+      <thead>
+        <tr>
+          <th>Application No.</th>
+          <th>Year</th>
+          <th>Title</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-domain="mind">
+          <td>202541014688</td>
+          <td>2025</td>
+          <td>Integrating Neuromorphic Computing and Reinforcement Learning in Hybrid AI for Autonomous Systems</td>
+        </tr>
+        <tr data-domain="earth">
+          <td>202541014687</td>
+          <td>2025</td>
+          <td>Innovative CO₂ Emission Filters for Vehicles: Net-Zero Carbon Solutions with Advanced Adsorption and Smart Monitoring</td>
+        </tr>
+        <tr data-domain="earth">
+          <td>202541014690</td>
+          <td>2025</td>
+          <td>Dynamic Adjustable Sleeve D&amp;M for Enhanced Universal CO₂ Emission Filters</td>
+        </tr>
+        <tr data-domain="mind">
+          <td>202541014689</td>
+          <td>2025</td>
+          <td>Hyper-Adaptive Manufacturing Using Multi-Agent AI for Autonomous Production Optimization</td>
+        </tr>
+        <tr data-domain="signal">
+          <td>202541032942</td>
+          <td>2025</td>
+          <td>EMEFF: An Explainable Multimodal Economic Forecasting Framework for Real-Time, Transparent, and Adaptive Predictions</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="gz-f">
+      <span>All applications filed and published · Indian Patent Office</span>
+      <span class="color-signal">Applicant: Prakul Sunil Hiremath</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     POSTERS — CORKBOARD
+════════════════════════════════════════════ -->
+<section id="posters" class="card c-earth">
+  <div class="sl">Poster Sessions</div>
+  <h2 class="st rv">Research<br><em>Posters</em></h2>
+  <div class="pgrid rv rv-1">
+    <div class="pi" data-domain="earth">
+      <div class="pi-venue">AAC 2025 · Mumbai</div>
+      <div class="pi-title">Real-Time Monitoring of Bioaerosol Emissions in Algae-Based Hydrogen Reactors Using Low-Cost Sensors and AI</div>
+      <div class="pi-yr">Dec 2025 · Presented</div>
+    </div>
+    <div class="pi" data-domain="mind">
+      <div class="pi-venue">QIB 2025 · Bengaluru</div>
+      <div class="pi-title">Monogamy-Driven Adaptive Quantum Secure Communication Framework</div>
+      <div class="pi-yr">Jul–Aug 2025 · Presented</div>
+    </div>
+    <div class="pi" data-domain="mind">
+      <div class="pi-venue">CODE-AI 2025 · MAHE Dubai</div>
+      <div class="pi-title">Photonic AI: Ultra-Fast, Zero-Power Optical Neural Networks for Real-Time Computer Vision</div>
+      <div class="pi-yr">Apr 2025 · Presented</div>
+    </div>
+    <div class="pi" data-domain="space">
+      <div class="pi-venue">IIT Bombay · TechConnect '24</div>
+      <div class="pi-title">Hybrid AI for Real-Time Autonomous Systems: The Intersection of Neuromorphic Computing and Reinforcement Learning</div>
+      <div class="pi-yr">Dec 2024 · Presented</div>
+    </div>
+    <div class="pi" data-domain="space">
+      <div class="pi-venue">Quantum Resources Conf. 2025</div>
+      <div class="pi-title">Quantum Resource Optimization: Revolutionizing Data Processing in High-Energy Physics through Entanglement and Quantum Feedback</div>
+      <div class="pi-yr">2025 · Accepted</div>
+    </div>
+    <div class="pi" data-domain="mind">
+      <div class="pi-venue">Quantum Resources Conf. 2025</div>
+      <div class="pi-title">Optimizing Quantum Algorithms: Bridging Artificial Intelligence and Quantum Computing for Enhanced Decision-Making</div>
+      <div class="pi-yr">2025 · Accepted</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     PROJECTS — RESEARCH SYSTEMS
+════════════════════════════════════════════ -->
+<section id="projects" class="card c-space">
+  <div class="sl">Research Systems</div>
+
+  <h2 class="st rv">
+    Selected<br><em>Research Infrastructure</em>
+  </h2>
+
+  <div class="pt-lbl rv">
+    Representative systems spanning uncertainty representation, propagation, and failure diagnostics.
+  </div>
+
+  <div class="rv rv-1">
+    
+    <!-- Card 01 — AMBIVERT -->
+    <div class="pj c-mind" data-domain="mind">
+      <div class="pj-h">
+        <span class="pj-n">01</span>
+        <span class="pj-name">AMBIVERT</span>
+        <span class="pj-tag">
+          <span class="pd mind"></span>
+          Representation
+        </span>
+      </div>
+      <div class="pj-b">
+        <div class="pj-desc">
+          Uncertainty-aware nearest-neighbor retrieval framework that augments vector indices with epistemic covariance structures rather than treating embeddings as deterministic points.
+        </div>
+        <div class="pj-tech">
+          <span>Vector Retrieval</span>
+          <span>VLDB</span>
+          <span>Uncertainty</span>
+          <span>Information Geometry</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 02 — AAWM -->
+    <div class="pj c-space" data-domain="space">
+      <div class="pj-h">
+        <span class="pj-n">02</span>
+        <span class="pj-name">Action-Conditioned Ambiguity World Models</span>
+        <span class="pj-tag">
+          <span class="pd space"></span>
+          Propagation
+        </span>
+      </div>
+      <div class="pj-b">
+        <div class="pj-desc">
+          World-model architecture for representing and propagating epistemic ambiguity across imagined futures in long-horizon robotic planning.
+        </div>
+        <div class="pj-tech">
+          <span>World Models</span>
+          <span>RSS</span>
+          <span>Robotics</span>
+          <span>Sequential Systems</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 03 — Latent State Integrity Suite -->
+    <div class="pj c-earth" data-domain="earth">
+      <div class="pj-h">
+        <span class="pj-n">03</span>
+        <span class="pj-name">Latent State Integrity Suite</span>
+        <span class="pj-tag">
+          <span class="pd earth"></span>
+          Failure
+        </span>
+      </div>
+      <div class="pj-b">
+        <div class="pj-desc">
+          Open-source ecosystem for monitoring, diagnosing, and auditing hidden-state degradation in sequential AI systems.
+        </div>
+        <div class="pj-tech">
+          <span>HED</span>
+          <span>Memoscope</span>
+          <span>Temporal Leaks</span>
+          <span>ParallelWatch</span>
+          <span>Flashback</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 04 — Identifiability Framework -->
+    <div class="pj c-signal" data-domain="signal">
+      <div class="pj-h">
+        <span class="pj-n">04</span>
+        <span class="pj-name">Identifiability Diagnostic Framework</span>
+        <span class="pj-tag">
+          <span class="pd signal"></span>
+          Latent States
+        </span>
+      </div>
+      <div class="pj-b">
+        <div class="pj-desc">
+          Geometric pre-training diagnostic for detecting latent-state non-identifiability in switching state-space models before model deployment.
+        </div>
+        <div class="pj-tech">
+          <span>State-Space Models</span>
+          <span>Bayesian Inference</span>
+          <span>Geometry</span>
+          <span>Sequential Systems</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     GRANTS — FINANCIAL TABLE
+════════════════════════════════════════════ -->
+<section id="grants" class="card c-earth">
+  <div class="sl">Funding</div>
+  <h2 class="st rv">Notable<br><em>Grants</em></h2>
+  <div class="rv rv-1">
+    <table class="gt">
+      <thead>
+        <tr>
+          <th>Project</th>
+          <th>Amount</th>
+          <th>Funding Body</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-domain="earth">
+          <td>MSME Idea Hackathon 5.0 — Green Hydrogen Production from Seawater integrating Nanocatalysts, Selective Membranes, and Concentrated Solar Power</td>
+          <td>₹15L</td>
+          <td>Ministry of MSME, Govt. of India</td>
+        </tr>
+        <tr data-domain="earth">
+          <td>NAIN 2.0 — New Age Innovation Network · BIOLOOP (Carbon Capture) &amp; URJAWAVE (Clean Energy) · Host: IIIT Dharwad</td>
+          <td>₹3L</td>
+          <td>Govt. of Karnataka</td>
+        </tr>
+        <tr data-domain="mind">
+          <td>KAHER VC Research Grant — Deep Learning for Multi-Modal AI-Assisted Diagnosis integrating Histopathology WSIs and Clinical Oral Images</td>
+          <td>₹30K</td>
+          <td>KAHER University</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="gt-total">
+          <td><strong>Total Secured</strong></td>
+          <td>₹18.3L</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     CONFERENCES — RULER TIMELINE
+════════════════════════════════════════════ -->
+<section id="conferences" class="card c-mind">
+  <div class="sl">Talks &amp; Appearances</div>
+  <h2 class="st rv">Conference<br><span class="out">Timeline</span></h2>
+  <div class="ruler-wrap rv rv-1">
+    <div class="ruler">
+      <!-- Year markers -->
+      <span class="rtick-yr" style="left:5%">2024</span>
+      <span class="rtick-yr" style="left:40%">2025</span>
+      <span class="rtick-yr" style="left:80%">2026</span>
+
+      <div class="rtick" style="left:8%">
+        <div class="rtick-mark"></div>
+        <div class="rtick-lbl">Dec '24</div>
+        <div class="rcard">
+          <div class="rcard-venue">IIT Bombay · TechConnect</div>
+          <div class="rcard-title">Hybrid AI for Real-Time Autonomous Systems: Neuromorphic Computing and Reinforcement Learning</div>
+          <div class="rcard-sub">ResCon: Soch Vichar Achar</div>
+        </div>
+      </div>
+      <div class="rtick" style="left:26%">
+        <div class="rtick-mark"></div>
+        <div class="rtick-lbl">Feb '25</div>
+        <div class="rcard">
+          <div class="rcard-venue">VTU Climate Conf. 2025</div>
+          <div class="rcard-title">Integration of AI in Environmental Modelling for Sustainable Ecosystems</div>
+          <div class="rcard-sub">VTU Belagavi International Conf.</div>
+          <div class="rcard-award">🏆 Best Paper Award</div>
+        </div>
+      </div>
+      <div class="rtick" style="left:40%">
+        <div class="rtick-mark"></div>
+        <div class="rtick-lbl">Apr '25</div>
+        <div class="rcard">
+          <div class="rcard-venue">CODE-AI 2025 · MAHE Dubai</div>
+          <div class="rcard-title">Photonic AI: Ultra-Fast, Zero-Power Optical Neural Networks for Real-Time Computer Vision</div>
+          <div class="rcard-sub">2nd Intl. Conf. on Data Science &amp; Exploration in AI</div>
+        </div>
+      </div>
+      <div class="rtick" style="left:56%">
+        <div class="rtick-mark"></div>
+        <div class="rtick-lbl">Jul '25</div>
+        <div class="rcard">
+          <div class="rcard-venue">QIB 2025 · Bengaluru</div>
+          <div class="rcard-title">Monogamy-Driven Adaptive Quantum Secure Communication Framework</div>
+          <div class="rcard-sub">Quantum India Bengaluru · Hotel Hilton, Manyata Tech Park</div>
+        </div>
+      </div>
+      <div class="rtick" style="left:70%">
+        <div class="rtick-mark"></div>
+        <div class="rtick-lbl">Dec '25</div>
+        <div class="rcard">
+          <div class="rcard-venue">AAC 2025 · Mumbai</div>
+          <div class="rcard-title">Real-Time Monitoring of Bioaerosol Emissions in Algae-Based Hydrogen Reactors</div>
+          <div class="rcard-sub">14th Asian Aerosol Conference · Vikhroli</div>
+        </div>
+      </div>
+      <div class="rtick" style="left:84%">
+        <div class="rtick-mark"></div>
+        <div class="rtick-lbl">Feb '26</div>
+        <div class="rcard">
+          <div class="rcard-venue">AstroSat 2026 · Bengaluru</div>
+          <div class="rcard-title">AI-Driven, Uncertainty-Aware Anomaly Detection in Multi-wavelength AstroSat Observations</div>
+          <div class="rcard-sub">Hyatt Centric Hebbal · ISRO/URSC · Proceedings p.146</div>
+        </div>
+      </div>
+      <div class="rtick" style="left:94%">
+        <div class="rtick-mark"></div>
+        <div class="rtick-lbl">Feb '26</div>
+        <div class="rcard">
+          <div class="rcard-venue">India AI Impact Summit · Delhi</div>
+          <div class="rcard-title">India AI Impact Summit 2026</div>
+          <div class="rcard-sub">National-level summit on AI policy, deployment, and ecosystem building</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     PHOTO — FULL BLEED
+════════════════════════════════════════════ -->
+<section id="photo-card" class="card" style="top:48px">
+  <img class="photo-fb" src="assets/photo-main.jpg" alt="Prakul at a research conference" loading="lazy">
+  <div class="photo-cap">AstroSat 2026 · Hyatt Centric Bengaluru · ISRO Conference</div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     HIGHLIGHTS — CONTACT SHEET
+════════════════════════════════════════════ -->
+<section id="highlights" id="hi-card" class="card" style="top:52px;background:#080808;color:#f0ede8;">
+  <div class="sl" style="color:rgba(240,237,232,.3)">Moments</div>
+  <h2 class="st rv" style="color:#f0ede8">Research<br><em>Highlights</em></h2>
+  <div class="csheet rv rv-1">
+
+    <div class="sf">
+      <span class="sf-num">▌01</span>
+      <img class="sf-img" src="assets/highlight-award.jpg" alt="Best Paper Award" loading="lazy">
+      <div class="sf-ph">Award Ceremony →</div>
+      <div class="sf-cap"><div class="sf-cap-t">Best Paper Award · VTU Climate Conference 2025</div></div>
+    </div>
+
+    <div class="sf">
+      <span class="sf-num">▌02</span>
+      <img class="sf-img" src="assets/highlight-vidhanasoudha.jpg" alt="Vidhana Soudha" loading="lazy">
+      <div class="sf-ph">Vidhana Soudha →</div>
+      <div class="sf-cap"><div class="sf-cap-t">TECHCELERATION 2025 · Suvarna Vidhana Soudha</div></div>
+    </div>
+
+    <div class="sf">
+      <span class="sf-num">▌03</span>
+      <img class="sf-img" src="assets/highlight-iisc.jpg" alt="IISc Visit" loading="lazy">
+      <div class="sf-ph">IISc Bangalore →</div>
+      <div class="sf-cap"><div class="sf-cap-t">Academic Visit · Indian Institute of Science</div></div>
+    </div>
+
+    <div class="sf">
+      <span class="sf-num">▌04</span>
+      <img class="sf-img" src="assets/highlight-poster.jpg" alt="Poster Presentation" loading="lazy">
+      <div class="sf-ph">AAC Mumbai →</div>
+      <div class="sf-cap"><div class="sf-cap-t">Poster Presentation · 14th Asian Aerosols Conf Mumbai</div></div>
+    </div>
+
+  </div>
+  <p style="margin-top:20px;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(240,237,232,.25)">
+    Replace placeholder frames with your photos in assets/
+  </p>
+</section>
+
+<!-- ════════════════════════════════════════════
+     WRITING — THE SIGNAL DISPATCH
+════════════════════════════════════════════ -->
+<section id="writing" class="card c-signal">
+  <div class="sl">Writing</div>
+  <h2 class="st rv">The Signal<br><em>Dispatch</em></h2>
+  <div class="rv rv-1">
+    <div class="dm">
+      <span class="dm-n">The Signal Dispatch</span>
+      <span class="dm-s">Vol. I · AI/ML · Space · Policy · Open Source</span>
+    </div>
+    <div class="dcols">
+      <a class="dc" href="https://medium.com/@prakulhiremath" target="_blank" rel="noopener">
+        <div class="dc-src color-space">Medium · Technical Deep-Dive</div>
+        <div class="dc-t">Research-Focused Writing on AI, ML &amp; Space Science</div>
+        <div class="dc-d">In-depth articles at the intersection of machine learning, astrophysics, and scientific discovery. Written for those who want the full picture.</div>
+        <div class="dc-a color-space">Read on Medium →</div>
+      </a>
+      <a class="dc" href="https://substack.com/@prakulhiremath" target="_blank" rel="noopener">
+        <div class="dc-src color-mind">Substack · Newsletter</div>
+        <div class="dc-t">Ideas, Opinions &amp; Research Notes</div>
+        <div class="dc-d">Long-form essays spanning AI policy, emerging tech, and the future of scientific computing. Irregular. Worth it.</div>
+        <div class="dc-a color-mind">Read on Substack →</div>
+      </a>
+      <a class="dc" href="https://scholar.google.com/citations?user=ERbZUdoAAAAJ" target="_blank" rel="noopener">
+        <div class="dc-src color-earth">Google Scholar · Academic Record</div>
+        <div class="dc-t">Published Papers &amp; Conference Proceedings</div>
+        <div class="dc-d">Peer-reviewed work on RLHF, anomaly detection, NLP for code-mixed text. Indexed on Google Scholar and ACL Anthology.</div>
+        <div class="dc-a color-earth">View Scholar Profile →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     CONTACT
+════════════════════════════════════════════ -->
+<section id="contact" class="card" style="top:56px">
+  <div class="sl">Contact</div>
+  <div class="cc rv">
+    <div class="cc-name">Prakul Sunil Hiremath</div>
+    <div class="cc-sub">VTU Belagavi · AI / ML Researcher · Open to Collaborations</div>
+    <div class="ce">
+       <a class="ce-row" href="mailto:hiremathprakul.aoe@gmail.com">
+        <span class="ce-l">AoE</span>
+        <span class="ce-v">hiremathprakul.aoe@gmail.com</span>
+        <span class="ce-a">→</span>
+      </a>
+      <a class="ce-row" href="mailto:prakulhiremath03@gmail.com">
+        <span class="ce-l">Personal</span>
+        <span class="ce-v">prakulhiremath03@gmail.com</span>
+        <span class="ce-a">→</span>
+      </a>
+      <a class="ce-row" href="mailto:prakulhiremath@vtu.ac.in">
+        <span class="ce-l">Academic</span>
+        <span class="ce-v">prakulhiremath@vtu.ac.in</span>
+        <span class="ce-a">→</span>
+      </a>
+    </div>
+    <div class="cl">
+      <a href="https://linkedin.com/in/prakulhiremath"  target="_blank">LinkedIn</a>
+      <a href="https://github.com/prakulhiremath"       target="_blank">GitHub</a>
+      <a href="https://twitter.com/PrakulHiremath"      target="_blank">Twitter</a>
+      <a href="https://orcid.org/0009-0007-9744-3519"   target="_blank">ORCID</a>
+      <a href="https://scholar.google.com/citations?user=ERbZUdoAAAAJ" target="_blank">Scholar</a>
+      <a href="https://aclanthology.org/people/prakul-hiremath/" target="_blank">ACL</a>
+    </div>
+    <a class="cb open-modal">Send a message →</a>
+  </div>
+</section>
+
+</div><!-- /stack-wrapper -->
+
+<!-- FOOTER -->
+<footer>
+  <span>23.2156° N &nbsp;75.1240° E &nbsp;·&nbsp; Belagavi, Karnataka &nbsp;·&nbsp; Est. 2023</span>
+  <span id="live-clock"></span>
+  <span>Press <kbd style="border:1px solid var(--ink-4);padding:1px 5px;font-size:8px;">/</kbd> for command palette</span>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
