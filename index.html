@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prakul Sunil Hiremath — Epistemic Uncertainty in Intelligent Systems</title>
-  <meta name="description" content="Research on the representation, propagation, and failure of epistemic uncertainty in intelligent systems.">
-  <meta name="author" content="Prakul Sunil Hiremath">
+  <title>Prakul Hiremath — Safe World Models Under Uncertainty</title>
+  <meta name="description" content="Predicting when autonomous systems fail. Roboticist studying epistemic uncertainty in learned world models.">
   
   <style>
     * {
@@ -16,18 +15,18 @@
 
     :root {
       --bg: #ffffff;
-      --ink: #000000;
-      --ink-secondary: #666666;
-      --accent: #1e3a8a;
-      --border: #f0f0f0;
+      --text: #000000;
+      --text-secondary: #666666;
+      --accent: #1e40af;
+      --border: #e5e7eb;
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #0a0a0a;
-        --ink: #ffffff;
-        --ink-secondary: #999999;
-        --border: #1a1a1a;
+        --bg: #0f172a;
+        --text: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --border: #1e293b;
       }
     }
 
@@ -36,47 +35,67 @@
     }
 
     body {
-      background-color: var(--bg);
-      color: var(--ink);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, 'Helvetica Neue', sans-serif;
-      line-height: 1.75;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif;
+      line-height: 1.6;
       font-size: 16px;
-      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      margin-bottom: 4rem;
     }
 
     h1 {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 2.8rem;
-      font-weight: 400;
+      font-size: 2.5rem;
       line-height: 1.2;
-      margin: 4rem 0 2rem 0;
+      margin-bottom: 1rem;
+      font-weight: 700;
       letter-spacing: -0.02em;
     }
 
-    h2 {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 2.2rem;
-      font-weight: 400;
-      line-height: 1.3;
-      margin: 3rem 0 1.5rem 0;
-      letter-spacing: -0.015em;
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
     }
 
-    h3 {
-      font-family: 'Instrument Serif', Georgia, serif;
+    .role {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .research-question {
+      background: var(--border);
+      padding: 2rem;
+      border-left: 4px solid var(--accent);
+      margin: 2rem 0;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      font-weight: 500;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    h2 {
       font-size: 1.4rem;
-      font-weight: 400;
-      margin: 2rem 0 1rem 0;
-      letter-spacing: -0.01em;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      margin-top: 2rem;
     }
 
     p {
-      margin: 0 0 1.25rem 0;
-      color: var(--ink);
-    }
-
-    p + p {
-      margin-top: 1.25rem;
+      margin-bottom: 1rem;
+      color: var(--text);
     }
 
     a {
@@ -90,367 +109,119 @@
       opacity: 0.7;
     }
 
-    a[target="_blank"]::after {
-      content: ' ↗';
-      font-size: 0.85em;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 3rem;
-    }
-
-    /* Navigation */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      z-index: 1000;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      nav {
-        background: rgba(10, 10, 10, 0.98);
-      }
-    }
-
-    nav .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.25rem 3rem;
-    }
-
-    .nav-brand {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 1.1rem;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      color: var(--ink);
-      text-decoration: none;
-      border: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-      font-size: 0.95rem;
-    }
-
-    .nav-links a {
-      color: var(--ink);
-      border: none;
-      border-bottom: 2px solid transparent;
-      transition: border-color 0.2s;
-      padding-bottom: 2px;
-    }
-
-    .nav-links a:hover {
-      border-bottom-color: var(--ink);
-      opacity: 1;
-    }
-
-    .nav-links a[data-active] {
-      border-bottom-color: var(--ink);
-    }
-
-    .theme-toggle {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1.2rem;
-      color: var(--ink);
-      padding: 0.25rem 0.5rem;
-    }
-
-    body > .container {
-      padding-top: 5.5rem;
-    }
-
-    /* Hero Section */
-    #hero {
-      margin-top: 2rem;
-      margin-bottom: 4rem;
-    }
-
-    .hero-subtitle {
-      font-size: 1.1rem;
-      color: var(--ink-secondary);
-      margin: 1.5rem 0 0 0;
-      font-weight: 400;
-    }
-
-    .core-statement {
-      font-size: 1.2rem;
-      margin: 2rem 0;
-      padding: 2rem 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      font-style: italic;
-      color: var(--ink);
-      line-height: 1.8;
-    }
-
-    /* Stats Grid */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      margin: 2.5rem 0 3rem 0;
-      padding: 2rem 0;
-    }
-
-    .stat-item h4 {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 1.8rem;
-      font-weight: 400;
-      margin: 0 0 0.5rem 0;
-    }
-
-    .stat-item p {
-      font-size: 0.9rem;
-      color: var(--ink-secondary);
-      margin: 0;
-    }
-
-    /* Three Pillars */
-    .pillars {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 3rem;
-      margin: 3rem 0;
-    }
-
-    .pillar {
-      padding: 0;
-    }
-
-    .pillar h3 {
-      margin-top: 0;
-    }
-
-    .pillar ul {
+    .papers {
       list-style: none;
       padding: 0;
     }
 
-    .pillar li {
-      margin: 0.75rem 0;
-      color: var(--ink);
-      font-size: 0.95rem;
-    }
-
-    .pillar li::before {
-      content: '‣ ';
-      color: var(--ink-secondary);
-    }
-
-    @media (max-width: 768px) {
-      .pillars {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-    }
-
-    /* Bibliography */
-    .bibliography {
-      margin: 3rem 0;
-    }
-
-    .bib-section {
-      margin: 2.5rem 0;
-    }
-
-    .bib-section h3 {
-      font-size: 1.2rem;
-      margin: 2.5rem 0 1.5rem 0;
-      color: var(--ink);
-    }
-
-    .paper {
-      margin: 1.75rem 0;
-      padding: 0;
-      border-left: 2px solid var(--border);
+    .paper-item {
+      padding: 1.2rem;
+      border-left: 3px solid var(--border);
+      margin-bottom: 1rem;
       padding-left: 1.5rem;
+    }
+
+    .paper-item.core {
+      border-left-color: var(--accent);
+      background: var(--border);
+      padding: 1.2rem;
+      border-radius: 4px;
     }
 
     .paper-title {
       font-weight: 600;
-      color: var(--ink);
-      margin: 0 0 0.35rem 0;
-      font-size: 1rem;
-    }
-
-    .paper a {
-      color: var(--accent);
+      margin-bottom: 0.3rem;
     }
 
     .paper-meta {
       font-size: 0.9rem;
-      color: var(--ink-secondary);
-      margin: 0.35rem 0;
-    }
-
-    .paper-tag {
-      display: inline-block;
-      background: var(--border);
-      padding: 0.25rem 0.6rem;
-      border-radius: 2px;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-right: 0.5rem;
-      color: var(--ink-secondary);
+      color: var(--text-secondary);
       margin-bottom: 0.5rem;
     }
 
-    .paper-status {
+    .status {
       display: inline-block;
       font-size: 0.8rem;
-      color: var(--ink-secondary);
+      padding: 0.3rem 0.6rem;
+      background: var(--border);
+      border-radius: 3px;
+      color: var(--text-secondary);
       font-style: italic;
     }
 
-    /* Software */
     .software-item {
-      margin: 1.75rem 0;
-      padding: 0;
-      border-left: 2px solid var(--border);
+      padding: 1rem;
+      border-left: 3px solid var(--border);
+      margin-bottom: 1rem;
       padding-left: 1.5rem;
     }
 
     .software-name {
       font-weight: 600;
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 1.05rem;
-      margin: 0 0 0.35rem 0;
+      margin-bottom: 0.3rem;
     }
 
     .software-desc {
       font-size: 0.95rem;
-      margin: 0.5rem 0;
-      color: var(--ink);
+      color: var(--text);
+      margin-bottom: 0.5rem;
     }
 
-    .software-install {
+    .code {
       background: var(--border);
-      padding: 0.75rem 1rem;
-      border-radius: 2px;
-      font-family: 'Monaco', 'Courier New', monospace;
+      padding: 0.5rem 0.75rem;
+      border-radius: 3px;
+      font-family: "Monaco", monospace;
       font-size: 0.85rem;
-      margin: 0.75rem 0;
-      overflow-x: auto;
+      display: inline-block;
     }
 
-    .software-links {
+    .contact {
+      background: var(--border);
+      padding: 1.5rem;
+      border-radius: 4px;
+      margin-top: 2rem;
+    }
+
+    .contact p {
+      margin-bottom: 0.5rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+      margin-top: 4rem;
       font-size: 0.9rem;
-      margin-top: 0.5rem;
+      color: var(--text-secondary);
     }
 
-    .software-links a {
-      margin-right: 1.25rem;
-    }
-
-    /* Grants & Patents */
-    .grant-item {
-      margin: 1.75rem 0;
-      padding: 0;
-      border-left: 2px solid var(--border);
-      padding-left: 1.5rem;
-    }
-
-    .grant-title {
-      font-weight: 600;
-      margin: 0 0 0.35rem 0;
-    }
-
-    .grant-meta {
-      font-size: 0.9rem;
-      color: var(--ink-secondary);
-    }
-
-    /* Timeline */
-    .timeline-item {
-      margin: 1.75rem 0;
-      padding: 0;
-      border-left: 2px solid var(--border);
-      padding-left: 1.5rem;
-    }
-
-    .timeline-date {
-      font-weight: 600;
-      color: var(--ink);
-      margin-bottom: 0.25rem;
-    }
-
-    .timeline-title {
-      font-weight: 600;
-      margin: 0.25rem 0;
-    }
-
-    .timeline-venue {
-      font-size: 0.9rem;
-      color: var(--ink-secondary);
-      margin: 0.25rem 0;
-    }
-
-    /* Dividers */
     .divider {
-      margin: 3rem 0;
       border: none;
       border-top: 1px solid var(--border);
+      margin: 3rem 0;
     }
 
-    /* Footer */
-    footer {
-      margin-top: 4rem;
-      padding: 3rem 0;
-      border-top: 1px solid var(--border);
-      font-size: 0.9rem;
-      color: var(--ink-secondary);
-    }
-
-    .footer-content {
+    .stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 2rem;
+      margin: 2rem 0;
     }
 
-    .footer-section h4 {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 1rem;
-      font-weight: 400;
-      margin: 0 0 1rem 0;
+    .stat-block h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
     }
 
-    .footer-section ul {
-      list-style: none;
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
     }
 
-    .footer-section li {
-      margin: 0.5rem 0;
-    }
-
-    .footer-section a {
-      color: var(--ink-secondary);
-      border-color: var(--ink-secondary);
-    }
-
-    .footer-section a:hover {
-      opacity: 1;
-      color: var(--ink);
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
+    @media (max-width: 640px) {
       .container {
-        padding: 0 1.5rem;
+        padding: 1.5rem;
       }
 
       h1 {
@@ -458,810 +229,169 @@
       }
 
       h2 {
-        font-size: 1.6rem;
-      }
-
-      nav .container {
-        padding: 1rem 1.5rem;
-      }
-
-      .nav-links {
-        gap: 1.5rem;
-        font-size: 0.85rem;
-      }
-
-      body > .container {
-        padding-top: 4.5rem;
+        font-size: 1.2rem;
       }
 
       .stats {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
       }
-    }
-
-    /* Utility */
-    .subtle {
-      color: var(--ink-secondary);
-    }
-
-    .accent-text {
-      color: var(--accent);
     }
   </style>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-<!-- Navigation -->
-<nav>
-  <div class="container">
-    <a href="#" class="nav-brand">Prakul Sunil Hiremath</a>
-    <ul class="nav-links">
-      <li><a href="#identity" data-section="identity">Research</a></li>
-      <li><a href="#publications" data-section="publications">Publications</a></li>
-      <li><a href="#software" data-section="software">Software</a></li>
-      <li><a href="#talks" data-section="talks">Talks</a></li>
-      <li><a href="#contact" data-section="contact">Contact</a></li>
+<div class="container">
+
+  <header>
+    <div class="subtitle">Prakul Sunil Hiremath</div>
+    <h1>Safe World Models Under Uncertainty</h1>
+    <div class="role">
+      6th Semester Undergrad, VTU Belagavi · Computer Science Engineering<br>
+      Targeting: Stanford ASL PhD (2027)
+    </div>
+  </header>
+
+  <div class="research-question">
+    <strong>Core Research Question:</strong><br>
+    When do autonomous systems with learned world models fail to predict reality accurately, and how can we detect and prevent that failure before it cascades into catastrophe?
+  </div>
+
+  <section>
+    <h2>The Problem</h2>
+    <p>
+      Robots and autonomous systems learn models of their environment to imagine futures and plan actions. These world models work—until they don't. The moment they compress too much uncertainty into overconfident predictions, imagination becomes hallucination, and safe planning becomes dangerous.
+    </p>
+    <p>
+      I'm building mathematical tools to predict exactly when and why this happens, and designing control policies that respect those limits.
+    </p>
+  </section>
+
+  <section>
+    <h2>Core Work</h2>
+    <ul class="papers">
+      <li class="paper-item core">
+        <div class="paper-title">Predictive Failure Hitting-Times for World Model-Based Robot Planning</div>
+        <div class="paper-meta">
+          2026 · RSS 2026 Workshop (Robotics: World Models)
+        </div>
+        <div class="status">Current Focus</div>
+        <p style="font-size: 0.95rem; margin-top: 0.5rem;">
+          Computing the exact horizon beyond which a learned world model's epistemic uncertainty becomes unsafe for planning. The core framework that everything else builds on.
+        </p>
+      </li>
     </ul>
-    <button class="theme-toggle" id="themeToggle">◯</button>
-  </div>
-</nav>
-
-<!-- Main Content -->
-<main class="container">
-
-  <!-- LAYER 1: RESEARCH IDENTITY -->
-  <section id="hero">
-    <h1>Epistemic Uncertainty<br>in Intelligent Systems</h1>
-    
-    <p class="hero-subtitle">
-      VTU Belagavi · Computer Science Engineering · 2023–present<br>
-      Studying the representation, propagation, and failure of uncertainty in learned systems.
-    </p>
-
-    <div class="core-statement">
-      How is uncertainty represented, propagated, and lost in intelligent systems? What structural failures emerge when complex uncertainty is compressed into simplified predictions?
-    </div>
-
-    <p>
-      My research develops <strong>information-theoretic and geometric frameworks</strong> for understanding epistemic uncertainty in sequential decision-making systems. The work connects theory to practice through open-source infrastructure, peer-reviewed publications, and rigorous empirical investigation.
-    </p>
-
-    <p>
-      Current focus: <strong>Latent-state uncertainty in sequential systems</strong>—world models, state-space systems, retrieval architectures, and failure diagnostics for learned representations.
-    </p>
-
-    <!-- Stats -->
-    <div class="stats">
-      <div class="stat-item">
-        <h4>20+</h4>
-        <p>Research manuscripts</p>
-      </div>
-      <div class="stat-item">
-        <h4>7</h4>
-        <p>PyPI packages</p>
-      </div>
-      <div class="stat-item">
-        <h4>18L+</h4>
-        <p>Research grants (₹)</p>
-      </div>
-      <div class="stat-item">
-        <h4>5</h4>
-        <p>Patents filed</p>
-      </div>
-    </div>
   </section>
 
-  <hr class="divider">
-
-  <!-- LAYER 2: RESEARCH ARCHITECTURE -->
-  <section id="architecture">
-    <h2>Research Architecture</h2>
-
-    <p>
-      The research program is organized around <strong>three foundational pillars</strong>. All applications—robotics, vector databases, LLMs, finance, cybersecurity, scientific systems—are testbeds for investigating these core pillars, not separate research directions.
-    </p>
-
-    <div class="pillars">
-      <div class="pillar">
-        <h3>Representation</h3>
-        <p style="font-size: 0.9rem; color: var(--ink-secondary); margin-bottom: 1rem;">How should uncertainty be represented without losing essential information?</p>
-        <ul>
-          <li>Simplex Collapse</li>
-          <li>Measure Gap</li>
-          <li>Identifiability (ICC)</li>
-          <li>AMBIVERT</li>
-          <li>Transformation-Stable Information</li>
-        </ul>
-      </div>
-
-      <div class="pillar">
-        <h3>Propagation</h3>
-        <p style="font-size: 0.9rem; color: var(--ink-secondary); margin-bottom: 1rem;">How does uncertainty evolve through time and decisions?</p>
-        <ul>
-          <li>Action-Conditioned Ambiguity World Models</li>
-          <li>World Action Models with Epistemic Uncertainty</li>
-          <li>Predictive Failure Hitting-Times</li>
-          <li>GIRL (Hallucination Control)</li>
-          <li>Regret-Aware Policy Optimization</li>
-        </ul>
-      </div>
-
-      <div class="pillar">
-        <h3>Failure &amp; Diagnostics</h3>
-        <p style="font-size: 0.9rem; color: var(--ink-secondary); margin-bottom: 1rem;">What failures emerge when uncertainty is lost or misrepresented?</p>
-        <ul>
-          <li>Calibration Drift</li>
-          <li>Constraint Drift in LLMs</li>
-          <li>Silent Failures in Systems</li>
-          <li>Sensitivity-Uncertainty Alignment</li>
-          <li>HED (Early Detection Score)</li>
-        </ul>
-      </div>
-    </div>
-
-    <p style="margin-top: 2rem; color: var(--ink-secondary); font-size: 0.95rem;">
-      <strong>Testbeds:</strong> Robotics · Vector Databases · Large Language Models · Finance · Cybersecurity · Scientific Systems
-    </p>
+  <section>
+    <h2>Related Work (In Development)</h2>
+    <ul class="papers">
+      <li class="paper-item">
+        <div class="paper-title">When the Simplex Collapses: The Geometry of Scalar Belief Compression</div>
+        <div class="paper-meta">PGM 2026</div>
+        <div class="status">Under Review</div>
+      </li>
+      <li class="paper-item">
+        <div class="paper-title">The Measure Gap: Information-Theoretic Limits of Deterministic Belief Encoders in POMDPs</div>
+        <div class="paper-meta">NeurIPS 2026</div>
+        <div class="status">Under Review</div>
+      </li>
+      <li class="paper-item">
+        <div class="paper-title">GIRL: Generative Imagination RL via Information-Theoretic Hallucination Control</div>
+        <div class="paper-meta">RLC 2026 Workshop</div>
+        <div class="status">Under Review</div>
+      </li>
+      <li class="paper-item">
+        <div class="paper-title">World Action Models with Epistemic Uncertainty Propagation</div>
+        <div class="paper-meta">RSS 2026 Workshop</div>
+        <div class="status">Under Review</div>
+      </li>
+    </ul>
   </section>
 
-  <hr class="divider">
-
-  <!-- LAYER 3: RESEARCH EVIDENCE -->
-  <section id="publications">
-    <h2>Publications &amp; Research Pipeline</h2>
-
-    <div class="bibliography">
-      <div class="bib-section">
-        <h3>Selected Peer-Reviewed Publications</h3>
-
-        <div class="paper">
-          <div class="paper-title">
-            Shared Feature-Based Multitask Model for Faux-Hate Classification in Code-Mixed Text
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">NLP</span>
-            ICON 2024 · AU-KBC Research Centre, Chennai
-          </div>
-          <div class="paper-status">Published</div>
-          <div style="margin-top: 0.5rem;">
-            <a href="https://aclanthology.org/people/prakul-hiremath/">ACL Anthology</a>
-          </div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            A Comprehensive Survey on Financial Health and Credit Card Management Practices in India
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Finance</span>
-            Kaleidoscope Journal · ISSN 3107-4677
-          </div>
-          <div class="paper-status">Published</div>
-          <div style="margin-top: 0.5rem;">
-            <a href="https://doi.org/10.62801/jkjmr2.12">DOI: 10.62801/jkjmr2.12</a>
-          </div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            AI-Driven, Uncertainty-Aware Anomaly Detection in Multi-wavelength AstroSat Observations
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Astrophysics</span>
-            AstroSat 2026 · ISRO/URSC Proceedings p.146
-          </div>
-          <div class="paper-status">Published</div>
-        </div>
-      </div>
-
-      <div class="bib-section">
-        <h3>Active Research Pipeline (arXiv Preprints &amp; Submissions)</h3>
-
-        <!-- Representation Pillar -->
-        <h4 style="color: var(--ink-secondary); font-weight: 400; margin: 2rem 0 1rem 0; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px;">Representation Foundations</h4>
-
-        <div class="paper">
-          <div class="paper-title">
-            When the Simplex Collapses: The Geometry of Scalar Belief Compression
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Theory</span>
-            PGM 2026 Conference Submission
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            The Measure Gap: Information-Theoretic Limits of Deterministic Belief Encoders in POMDPs
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Theory</span>
-            NeurIPS 2026 Conference Submission
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            AMBIVERT: Uncertainty-Aware Nearest-Neighbor Search via Epistemic Covariance in Vector Indices
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Vector Retrieval</span>
-            VLDB 2026 Workshop VecDB Submission
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            The Interventional Channel Constraint: A Geometric Diagnostic for Practical Identifiability in Regime-Switching Systems
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Sequential Systems</span>
-            CAISc 2026 Conference Submission
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            Transformation-Stable Information: A Foundation for Predicting Representation Quality
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Theory</span>
-            NeurIPS 2026 Conference Submission
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <!-- Propagation Pillar -->
-        <h4 style="color: var(--ink-secondary); font-weight: 400; margin: 2rem 0 1rem 0; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px;">Propagation Dynamics</h4>
-
-        <div class="paper">
-          <div class="paper-title">
-            GIRL: Generative Imagination Reinforcement Learning via Information-Theoretic Hallucination Control
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">World Models</span>
-            <a href="https://arxiv.org/abs/2604.07426">arXiv:2604.07426</a> · ICML 2026 / RLC 2026
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            World Action Models with Epistemic Uncertainty Propagation: Learning Uncertainty Budgets for Safe Long-Horizon Robot Imagination
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Robotics</span>
-            RSS 2026 Workshop RWM Submission
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            Action-Conditioned Ambiguity World Models
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Robotics</span>
-            RSS 2026 Workshop RWM Submission
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            Predictive Failure Hitting-Times for World Model-Based Robot Planning
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Robotics</span>
-            RSS 2026 Workshop RWM Submission
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            Regret-Aware Policy Optimization: Environment-Level Memory for Replay Suppression under Delayed Harm
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">RL</span>
-            <a href="https://arxiv.org/abs/2604.07428">arXiv:2604.07428</a> · RLC 2026 ContinualRL
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <!-- Failure &amp; Diagnostics -->
-        <h4 style="color: var(--ink-secondary); font-weight: 400; margin: 2rem 0 1rem 0; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px;">Failure &amp; Diagnostics</h4>
-
-        <div class="paper">
-          <div class="paper-title">
-            More Reasoning Can Hurt Calibration
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">LLMs</span>
-            ACL ARR 2026 May Submission
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            Constraint Drift in Multi-Turn LLM Sessions: A Longitudinal Evaluation Framework
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">LLMs</span>
-            ACL ARR 2026 May Submission
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            When Offline Metrics Lie: The Dynamics of Silent Failure in Deployed Recommendation Systems
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Systems</span>
-            SIGKDD 2026 Research Track Submission
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            When Confidence Metrics Fail: Sensitivity Uncertainty Alignment as a Diagnostic for High-Risk Model Errors
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Evaluation</span>
-            <a href="https://arxiv.org/abs/2604.20903">arXiv:2604.20903</a> · NeurIPS 2026 Datasets
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            The Hiremath Early Detection (HED) Score: A Measure-Theoretic Evaluation Standard for Temporal Intelligence
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Metrics</span>
-            <a href="https://arxiv.org/abs/2604.04993">arXiv:2604.04993</a>
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <!-- Sequential Systems &amp; Applications -->
-        <h4 style="color: var(--ink-secondary); font-weight: 400; margin: 2rem 0 1rem 0; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px;">Sequential Systems &amp; Applications</h4>
-
-        <div class="paper">
-          <div class="paper-title">
-            Early Detection of Latent Microstructure Regimes in Limit Order Books
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Finance</span>
-            <a href="https://arxiv.org/abs/2604.20949">arXiv:2604.20949</a>
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            Learning Nonlinear Regime Transitions via Semi-Parametric State-Space Models
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Sequential Systems</span>
-            <a href="https://arxiv.org/abs/2604.04963">arXiv:2604.04963</a>
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            PARD-SSM: Probabilistic Cyber-Attack Regime Detection via Variational Switching State-Space Models
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Cybersecurity</span>
-            <a href="https://arxiv.org/abs/2604.02299">arXiv:2604.02299</a>
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            BIOLOOP: Bio-Conformal Multimodal Learning for Reliability-Guaranteed Safe Control of Algal Hydrogen Reactors
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Science</span>
-            KDD 2026 AI4Sciences Track
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-        <div class="paper">
-          <div class="paper-title">
-            TIDAL: Temporal AI for Early Detection of Latent Financial Market Instability
-          </div>
-          <div class="paper-meta">
-            <span class="paper-tag">Finance</span>
-            AIETABS 2026 Conference
-          </div>
-          <div class="paper-status">Under Review</div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- SOFTWARE INFRASTRUCTURE -->
-  <section id="software">
+  <section>
     <h2>Research Infrastructure</h2>
-
     <p>
-      Open-source Python ecosystem for monitoring latent-state integrity, detecting leakage, auditing hidden-state drift, and diagnosing failure in sequential systems. All packages published on PyPI with permanent Zenodo DOIs.
+      Open-source tools for detecting when autonomous systems lose track of reality.
     </p>
-
-    <div style="margin-top: 2rem;">
-      <h3 style="font-size: 1.1rem;">Latent State Integrity Suite</h3>
-
-      <div class="software-item">
-        <div class="software-name">identifiability-diagnostic</div>
-        <div class="software-desc">
-          Geometric pre-training diagnostic verifying latent-state identifiability in regime-switching systems.
-        </div>
-        <div class="software-install">pip install identifiability-diagnostic</div>
-        <div class="software-links">
-          <a href="https://github.com/prakulhiremath/identifiability-diagnostic-framework">GitHub</a>
-          <a href="https://pypi.org/project/identifiability-diagnostic/">PyPI</a>
-          <a href="https://doi.org/10.5281/zenodo.20517275">DOI: 10.5281/zenodo.20517275</a>
-        </div>
+    <div class="software-item">
+      <div class="software-name">memoscope</div>
+      <div class="software-desc">
+        Live memory inspector for Transformers, SSMs, and RNNs. Watch hidden state drift during streaming inference.
       </div>
-
-      <div class="software-item">
-        <div class="software-name">memoscope</div>
-        <div class="software-desc">
-          Real-time internal-state drift inspector for Transformers, Mamba, and sequential neural networks.
-        </div>
-        <div class="software-install">pip install memoscope</div>
-        <div class="software-links">
-          <a href="https://github.com/prakulhiremath/memoscope">GitHub</a>
-          <a href="https://pypi.org/project/memoscope/">PyPI</a>
-          <a href="https://doi.org/10.5281/zenodo.20440916">DOI: 10.5281/zenodo.20440916</a>
-        </div>
+      <div class="code">pip install memoscope</div>
+    </div>
+    <div class="software-item">
+      <div class="software-name">identifiability-diagnostic</div>
+      <div class="software-desc">
+        Pre-training diagnostic that detects latent regime unidentifiability before training begins.
       </div>
-
-      <div class="software-item">
-        <div class="software-name">temporal-leaks</div>
-        <div class="software-desc">
-          Static leakage detection for time-series ML; isolates look-ahead context contamination.
-        </div>
-        <div class="software-install">pip install temporal-leaks</div>
-        <div class="software-links">
-          <a href="https://github.com/prakulhiremath/temporal-leaks">GitHub</a>
-          <a href="https://pypi.org/project/temporal-leaks/">PyPI</a>
-          <a href="https://doi.org/10.5281/zenodo.20440810">DOI: 10.5281/zenodo.20440810</a>
-        </div>
+      <div class="code">pip install identifiability-diagnostic</div>
+    </div>
+    <div class="software-item">
+      <div class="software-name">hed-score</div>
+      <div class="software-desc">
+        Evaluation metric for early detection in non-stationary systems. Rewards catching failure before it happens.
       </div>
-
-      <div class="software-item">
-        <div class="software-name">flashback-df</div>
-        <div class="software-desc">
-          DataFrame chronology control with granular lineage and checkpoint rollback for Pandas/Polars.
-        </div>
-        <div class="software-install">pip install flashback-df</div>
-        <div class="software-links">
-          <a href="https://github.com/prakulhiremath/flashback">GitHub</a>
-          <a href="https://pypi.org/project/flashback-df/">PyPI</a>
-          <a href="https://doi.org/10.5281/zenodo.20440636">DOI: 10.5281/zenodo.20440636</a>
-        </div>
-      </div>
-
-      <div class="software-item">
-        <div class="software-name">parallelwatch</div>
-        <div class="software-desc">
-          Real-time multivariate sequence monitoring tracking failures across telemetry.
-        </div>
-        <div class="software-install">pip install parallelwatch</div>
-        <div class="software-links">
-          <a href="https://github.com/prakulhiremath/parallelwatch">GitHub</a>
-          <a href="https://pypi.org/project/parallelwatch/">PyPI</a>
-          <a href="https://doi.org/10.5281/zenodo.20494486">DOI: 10.5281/zenodo.20494486</a>
-        </div>
-      </div>
-
-      <h3 style="font-size: 1.1rem; margin-top: 2rem;">Sequential Systems &amp; Finance</h3>
-
-      <div class="software-item">
-        <div class="software-name">chronosdefrag</div>
-        <div class="software-desc">
-          Quantitative finance representation learning suite for latent state transition discovery.
-        </div>
-        <div class="software-install">pip install chronosdefrag</div>
-        <div class="software-links">
-          <a href="https://github.com/prakulhiremath/chronosdefrag">GitHub</a>
-          <a href="https://pypi.org/project/chronosdefrag/">PyPI</a>
-          <a href="https://doi.org/10.5281/zenodo.20331774">DOI: 10.5281/zenodo.20331774</a>
-        </div>
-      </div>
-
-      <div class="software-item">
-        <div class="software-name">hed-score</div>
-        <div class="software-desc">
-          Canonical Hiremath Early Detection score implementation for temporal intelligence metrics.
-        </div>
-        <div class="software-install">pip install hed-score</div>
-        <div class="software-links">
-          <a href="https://github.com/prakulhiremath/HED-score">GitHub</a>
-          <a href="https://pypi.org/project/hed-score/">PyPI</a>
-          <a href="https://doi.org/10.5281/zenodo.19713081">DOI: 10.5281/zenodo.19713081</a>
-        </div>
-      </div>
+      <div class="code">pip install hed-score</div>
     </div>
   </section>
 
   <hr class="divider">
 
-  <!-- INTELLECTUAL PROPERTY & FUNDING -->
-  <section id="resources">
-    <h2>Intellectual Property &amp; Funding</h2>
-
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin: 2rem 0;">
-      <div>
-        <h3 style="font-size: 1.2rem;">Patents Filed</h3>
-        <p style="color: var(--ink-secondary); font-size: 0.9rem; margin: 0 0 1.5rem 0;">Indian Patent Office · All applications published</p>
-
-        <div class="grant-item">
-          <div class="grant-title">202541014688 (2025)</div>
-          <div class="grant-meta">
-            Integrating Neuromorphic Computing and Reinforcement Learning in Hybrid AI for Autonomous Systems
-          </div>
-        </div>
-
-        <div class="grant-item">
-          <div class="grant-title">202541014687 (2025)</div>
-          <div class="grant-meta">
-            Innovative CO₂ Emission Filters for Vehicles: Net-Zero Carbon Solutions
-          </div>
-        </div>
-
-        <div class="grant-item">
-          <div class="grant-title">202541014690 (2025)</div>
-          <div class="grant-meta">
-            Dynamic Adjustable Sleeve Design &amp; Manufacturing for Enhanced CO₂ Filters
-          </div>
-        </div>
-
-        <div class="grant-item">
-          <div class="grant-title">202541014689 (2025)</div>
-          <div class="grant-meta">
-            Hyper-Adaptive Manufacturing Using Multi-Agent AI for Autonomous Production
-          </div>
-        </div>
-
-        <div class="grant-item">
-          <div class="grant-title">202541032942 (2025)</div>
-          <div class="grant-meta">
-            EMEFF: Explainable Multimodal Economic Forecasting Framework
-          </div>
-        </div>
+  <section>
+    <h2>Background</h2>
+    <div class="stats">
+      <div class="stat-block">
+        <h3>5</h3>
+        <div class="stat-label">Core papers (focused, not scattered)</div>
       </div>
-
-      <div>
-        <h3 style="font-size: 1.2rem;">Research Grants</h3>
-        <p style="color: var(--ink-secondary); font-size: 0.9rem; margin: 0 0 1.5rem 0;">Total Secured: ₹18.3L</p>
-
-        <div class="grant-item">
-          <div class="grant-title">₹15L</div>
-          <div class="grant-meta">
-            MSME Idea Hackathon 5.0 — Green Hydrogen Production from Seawater
-          </div>
-          <div class="subtle" style="font-size: 0.85rem; margin-top: 0.5rem;">Ministry of MSME, Govt. of India</div>
-        </div>
-
-        <div class="grant-item">
-          <div class="grant-title">₹3L</div>
-          <div class="grant-meta">
-            NAIN 2.0 · BIOLOOP (Carbon Capture) &amp; URJAWAVE (Clean Energy)
-          </div>
-          <div class="subtle" style="font-size: 0.85rem; margin-top: 0.5rem;">Govt. of Karnataka · IIIT Dharwad</div>
-        </div>
-
-        <div class="grant-item">
-          <div class="grant-title">₹30K</div>
-          <div class="grant-meta">
-            KAHER VC Research Grant — Deep Learning for Multi-Modal AI-Assisted Diagnosis
-          </div>
-          <div class="subtle" style="font-size: 0.85rem; margin-top: 0.5rem;">KAHER University</div>
-        </div>
+      <div class="stat-block">
+        <h3>3</h3>
+        <div class="stat-label">PyPI packages (production-ready)</div>
       </div>
     </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- TALKS & CONFERENCES -->
-  <section id="talks">
-    <h2>Selected Talks &amp; Conferences</h2>
-
-    <div class="timeline-item">
-      <div class="timeline-date">Dec 2024</div>
-      <div class="timeline-title">
-        Hybrid AI for Real-Time Autonomous Systems: Neuromorphic Computing and Reinforcement Learning
-      </div>
-      <div class="timeline-venue">IIT Bombay · TechConnect 2024</div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-date">Feb 2025</div>
-      <div class="timeline-title">
-        Integration of AI in Environmental Modelling for Sustainable Ecosystems
-      </div>
-      <div class="timeline-venue">VTU Climate Conference 2025 · <span class="accent-text">Best Paper Award</span></div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-date">Apr 2025</div>
-      <div class="timeline-title">
-        Photonic AI: Ultra-Fast, Zero-Power Optical Neural Networks for Real-Time Computer Vision
-      </div>
-      <div class="timeline-venue">CODE-AI 2025 · MAHE Dubai</div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-date">Jul 2025</div>
-      <div class="timeline-title">
-        Monogamy-Driven Adaptive Quantum Secure Communication Framework
-      </div>
-      <div class="timeline-venue">Quantum India Bengaluru 2025 · Hilton Manyata Tech Park</div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-date">Dec 2025</div>
-      <div class="timeline-title">
-        Real-Time Monitoring of Bioaerosol Emissions in Algae-Based Hydrogen Reactors Using Low-Cost Sensors and AI
-      </div>
-      <div class="timeline-venue">14th Asian Aerosol Conference · Mumbai</div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-date">Feb 2026</div>
-      <div class="timeline-title">
-        AI-Driven, Uncertainty-Aware Anomaly Detection in Multi-wavelength AstroSat Observations
-      </div>
-      <div class="timeline-venue">AstroSat 2026 · Hyatt Centric Bengaluru · ISRO/URSC</div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-date">Feb 2026</div>
-      <div class="timeline-title">
-        India AI Impact Summit 2026
-      </div>
-      <div class="timeline-venue">Delhi · National-level summit on AI policy and deployment</div>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- LAYER 4: FUTURE DIRECTION -->
-  <section id="future">
-    <h2>Long-Term Vision</h2>
-
     <p>
-      Over the next decade, this research program aims to build <strong>the theory, systems, and software infrastructure</strong> required for intelligent systems to reason under epistemic uncertainty without losing critical information.
+      Currently in 6th semester at VTU Belagavi. Working on understanding epistemic uncertainty in sequential systems. 
+      Building theory, tools, and applications across robotics, uncertainty quantification, and safe autonomy.
     </p>
-
     <p>
-      The immediate priority is establishing foundational theory around representation and propagation, building a production-grade open-source ecosystem, and demonstrating empirical impact across diverse application domains. By 2030, the goal is to have created a recognized subfield with clear standards, metrics, and practices for uncertainty-aware system design.
-    </p>
-
-    <p>
-      This work will eventually mature into a research group with deep collaborations across academia and industry, dedicated to making epistemic uncertainty a first-class concern in intelligent systems engineering.
+      Next target: PhD at Stanford ASL (or UC Berkeley / MIT Robotics) starting Fall 2027.
     </p>
   </section>
 
   <hr class="divider">
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <h2>Contact &amp; Links</h2>
-
+  <section>
+    <h2>Advisors & Mentors</h2>
     <p>
-      <strong>Email:</strong><br>
-      <a href="mailto:prakulhiremath.aoe@gmail.com">prakulhiremath.aoe@gmail.com</a> (AoE)<br>
-      <a href="mailto:prakulhiremath03@gmail.com">prakulhiremath03@gmail.com</a> (Personal)<br>
-      <a href="mailto:prakulhiremath@vtu.ac.in">prakulhiremath@vtu.ac.in</a> (Academic)
+      Currently seeking mentorship from:
     </p>
-
-    <p style="margin-top: 1.5rem;">
-      <strong>Profiles &amp; Archives:</strong><br>
-      <a href="https://github.com/prakulhiremath">GitHub</a> · 
-      <a href="https://linkedin.com/in/prakulhiremath">LinkedIn</a> · 
-      <a href="https://twitter.com/PrakulHiremath">Twitter</a> · 
-      <a href="https://scholar.google.com/citations?user=ERbZUdoAAAAJ">Google Scholar</a> · 
-      <a href="https://orcid.org/0009-0007-9744-3519">ORCID</a> · 
-      <a href="https://aclanthology.org/people/prakul-hiremath/">ACL Anthology</a>
-    </p>
-
-    <p style="margin-top: 1.5rem; color: var(--ink-secondary); font-size: 0.9rem;">
-      Open to collaborations, research discussions, and PhD applications.
-    </p>
+    <ul style="list-style: disc; padding-left: 2rem;">
+      <li><a href="https://pavone.me">Marco Pavone</a> (Stanford ASL — Safe Autonomy)</li>
+      <li><a href="https://ai.stanford.edu/~cbfinn/">Chelsea Finn</a> (Stanford — Learning for Embodiment)</li>
+    </ul>
   </section>
 
-</main>
-
-<!-- Footer -->
-<footer>
-  <div class="container">
-    <p style="color: var(--ink-secondary); margin-bottom: 2rem;">
-      Prakul Sunil Hiremath<br>
-      VTU Belagavi · Computer Science Engineering<br>
-      23.2156° N 75.1240° E
-    </p>
-    <p style="font-size: 0.85rem; color: var(--ink-secondary);">
-      Last updated June 2026 · Research website · <a href="https://github.com/prakulhiremath/prakulhiremath.github.io">View source</a>
-    </p>
+  <div class="contact">
+    <strong>Get in touch:</strong><br>
+    <a href="mailto:prakulhiremath@vtu.ac.in">prakulhiremath@vtu.ac.in</a><br>
+    <a href="https://github.com/prakulhiremath">GitHub</a> · 
+    <a href="https://scholar.google.com/citations?user=ERbZUdoAAAAJ">Google Scholar</a> · 
+    <a href="https://orcid.org/0009-0007-9744-3519">ORCID</a>
   </div>
-</footer>
 
-<!-- JavaScript for minimal interactions -->
-<script>
-  // Theme toggle
-  const themeToggle = document.getElementById('themeToggle');
-  const prefersLight = window.matchMedia('(prefers-color-scheme: light)');
-  
-  themeToggle.addEventListener('click', () => {
-    document.documentElement.style.colorScheme = 
-      document.documentElement.style.colorScheme === 'dark' ? 'light' : 'dark';
-  });
+  <footer>
+    <p>
+      Prakul Sunil Hiremath<br>
+      VTU Belagavi, India<br>
+      Last updated: June 2026
+    </p>
+    <p style="margin-top: 1rem;">
+      Currently focused. Not scattered. Building toward 0.001%.
+    </p>
+  </footer>
 
-  // Smooth scroll and active nav link
-  const navLinks = document.querySelectorAll('.nav-links a');
-  
-  navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      navLinks.forEach(l => l.removeAttribute('data-active'));
-      e.target.setAttribute('data-active', '');
-    });
-  });
-
-  // Simple scroll spy for nav links
-  window.addEventListener('scroll', () => {
-    const sections = ['hero', 'architecture', 'publications', 'software', 'talks', 'contact'];
-    let current = sections[0];
-    
-    sections.forEach(section => {
-      const element = document.getElementById(section);
-      if (element && element.offsetTop <= window.scrollY + 100) {
-        current = section;
-      }
-    });
-
-    navLinks.forEach(link => {
-      link.removeAttribute('data-active');
-      const href = link.getAttribute('href');
-      if ((current === 'hero' && href === '#identity') || 
-          (current === 'architecture' && href === '#identity') ||
-          href === `#${current}`) {
-        link.setAttribute('data-active', '');
-      }
-    });
-  });
-
-  // Initialize theme based on system preference
-  if (prefersLight.matches) {
-    document.documentElement.style.colorScheme = 'light';
-  } else {
-    document.documentElement.style.colorScheme = 'dark';
-  }
-</script>
+</div>
 
 </body>
 </html>
